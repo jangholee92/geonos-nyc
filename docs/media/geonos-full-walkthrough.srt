@@ -1,0 +1,383 @@
+1
+00:00:00,259 --> 00:00:03,942
+Heat and flooding threaten cold-chain reliability.
+
+2
+00:00:04,064 --> 00:00:09,441
+Before committing to a retrofit, investigate what could change your choice.
+
+3
+00:00:09,549 --> 00:00:13,441
+I’m Jangho Lee, and this is GEONOS.
+
+4
+00:00:13,521 --> 00:00:22,027
+During the hackathon I built this NYC map workspace, its reproducible evidence pipeline and six distinct Meta model
+
+5
+00:00:22,077 --> 00:00:23,329
+integrations.
+
+6
+00:00:23,423 --> 00:00:29,926
+Official datasets, pretrained models and software libraries are existing inputs.
+
+7
+00:00:30,034 --> 00:00:36,494
+This walkthrough follows two real public records, not verified available properties.
+
+8
+00:00:36,898 --> 00:00:41,651
+At city scale, a density view keeps the map legible.
+
+9
+00:00:41,746 --> 00:00:49,972
+Zoom in and the official footprint tiles appear across all five boroughs, independently of the current search results.
+
+10
+00:00:50,094 --> 00:00:56,903
+The preserved source has 1,082,964 records.
+
+11
+00:00:57,012 --> 00:01:08,251
+We retain 1,082,923 usable outlines and explicitly exclude 41 invalid or placeholder geometries.
+
+12
+00:01:08,332 --> 00:01:16,225
+Toggle a contextual layer, read its legend and source, then use recorded roof heights in 3D.
+
+13
+00:01:16,541 --> 00:01:19,767
+Unknown height never becomes an invented measurement.
+
+14
+00:01:20,148 --> 00:01:25,971
+You can search an address, a building identification number or a tax-lot number.
+
+15
+00:01:26,052 --> 00:01:31,931
+A tax lot may contain several buildings, so the returned identity matters.
+
+16
+00:01:32,081 --> 00:01:40,085
+Filters can narrow official records, while a search of the visible map area returns a bounded page.
+
+17
+00:01:40,179 --> 00:01:44,336
+These are discovery tools, not a citywide optimum.
+
+18
+00:01:44,416 --> 00:01:48,420
+An unmatched search leaves an honest empty result.
+
+19
+00:01:48,529 --> 00:01:52,983
+I’ll return to Smith Street and select the two native building records.
+
+20
+00:01:53,314 --> 00:01:56,558
+The first selection opens the building details.
+
+21
+00:01:56,666 --> 00:02:02,951
+The second creates an automatic side-by-side comparison, with A and B marked on the map.
+
+22
+00:02:03,087 --> 00:02:08,789
+For these Smith Street records, 572 has the larger mapped footprint.
+
+23
+00:02:08,870 --> 00:02:13,252
+Recorded roof height and construction year are separate facts;
+
+24
+00:02:13,370 --> 00:02:17,947
+neither establishes interior clear height or structural capacity.
+
+25
+00:02:18,055 --> 00:02:21,826
+The floor-area row is explicitly tax-lot-wide.
+
+26
+00:02:21,935 --> 00:02:28,636
+Sources retain native identifiers, and selected places stay available while the search changes.
+
+27
+00:02:29,009 --> 00:02:37,732
+Let’s state a condition instead of inventing a score: at least twenty thousand square feet of usable space.
+
+28
+00:02:37,840 --> 00:02:43,411
+Public outlines do not answer that, so both remain unknown.
+
+29
+00:02:43,491 --> 00:02:52,979
+If I deliberately change the requirement to mapped footprint, 572 meets it and 592 conflicts.
+
+30
+00:02:53,059 --> 00:02:59,380
+Available electrical capacity is another missing operational fact.
+
+31
+00:02:59,488 --> 00:03:05,669
+A sourced owner report can be attached with a date, but stays user-reported.
+
+32
+00:03:05,764 --> 00:03:09,525
+We have no such report here and will not manufacture one.
+
+33
+00:03:09,856 --> 00:03:14,731
+Both interior points look blank on the published stormwater map.
+
+34
+00:03:14,826 --> 00:03:22,979
+That is not a safety verdict: DEP’s methodology represents buildings as voids in the surface-water mesh.
+
+35
+00:03:23,087 --> 00:03:25,990
+Now look outside the outlines.
+
+36
+00:03:26,070 --> 00:03:36,090
+In the pinned 2050 sea-level scenario, the mapped class of at least one foot touches 572, while the nearest such area is
+
+37
+00:03:36,140 --> 00:03:40,251
+about forty-seven meters from 592.
+
+38
+00:03:40,346 --> 00:03:50,401
+Both source scenarios use 2.13 inches of rain in one hour; the future scenario adds thirty inches of sea-level rise.
+
+39
+00:03:50,496 --> 00:03:57,135
+This directs a site survey of entrances, drainage and equipment elevations.
+
+40
+00:03:57,229 --> 00:04:00,400
+It does not tell us indoor depth or damage.
+
+41
+00:04:00,731 --> 00:04:04,774
+Climate context answers a different scale of question.
+
+42
+00:04:04,883 --> 00:04:11,801
+The observed view uses NOAA station records, with daily data summarized into comparable periods.
+
+43
+00:04:11,909 --> 00:04:15,049
+A station is not a measurement of this building.
+
+44
+00:04:15,158 --> 00:04:23,881
+The future view keeps the published NPCC regional projections, periods and baseline separate from those observations.
+
+45
+00:04:23,990 --> 00:04:29,963
+The same regional outlook applies to both sites; it does not rank their resilience.
+
+46
+00:04:30,058 --> 00:04:37,490
+It motivates questions about required indoor conditions, equipment performance and the intended operating horizon.
+
+47
+00:04:37,939 --> 00:04:45,584
+For equipment discussions, a common shortcut is to combine the hottest air temperature with the highest dew point.
+
+48
+00:04:45,665 --> 00:04:53,115
+At JFK in the retained 2025 observations, those peaks occurred at different times.
+
+49
+00:04:53,223 --> 00:05:02,313
+GEONOS keeps each actual air-temperature and dew-point pair together, with its timestamp, ties, coverage and gaps.
+
+50
+00:05:02,407 --> 00:05:07,024
+Move through the observed hot period to see both values change.
+
+51
+00:05:07,132 --> 00:05:14,222
+These airport samples help frame a question; they are not continuous site measurements or engineering design weather.
+
+52
+00:05:14,606 --> 00:05:21,047
+A separate example at 211 Lombardy Street shows why the reporting boundary matters.
+
+53
+00:05:21,169 --> 00:05:29,972
+The parent and one child report contain the same annual site-energy total, but their reported floor areas differ.
+
+54
+00:05:30,080 --> 00:05:37,507
+That reproduces energy intensities of 66.7 and 127.6.
+
+55
+00:05:37,615 --> 00:05:40,529
+The other child’s energy is missing.
+
+56
+00:05:40,637 --> 00:05:46,453
+We preserve all three records and never add the parent and child totals.
+
+57
+00:05:46,561 --> 00:05:54,378
+Before calling a building efficient, ask which meters, areas and operating uses each report covers.
+
+58
+00:05:54,759 --> 00:06:00,187
+Muse Voice transcribes a short recording into a draft I can edit.
+
+59
+00:06:00,295 --> 00:06:08,959
+This demonstrated clip is synthetic English speech; it is not a field test of microphone or Korean recognition.
+
+60
+00:06:09,054 --> 00:06:12,356
+Adding the transcript does not send it.
+
+61
+00:06:12,451 --> 00:06:20,865
+Muse Spark then chooses bounded official-data operations and carries the question into the investigation.
+
+62
+00:06:20,987 --> 00:06:28,179
+Source citations come from successful server-side retrieval, not links invented by the model.
+
+63
+00:06:28,259 --> 00:06:35,983
+Ordinary conversation and a formally evaluated requirement result remain different kinds of output.
+
+64
+00:06:36,328 --> 00:06:45,935
+For the two-site visual review, the app resolves the native buildings and retrieves official Spring 2024 aerial crops.
+
+65
+00:06:46,043 --> 00:06:53,358
+SAM 3.1 receives the same images you see and returns roof and tree regions.
+
+66
+00:06:53,467 --> 00:06:57,143
+The mapped footprint remains a separate reference.
+
+67
+00:06:57,237 --> 00:07:03,608
+Switch between A and B, hide detections, and compare them with the original image.
+
+68
+00:07:03,716 --> 00:07:10,837
+The map comparison shows agreement between two representations, not segmentation accuracy.
+
+69
+00:07:10,917 --> 00:07:18,191
+Neighboring roofs, shadows, leaf-off vegetation and differing source dates all matter.
+
+70
+00:07:18,271 --> 00:07:24,067
+A missing tree detection remains unknown, not proof that there are no trees.
+
+71
+00:07:24,398 --> 00:07:32,635
+Once both image analyses complete, Muse Wonder reviews their typed summaries alongside the public evidence.
+
+72
+00:07:32,702 --> 00:07:35,467
+It does not receive the image pixels.
+
+73
+00:07:35,576 --> 00:07:39,498
+Its useful output is a short list of survey targets:
+
+74
+00:07:39,548 --> 00:07:46,299
+roof and equipment, tree context, and the relationship between the dated map and image.
+
+75
+00:07:46,408 --> 00:07:52,007
+There is also an explicit second-review action for the public-data comparison.
+
+76
+00:07:52,101 --> 00:07:55,075
+Neither review approves the retrofit.
+
+77
+00:07:55,155 --> 00:07:58,275
+Each asks what finding could alter the next decision.
+
+78
+00:07:58,606 --> 00:08:07,345
+The historical view retrieves official 2020 and 2024 photographs with matching geographic crop bounds.
+
+79
+00:08:07,440 --> 00:08:12,124
+I choose when to run DINOv2 locally in this browser.
+
+80
+00:08:12,218 --> 00:08:21,818
+Its pretrained features produce a 16-by-16 comparison grid after each image is resized for inference.
+
+81
+00:08:21,941 --> 00:08:27,791
+Highlighted windows tell me where to inspect the original photographs.
+
+82
+00:08:27,899 --> 00:08:37,305
+They do not certify physical change: shadows, season, processing and alignment can also affect the result.
+
+83
+00:08:37,372 --> 00:08:44,942
+I can move the divider, hide the grid, and prepare a site-visit question without automatically sending it.
+
+84
+00:08:45,273 --> 00:08:49,614
+Muse Image serves a different purpose: communication.
+
+85
+00:08:49,694 --> 00:08:58,255
+An explicit request turns the written inspection checks into a conceptual diagram of what is known, what to verify and
+
+86
+00:08:58,305 --> 00:08:59,771
+what could change.
+
+87
+00:08:59,866 --> 00:09:04,304
+It does not edit the aerial image or generate replacement evidence.
+
+88
+00:09:04,413 --> 00:09:11,906
+The visible label stays outside the picture so it cannot be mistaken for a site photograph or engineering plan.
+
+89
+00:09:12,001 --> 00:09:19,564
+Source references remain attached to the written brief; the generated pixels are not validated measurements.
+
+90
+00:09:19,884 --> 00:09:26,813
+Export the selected evidence and the explicit conditions, including what remains unknown.
+
+91
+00:09:26,907 --> 00:09:33,489
+The methods and visual evidence guide make the source boundaries inspectable later.
+
+92
+00:09:33,597 --> 00:09:37,067
+Some benign requests still trigger Meta’s filter;
+
+93
+00:09:37,208 --> 00:09:44,540
+GEONOS preserves that refusal and, where supported, separately labels a public-data brief.
+
+94
+00:09:44,648 --> 00:09:47,771
+It never disguises that as model output.
+
+95
+00:09:47,880 --> 00:09:51,558
+The result of this investigation is a concrete next step:
+
+96
+00:09:51,782 --> 00:09:59,822
+obtain plans, inspect drainage and verify usable space and power before committing to either building.

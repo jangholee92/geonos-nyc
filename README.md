@@ -4,6 +4,12 @@ Explore New York City buildings, select two to compare, and ask what the availab
 
 This is a sanitized public source snapshot of the hackathon application, based on private working commit `fd667567f782f37df64358d4c90554ee99a35c84`. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
 
+## Recorded demo
+
+Planned video page: [jangholee92.github.io/geonos-nyc](https://jangholee92.github.io/geonos-nyc/) — **publication pending; not yet verified reachable**. The page contains a three-minute overview and a ten-minute supporting walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
+
+These are edited actual product states with synthetic English narration, not a continuous live recording or an interactive deployment. The Muse Image concept is an earlier separate verified example, as disclosed beside the videos. No API key is needed to watch. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for the interactive walkthrough and access requirements.
+
 ## What it does
 
 - Shows the complete valid footprint snapshot across five boroughs, independent of a search result page. Click a building for its full official record; select a second for automatic A/B comparison.

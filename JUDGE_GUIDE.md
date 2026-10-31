@@ -2,6 +2,12 @@
 
 GEONOS helps you compare what public evidence says about two NYC buildings and identify the next owner document or site inspection that could change your decision. It does not produce a resilience score, investment return or building approval.
 
+## Watch the recorded demo
+
+Planned video page: [jangholee92.github.io/geonos-nyc](https://jangholee92.github.io/geonos-nyc/) — **publication pending; not yet verified reachable**. It includes the three-minute overview and ten-minute supporting walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watching requires no key and does not run the application.
+
+The recordings use edited actual product states and synthetic English narration. The Muse Image illustration is an earlier, separate verified example, not the outcome of the later recorded two-building sequence or a retry of a refused request.
+
 ## Access and verified release
 
 The [hosted application](https://geonos-nyc-explorer-jh-1027.jholee.chatgpt.site) **requires access**: its last verified audience was owner-private. This link is not a promise of public judge access. Repository access does not grant application access.

@@ -1,5 +1,7 @@
 # What would change your mind?
 
+> **Historical planning note — 28 October 2026.** Retained as a dated source-generation seed, not current release or submission guidance. Statements below about pending API approval, an unconnected key, unverified provider calls, the earlier interface and unknown portal requirements describe that draft stage. Later live Meta verification and the six-model release supersede those status statements. Use the current [README](../../README.md) and [judge guide](../../JUDGE_GUIDE.md) for the implemented application and its limits.
+
 Product strategy and verified judging criteria · updated 28 October 2026 UTC
 
 GEONOS starts with a recognizable property question, tests explicit conditions against compatible evidence, and identifies the missing fact worth checking next. Its creative idea is to make the boundary of evidence visible: the edge of a building, the scope of an energy report, and the timestamp of a weather observation. Each reveal should change a concrete next action.

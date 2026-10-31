@@ -1,0 +1,45 @@
+GEONOS — overview-3min
+
+Edited authentic captured states, editorial motion; Microsoft Andrew neural synthetic English narration. Not continuous live recording.
+
+[00:00:00,000 – 00:00:11,167] What would change your choice?
+Heat and flooding threaten cold-chain reliability. Before committing to a retrofit, investigate what could change your choice. I’m Jangho Lee, and this is GEONOS.
+
+[00:00:11,167 – 00:00:25,292] NYC implementation built Oct 27–31 · existing public data / models
+Built during the hackathon: this NYC workspace, evidence pipeline, and six-model workflow. Explore all five boroughs and more than a million official outlines. Public data and pretrained models remain acknowledged foundations.
+
+[00:00:25,292 – 00:00:40,583] Select native records · compare scopes
+Select 572 Smith Street, then 592. Their records compare immediately. Search, filters, layers, and recorded-height 3D locate candidates; tax-lot floor area stays distinct from building measurements.
+
+[00:00:40,583 – 00:00:54,375] An explicit condition · usable space versus mapped footprint
+Require twenty thousand square feet of usable area: unknown. Change the measurement to mapped footprint: 572 meets it; 592 does not. That is a checked condition, not a suitability score.
+
+[00:00:54,375 – 00:01:08,792] The map leaves building interiors out
+A blank flood-map point isn’t clearance. DEP models building interiors as voids. In its published 2050 scenario, the deep class touches 572’s outline and is about forty-seven meters from 592.
+
+[00:01:08,792 – 00:01:21,583] Station history, regional futures, actual weather pairs
+The next check: survey entrances, drains, and equipment elevations. Regional climate projections and station history add context; JFK’s paired weather keeps actual heat and moisture together.
+
+[00:01:21,583 – 00:01:33,125] Separate example · Lombardy energy reporting boundaries
+Energy has boundaries, too. At Lombardy Street, parent and child reports repeat energy but use different areas. Request the meter-to-building schedule before judging efficiency.
+
+[00:01:33,125 – 00:01:45,250] Synthetic sample → editable Voice draft → bounded tools
+Muse Voice turns a sample question into an editable draft. Muse Spark orchestrates bounded official-data tools, carrying the user’s goal and source references into the conversation.
+
+[00:01:45,250 – 00:01:57,208] SAM 3.1 · actual dated imagery, uncertain detections
+SAM 3.1 segments roofs and trees in the actual dated aerial crops. Switch between sites and the original imagery. A missed detection never proves absence.
+
+[00:01:57,208 – 00:02:13,167] Wonder reviews typed summaries · not unseen pixels
+Muse Wonder reviews typed summaries, not unseen pixels, and proposes survey targets. Map-mask disagreement directs inspection; it is not a condition rating or resilience score. Both image analyses completed before Wonder reviewed their summaries.
+
+[00:02:13,167 – 00:02:26,375] Meta DINOv2 · local visual features, not proven change
+DINOv2 runs locally, comparing contextual features in 2020 and 2024 images. Highlighted windows suggest where to look; shadows, season and alignment can also explain differences.
+
+[00:02:26,375 – 00:02:37,542] Muse Image concept · not evidence · Oct 30 · 572 Smith / 611 Court
+Muse Image illustrates the inspection plan: what we know, what to verify, and what could change. The diagram stays visibly separate from photographs and evidence.
+
+[00:02:37,542 – 00:02:49,000] Keep the evidence · preserve a real provider refusal
+Sources keep their dates and scope. Export the comparison and unresolved requirements. If Meta filters a question, the app preserves that refusal and labels any public-data brief.
+
+[00:02:49,000 – 00:03:00,000] The next useful investigation
+GEONOS makes the next step concrete: request roof plans, inspect drainage, verify usable space and power. Investigate what could change the choice before choosing a building.
