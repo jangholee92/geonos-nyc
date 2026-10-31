@@ -1,0 +1,654 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-27T14:26:12.897941-04:00",
+  "data_kind": "observed_station_climate_context",
+  "historical_cutoff": "2025-12-31",
+  "source_snapshot": {
+    "retrieved_on": "2026-10-27",
+    "version": "3.35-upd-2026102517",
+    "version_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-version.txt",
+    "version_description": "The current version of GHCN Daily is 3.35-upd-2026102517 (i.e, an update that started at 2026102517 [yyyymmddhh] UTC; yyyy=year; mm=month; dd=day; hh=hour),\ncreated by appending recently available data updates to the last fully reprocessed version: 3.35-por-2026101623."
+  },
+  "periods": {
+    "baseline": [
+      1991,
+      2020
+    ],
+    "recent": [
+      2021,
+      2025
+    ]
+  },
+  "methodology": {
+    "source": "NOAA NCEI GHCN-Daily .dly, core TMAX, TMIN, PRCP; snapshot preserved with SHA256.",
+    "dataset_doi": "https://doi.org/10.7289/V5D21VHZ",
+    "method_doi": "https://doi.org/10.1175/JTECH-D-11-00103.1",
+    "format_reference": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/readme.txt",
+    "qc": "Reject -9999 and every nonblank QFLAG. Preserve nonblank measurement/source flag counts. Blank QFLAG means no failed GHCN checks, not proof of perfect measurement. Trace precipitation contributes reported 0 mm.",
+    "mean_temperature": "Daily (TMAX+TMIN)/2, averaged across valid paired days; not GHCN TAVG or 24-hour mean.",
+    "period_means": "Equal weight for each valid annual aggregate; monthly climatology equally weights each valid year for that calendar month.",
+    "coverage_rule": "Temperature means require >=95% valid daily coverage. Counts, precipitation sums, daily maxima and degree-day sums require 100%; otherwise null. No imputation or prorating.",
+    "hot_days_32_2c": "Count TMAX >=32.2 degC; 90 degF is 32.222... degC, rounded to 32.2 to match the archive's 0.1 degC encoding. Do not apply exact 32.222 to rounded observations.",
+    "tropical_nights_gt20c": "Count daily TMIN >20 degC (ETCCDI/Climpact TR definition); not Korea's >=25 degC overnight definition and not an hourly sunset-to-sunrise measurement.",
+    "warm_nights_ge23_9c": "Count TMIN >=23.9 degC, 75 degF rounded to archive precision.",
+    "precipitation": "PRCP daily water-equivalent precipitation, tenths mm converted to mm; may include melted snowfall. rx1day_mm is maximum reported daily total, not a rolling 24h or 1h extreme.",
+    "r10mm_days": "Count daily PRCP >=10 mm",
+    "r20mm_days": "Count daily PRCP >=20 mm",
+    "degree_days": "Sum max(0,Tmean-18) for CDD and max(0,18-Tmean) for HDD, in degC-days; proxy climate demand, not kWh or design load.",
+    "normals_status": "These are reproducible unadjusted derived baseline statistics, NOT official NOAA 1991-2020 Climate Normals (which use further processing).",
+    "spatial_assignment": "Nearest station uses haversine distance to provided latitude/longitude and returns reference-station context only. Do not interpolate, portray as building temperature, or treat Newark as a rural UHI control."
+  },
+  "limitations": [
+    "A five-year recent period is weather/climate context, not a new 30-year normal or attribution study.",
+    "Station siting, relocations, observation practices, airport/park surroundings and ocean proximity affect comparisons.",
+    "Daily temperature and precipitation do not provide humidity, heat index, WBGT, cooling peaks, subdaily rainfall, flood depth or financial losses.",
+    "No 2026 observations are included; no station values are forecasts or parcel-scale measurements."
+  ],
+  "stations": [
+    {
+      "id": "USW00094728",
+      "name": "Central Park",
+      "area": "Manhattan",
+      "outside_nyc_reference": false,
+      "latitude": 40.7789,
+      "longitude": -73.9692,
+      "elevation_m": 42.7,
+      "noaa_name": "NY CITY CNTRL PARK",
+      "source_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00094728.dly",
+      "source_sha256": "d118bcd9fcd47f90ecc0c9598e17b8f034b453abe0a125fec49bc1bbd4476a63",
+      "source_retrieved_on": "2026-10-27",
+      "source_latest_valid_record_by_element": {
+        "TMAX": "2026-10-24",
+        "TMIN": "2026-10-24",
+        "PRCP": "2026-10-24"
+      },
+      "start_date": "1991-01-01",
+      "end_date": "2025-12-31",
+      "quality": {
+        "rejected_or_missing_observations": {},
+        "measurement_flag_counts": {
+          "PRCP:T": 1070
+        },
+        "source_flag_counts": {
+          "TMAX:0": 7272,
+          "TMIN:0": 7274,
+          "PRCP:0": 7276,
+          "TMAX:X": 848,
+          "TMIN:X": 847,
+          "PRCP:X": 843,
+          "TMIN:Z": 3,
+          "TMAX:Z": 4,
+          "PRCP:Z": 5,
+          "TMAX:W": 4533,
+          "TMIN:W": 4533,
+          "PRCP:W": 4533,
+          "TMAX:1": 127,
+          "TMIN:1": 127,
+          "PRCP:1": 127
+        }
+      },
+      "summary": {
+        "baseline_1991_2020": {
+          "start_year": 1991,
+          "end_year": 2020,
+          "expected_years": 30,
+          "annual_average": {
+            "tmean_c": 13.18,
+            "tmax_mean_c": 17.211,
+            "tmin_mean_c": 9.149,
+            "hot_days_32_2c": 17.367,
+            "tropical_nights_gt20c": 46.9,
+            "warm_nights_ge23_9c": 8.833,
+            "frost_days_lt0c": 61.2,
+            "precip_mm": 1258.167,
+            "rx1day_mm": 85.38,
+            "r10mm_days": 40.267,
+            "r20mm_days": 19.133,
+            "heavy_rain_days_ge25_4mm": 13.433,
+            "heavy_rain_days_ge50_8mm": 2.7,
+            "cooling_degree_days_18c": 712.475,
+            "heating_degree_days_18c": 2473.218
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 30,
+            "tmax_mean_c": 30,
+            "tmin_mean_c": 30,
+            "hot_days_32_2c": 30,
+            "tropical_nights_gt20c": 30,
+            "warm_nights_ge23_9c": 30,
+            "frost_days_lt0c": 30,
+            "precip_mm": 30,
+            "rx1day_mm": 30,
+            "r10mm_days": 30,
+            "r20mm_days": 30,
+            "heavy_rain_days_ge25_4mm": 30,
+            "heavy_rain_days_ge50_8mm": 30,
+            "cooling_degree_days_18c": 30,
+            "heating_degree_days_18c": 30
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_2021_2025": {
+          "start_year": 2021,
+          "end_year": 2025,
+          "expected_years": 5,
+          "annual_average": {
+            "tmean_c": 13.907,
+            "tmax_mean_c": 17.8,
+            "tmin_mean_c": 10.015,
+            "hot_days_32_2c": 17.8,
+            "tropical_nights_gt20c": 55.4,
+            "warm_nights_ge23_9c": 11.2,
+            "frost_days_lt0c": 52.8,
+            "precip_mm": 1276.94,
+            "rx1day_mm": 105.48,
+            "r10mm_days": 40.8,
+            "r20mm_days": 17.8,
+            "heavy_rain_days_ge25_4mm": 11.0,
+            "heavy_rain_days_ge50_8mm": 3.0,
+            "cooling_degree_days_18c": 760.06,
+            "heating_degree_days_18c": 2254.69
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 5,
+            "tmax_mean_c": 5,
+            "tmin_mean_c": 5,
+            "hot_days_32_2c": 5,
+            "tropical_nights_gt20c": 5,
+            "warm_nights_ge23_9c": 5,
+            "frost_days_lt0c": 5,
+            "precip_mm": 5,
+            "rx1day_mm": 5,
+            "r10mm_days": 5,
+            "r20mm_days": 5,
+            "heavy_rain_days_ge25_4mm": 5,
+            "heavy_rain_days_ge50_8mm": 5,
+            "cooling_degree_days_18c": 5,
+            "heating_degree_days_18c": 5
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_minus_baseline": {
+          "tmean_c": 0.727,
+          "tmax_mean_c": 0.589,
+          "tmin_mean_c": 0.866,
+          "hot_days_32_2c": 0.433,
+          "tropical_nights_gt20c": 8.5,
+          "warm_nights_ge23_9c": 2.367,
+          "frost_days_lt0c": -8.4,
+          "precip_mm": 18.773,
+          "rx1day_mm": 20.1,
+          "r10mm_days": 0.533,
+          "r20mm_days": -1.333,
+          "heavy_rain_days_ge25_4mm": -2.433,
+          "heavy_rain_days_ge50_8mm": 0.3,
+          "cooling_degree_days_18c": 47.585,
+          "heating_degree_days_18c": -218.528
+        }
+      }
+    },
+    {
+      "id": "USW00094789",
+      "name": "JFK Airport",
+      "area": "Queens",
+      "outside_nyc_reference": false,
+      "latitude": 40.6392,
+      "longitude": -73.7639,
+      "elevation_m": 2.7,
+      "noaa_name": "JFK INTL AP",
+      "source_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00094789.dly",
+      "source_sha256": "abd4b4218935b0d5f7f770fb3dd1979b46b0f5f539bbc6d3474e0d5c0b7e27d7",
+      "source_retrieved_on": "2026-10-27",
+      "source_latest_valid_record_by_element": {
+        "TMAX": "2026-10-24",
+        "TMIN": "2026-10-24",
+        "PRCP": "2026-10-24"
+      },
+      "start_date": "1991-01-01",
+      "end_date": "2025-12-31",
+      "quality": {
+        "rejected_or_missing_observations": {},
+        "measurement_flag_counts": {
+          "PRCP:T": 1654
+        },
+        "source_flag_counts": {
+          "TMAX:0": 7304,
+          "TMIN:0": 7304,
+          "PRCP:0": 7305,
+          "TMAX:W": 4503,
+          "TMIN:W": 4503,
+          "TMAX:X": 821,
+          "TMIN:X": 820,
+          "PRCP:X": 817,
+          "PRCP:Z": 4,
+          "TMIN:Z": 1,
+          "PRCP:W": 4502,
+          "TMAX:1": 156,
+          "TMIN:1": 156,
+          "PRCP:1": 156
+        }
+      },
+      "summary": {
+        "baseline_1991_2020": {
+          "start_year": 1991,
+          "end_year": 2020,
+          "expected_years": 30,
+          "annual_average": {
+            "tmean_c": 12.723,
+            "tmax_mean_c": 16.743,
+            "tmin_mean_c": 8.703,
+            "hot_days_32_2c": 10.833,
+            "tropical_nights_gt20c": 42.067,
+            "warm_nights_ge23_9c": 5.467,
+            "frost_days_lt0c": 67.033,
+            "precip_mm": 1099.277,
+            "rx1day_mm": 77.103,
+            "r10mm_days": 35.833,
+            "r20mm_days": 16.133,
+            "heavy_rain_days_ge25_4mm": 11.2,
+            "heavy_rain_days_ge50_8mm": 2.1,
+            "cooling_degree_days_18c": 635.373,
+            "heating_degree_days_18c": 2562.838
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 30,
+            "tmax_mean_c": 30,
+            "tmin_mean_c": 30,
+            "hot_days_32_2c": 30,
+            "tropical_nights_gt20c": 30,
+            "warm_nights_ge23_9c": 30,
+            "frost_days_lt0c": 30,
+            "precip_mm": 30,
+            "rx1day_mm": 30,
+            "r10mm_days": 30,
+            "r20mm_days": 30,
+            "heavy_rain_days_ge25_4mm": 30,
+            "heavy_rain_days_ge50_8mm": 30,
+            "cooling_degree_days_18c": 30,
+            "heating_degree_days_18c": 30
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_2021_2025": {
+          "start_year": 2021,
+          "end_year": 2025,
+          "expected_years": 5,
+          "annual_average": {
+            "tmean_c": 13.462,
+            "tmax_mean_c": 17.559,
+            "tmin_mean_c": 9.365,
+            "hot_days_32_2c": 11.0,
+            "tropical_nights_gt20c": 49.0,
+            "warm_nights_ge23_9c": 7.8,
+            "frost_days_lt0c": 58.2,
+            "precip_mm": 1052.46,
+            "rx1day_mm": 90.24,
+            "r10mm_days": 34.0,
+            "r20mm_days": 15.4,
+            "heavy_rain_days_ge25_4mm": 8.6,
+            "heavy_rain_days_ge50_8mm": 1.4,
+            "cooling_degree_days_18c": 690.13,
+            "heating_degree_days_18c": 2347.26
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 5,
+            "tmax_mean_c": 5,
+            "tmin_mean_c": 5,
+            "hot_days_32_2c": 5,
+            "tropical_nights_gt20c": 5,
+            "warm_nights_ge23_9c": 5,
+            "frost_days_lt0c": 5,
+            "precip_mm": 5,
+            "rx1day_mm": 5,
+            "r10mm_days": 5,
+            "r20mm_days": 5,
+            "heavy_rain_days_ge25_4mm": 5,
+            "heavy_rain_days_ge50_8mm": 5,
+            "cooling_degree_days_18c": 5,
+            "heating_degree_days_18c": 5
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_minus_baseline": {
+          "tmean_c": 0.739,
+          "tmax_mean_c": 0.816,
+          "tmin_mean_c": 0.662,
+          "hot_days_32_2c": 0.167,
+          "tropical_nights_gt20c": 6.933,
+          "warm_nights_ge23_9c": 2.333,
+          "frost_days_lt0c": -8.833,
+          "precip_mm": -46.817,
+          "rx1day_mm": 13.137,
+          "r10mm_days": -1.833,
+          "r20mm_days": -0.733,
+          "heavy_rain_days_ge25_4mm": -2.6,
+          "heavy_rain_days_ge50_8mm": -0.7,
+          "cooling_degree_days_18c": 54.757,
+          "heating_degree_days_18c": -215.578
+        }
+      }
+    },
+    {
+      "id": "USW00014732",
+      "name": "LaGuardia Airport",
+      "area": "Queens",
+      "outside_nyc_reference": false,
+      "latitude": 40.7794,
+      "longitude": -73.8803,
+      "elevation_m": 3.0,
+      "noaa_name": "LAGUARDIA AP",
+      "source_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00014732.dly",
+      "source_sha256": "2325e4e22e7a6b660c0b393047f21981737a2b0c6e0e1acbb742d72ac79a1607",
+      "source_retrieved_on": "2026-10-27",
+      "source_latest_valid_record_by_element": {
+        "TMAX": "2026-10-24",
+        "TMIN": "2026-10-24",
+        "PRCP": "2026-10-24"
+      },
+      "start_date": "1991-01-01",
+      "end_date": "2025-12-31",
+      "quality": {
+        "rejected_or_missing_observations": {},
+        "measurement_flag_counts": {
+          "PRCP:T": 1531
+        },
+        "source_flag_counts": {
+          "TMAX:0": 7303,
+          "TMIN:0": 7304,
+          "PRCP:0": 7305,
+          "TMIN:Z": 1,
+          "TMAX:Z": 2,
+          "TMAX:X": 821,
+          "TMIN:X": 821,
+          "PRCP:X": 817,
+          "PRCP:Z": 4,
+          "TMAX:W": 4531,
+          "TMIN:W": 4531,
+          "PRCP:W": 4531,
+          "TMAX:1": 127,
+          "TMIN:1": 127,
+          "PRCP:1": 127
+        }
+      },
+      "summary": {
+        "baseline_1991_2020": {
+          "start_year": 1991,
+          "end_year": 2020,
+          "expected_years": 30,
+          "annual_average": {
+            "tmean_c": 13.62,
+            "tmax_mean_c": 17.421,
+            "tmin_mean_c": 9.818,
+            "hot_days_32_2c": 21.767,
+            "tropical_nights_gt20c": 61.533,
+            "warm_nights_ge23_9c": 16.667,
+            "frost_days_lt0c": 55.133,
+            "precip_mm": 1149.833,
+            "rx1day_mm": 81.803,
+            "r10mm_days": 37.1,
+            "r20mm_days": 16.867,
+            "heavy_rain_days_ge25_4mm": 11.633,
+            "heavy_rain_days_ge50_8mm": 2.233,
+            "cooling_degree_days_18c": 800.198,
+            "heating_degree_days_18c": 2400.225
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 30,
+            "tmax_mean_c": 30,
+            "tmin_mean_c": 30,
+            "hot_days_32_2c": 30,
+            "tropical_nights_gt20c": 30,
+            "warm_nights_ge23_9c": 30,
+            "frost_days_lt0c": 30,
+            "precip_mm": 30,
+            "rx1day_mm": 30,
+            "r10mm_days": 30,
+            "r20mm_days": 30,
+            "heavy_rain_days_ge25_4mm": 30,
+            "heavy_rain_days_ge50_8mm": 30,
+            "cooling_degree_days_18c": 30,
+            "heating_degree_days_18c": 30
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_2021_2025": {
+          "start_year": 2021,
+          "end_year": 2025,
+          "expected_years": 5,
+          "annual_average": {
+            "tmean_c": 14.327,
+            "tmax_mean_c": 18.103,
+            "tmin_mean_c": 10.55,
+            "hot_days_32_2c": 23.6,
+            "tropical_nights_gt20c": 65.2,
+            "warm_nights_ge23_9c": 18.4,
+            "frost_days_lt0c": 45.4,
+            "precip_mm": 1194.52,
+            "rx1day_mm": 92.6,
+            "r10mm_days": 38.0,
+            "r20mm_days": 17.6,
+            "heavy_rain_days_ge25_4mm": 12.2,
+            "heavy_rain_days_ge50_8mm": 2.4,
+            "cooling_degree_days_18c": 849.65,
+            "heating_degree_days_18c": 2191.05
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 5,
+            "tmax_mean_c": 5,
+            "tmin_mean_c": 5,
+            "hot_days_32_2c": 5,
+            "tropical_nights_gt20c": 5,
+            "warm_nights_ge23_9c": 5,
+            "frost_days_lt0c": 5,
+            "precip_mm": 5,
+            "rx1day_mm": 5,
+            "r10mm_days": 5,
+            "r20mm_days": 5,
+            "heavy_rain_days_ge25_4mm": 5,
+            "heavy_rain_days_ge50_8mm": 5,
+            "cooling_degree_days_18c": 5,
+            "heating_degree_days_18c": 5
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_minus_baseline": {
+          "tmean_c": 0.707,
+          "tmax_mean_c": 0.682,
+          "tmin_mean_c": 0.732,
+          "hot_days_32_2c": 1.833,
+          "tropical_nights_gt20c": 3.667,
+          "warm_nights_ge23_9c": 1.733,
+          "frost_days_lt0c": -9.733,
+          "precip_mm": 44.687,
+          "rx1day_mm": 10.797,
+          "r10mm_days": 0.9,
+          "r20mm_days": 0.733,
+          "heavy_rain_days_ge25_4mm": 0.567,
+          "heavy_rain_days_ge50_8mm": 0.167,
+          "cooling_degree_days_18c": 49.452,
+          "heating_degree_days_18c": -209.175
+        }
+      }
+    },
+    {
+      "id": "USW00014734",
+      "name": "Newark Liberty Airport",
+      "area": "New Jersey reference",
+      "outside_nyc_reference": true,
+      "latitude": 40.6828,
+      "longitude": -74.1692,
+      "elevation_m": 1.8,
+      "noaa_name": "NEWARK LIBERTY INTL AP",
+      "source_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00014734.dly",
+      "source_sha256": "c96c55bbd4274cd41936eb6209c33eeb09f556c7b62e20a3b30a3a9119a21970",
+      "source_retrieved_on": "2026-10-27",
+      "source_latest_valid_record_by_element": {
+        "TMAX": "2026-10-24",
+        "TMIN": "2026-10-24",
+        "PRCP": "2026-10-24"
+      },
+      "start_date": "1991-01-01",
+      "end_date": "2025-12-31",
+      "quality": {
+        "rejected_or_missing_observations": {},
+        "measurement_flag_counts": {
+          "PRCP:T": 1804
+        },
+        "source_flag_counts": {
+          "TMAX:0": 7304,
+          "TMIN:0": 7304,
+          "PRCP:0": 7305,
+          "TMAX:W": 4531,
+          "TMIN:W": 4531,
+          "TMAX:X": 820,
+          "TMIN:X": 820,
+          "PRCP:X": 819,
+          "PRCP:W": 4530,
+          "PRCP:Z": 1,
+          "TMAX:1": 129,
+          "TMIN:1": 129,
+          "PRCP:1": 129
+        }
+      },
+      "summary": {
+        "baseline_1991_2020": {
+          "start_year": 1991,
+          "end_year": 2020,
+          "expected_years": 30,
+          "annual_average": {
+            "tmean_c": 13.263,
+            "tmax_mean_c": 17.901,
+            "tmin_mean_c": 8.626,
+            "hot_days_32_2c": 28.3,
+            "tropical_nights_gt20c": 47.233,
+            "warm_nights_ge23_9c": 8.867,
+            "frost_days_lt0c": 71.9,
+            "precip_mm": 1183.58,
+            "rx1day_mm": 88.5,
+            "r10mm_days": 39.1,
+            "r20mm_days": 18.067,
+            "heavy_rain_days_ge25_4mm": 11.967,
+            "heavy_rain_days_ge50_8mm": 2.133,
+            "cooling_degree_days_18c": 773.188,
+            "heating_degree_days_18c": 2503.337
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 30,
+            "tmax_mean_c": 30,
+            "tmin_mean_c": 30,
+            "hot_days_32_2c": 30,
+            "tropical_nights_gt20c": 30,
+            "warm_nights_ge23_9c": 30,
+            "frost_days_lt0c": 30,
+            "precip_mm": 30,
+            "rx1day_mm": 30,
+            "r10mm_days": 30,
+            "r20mm_days": 30,
+            "heavy_rain_days_ge25_4mm": 30,
+            "heavy_rain_days_ge50_8mm": 30,
+            "cooling_degree_days_18c": 30,
+            "heating_degree_days_18c": 30
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_2021_2025": {
+          "start_year": 2021,
+          "end_year": 2025,
+          "expected_years": 5,
+          "annual_average": {
+            "tmean_c": 14.368,
+            "tmax_mean_c": 19.1,
+            "tmin_mean_c": 9.636,
+            "hot_days_32_2c": 38.2,
+            "tropical_nights_gt20c": 56.6,
+            "warm_nights_ge23_9c": 16.0,
+            "frost_days_lt0c": 60.2,
+            "precip_mm": 1152.38,
+            "rx1day_mm": 93.78,
+            "r10mm_days": 36.6,
+            "r20mm_days": 16.4,
+            "heavy_rain_days_ge25_4mm": 10.6,
+            "heavy_rain_days_ge50_8mm": 2.4,
+            "cooling_degree_days_18c": 903.16,
+            "heating_degree_days_18c": 2229.47
+          },
+          "valid_years_by_metric": {
+            "tmean_c": 5,
+            "tmax_mean_c": 5,
+            "tmin_mean_c": 5,
+            "hot_days_32_2c": 5,
+            "tropical_nights_gt20c": 5,
+            "warm_nights_ge23_9c": 5,
+            "frost_days_lt0c": 5,
+            "precip_mm": 5,
+            "rx1day_mm": 5,
+            "r10mm_days": 5,
+            "r20mm_days": 5,
+            "heavy_rain_days_ge25_4mm": 5,
+            "heavy_rain_days_ge50_8mm": 5,
+            "cooling_degree_days_18c": 5,
+            "heating_degree_days_18c": 5
+          },
+          "min_daily_coverage": {
+            "TMAX": 1.0,
+            "TMIN": 1.0,
+            "PRCP": 1.0,
+            "TMEAN_PAIR": 1.0
+          }
+        },
+        "recent_minus_baseline": {
+          "tmean_c": 1.105,
+          "tmax_mean_c": 1.199,
+          "tmin_mean_c": 1.01,
+          "hot_days_32_2c": 9.9,
+          "tropical_nights_gt20c": 9.367,
+          "warm_nights_ge23_9c": 7.133,
+          "frost_days_lt0c": -11.7,
+          "precip_mm": -31.2,
+          "rx1day_mm": 5.28,
+          "r10mm_days": -2.5,
+          "r20mm_days": -1.667,
+          "heavy_rain_days_ge25_4mm": -1.367,
+          "heavy_rain_days_ge50_8mm": 0.267,
+          "cooling_degree_days_18c": 129.972,
+          "heating_degree_days_18c": -273.867
+        }
+      }
+    }
+  ]
+}

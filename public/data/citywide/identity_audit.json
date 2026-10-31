@@ -1,0 +1,60 @@
+{
+  "bin_distinct_including_unassigned": 1082956,
+  "duplicate_bin_groups": [
+    {
+      "bin": "3000000",
+      "records": 2
+    },
+    {
+      "bin": "4000000",
+      "records": 6
+    },
+    {
+      "bin": "5000000",
+      "records": 3
+    }
+  ],
+  "invalid_bin_format": 0,
+  "footprint_feature_codes": [
+    {
+      "feature_code": 1000,
+      "count": 98
+    },
+    {
+      "feature_code": 1001,
+      "count": 135
+    },
+    {
+      "feature_code": 1003,
+      "count": 34
+    },
+    {
+      "feature_code": 1004,
+      "count": 229
+    },
+    {
+      "feature_code": 1005,
+      "count": 25
+    },
+    {
+      "feature_code": 1006,
+      "count": 23
+    },
+    {
+      "feature_code": 2100,
+      "count": 868582
+    },
+    {
+      "feature_code": 2110,
+      "count": 119
+    },
+    {
+      "feature_code": 5100,
+      "count": 311
+    },
+    {
+      "feature_code": 5110,
+      "count": 213408
+    }
+  ]
+}

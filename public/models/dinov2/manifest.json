@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "model": "DINOv2 ViT-S/14 with registers",
+  "model_id": "dinov2_vits14_reg",
+  "publisher": "Meta FAIR",
+  "license": "Apache-2.0",
+  "source_repository": "https://github.com/facebookresearch/dinov2",
+  "source_commit": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+  "source_model_card": "https://github.com/facebookresearch/dinov2/blob/main/MODEL_CARD.md",
+  "checkpoint": {
+    "url": "https://dl.fbaipublicfiles.com/dinov2/dinov2_vits14/dinov2_vits14_reg4_pretrain.pth",
+    "sha256": "f433177089a681826f849f194ece3bb48f4d63fb38d32fc837e3dc7a4e5641fb",
+    "bytes": 88291785
+  },
+  "artifact": {
+    "path": "/models/dinov2/dinov2-vits14-reg-patches-int8.onnx.gzip",
+    "sha256": "d46cefd48b765afe1fe0dad6ef6d627d3f2d505a5fc2aafe628c9128c92a8c51",
+    "bytes": 23134169,
+    "format": "ONNX",
+    "opset": 17,
+    "quantization": "symmetric per-output-channel INT8 constant MatMul weights, standard QDQ; activations and remaining operations float32",
+    "input_name": "image",
+    "input_shape": [
+      1,
+      3,
+      224,
+      224
+    ],
+    "output_name": "patches",
+    "output_shape": [
+      1,
+      256,
+      384
+    ],
+    "download": {
+      "path": "/models/dinov2/dinov2-vits14-reg-patches-int8.onnx.gzip",
+      "encoding": "gzip",
+      "bytes": 20674366,
+      "sha256": "a951cd506f8b8c84a7602c7a399b87fec2c41c2fe67e0cd09cfd72551d537c25"
+    },
+    "decoded_filename": "dinov2-vits14-reg-patches-int8.onnx",
+    "size_hash_scope": "artifact.bytes/sha256 describe the decoded ONNX; artifact.download describes the actual compressed public asset."
+  },
+  "fixed_position_encoding": "Official antialiased bicubic positional embedding precomputed exactly once at224px; frozen in ONNX, no retraining",
+  "preprocessing": {
+    "color": "RGB",
+    "resize": "whole crop, pixel-center bilinear, 224 x 224; no center crop",
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "comparison": {
+    "metric": "1 - cosine similarity between corresponding 384-dimensional patch vectors",
+    "grid": [
+      16,
+      16
+    ],
+    "range": [
+      0,
+      2
+    ],
+    "meaning": "Relative feature discrepancy for visual inspection, not a calibrated change probability, material label or condition assessment. Self-attention includes context outside each patch."
+  },
+  "validation": {
+    "torch_version": "2.15.0",
+    "onnx_version": "1.23.2",
+    "onnxruntime_version": "1.31.1",
+    "device": "CPU, four inference threads",
+    "images": [
+      {
+        "source_image": "smith-nativecrop-2020.jpg",
+        "image_sha256": "2a9db12d1df50648ca6d301e8fe690ffa60377b2969e18cbff3cbcb534cc2012",
+        "inference_seconds_cpu": 0.0625,
+        "patch_cosine_to_torch": {
+          "minimum": 0.9984695911407471,
+          "mean": 0.999332845211029
+        }
+      },
+      {
+        "source_image": "smith-nativecrop-2024.jpg",
+        "image_sha256": "bcf35d8bfb0e99a61ff5d2b6cb3559c36b467adc54a8be321efd7834282cc6f1",
+        "inference_seconds_cpu": 0.06287,
+        "patch_cosine_to_torch": {
+          "minimum": 0.998619556427002,
+          "mean": 0.9992769956588745
+        }
+      }
+    ],
+    "pair_discrepancy": {
+      "minimum": 0.03489774465560913,
+      "maximum": 0.49466651678085327,
+      "mean": 0.14534756541252136
+    },
+    "browser_status": "passed actual Chrome with the compiled production-format worker; parent also verified the integrated Vinext/IAB card",
+    "graph_optimization": "disabled to preserve explicit QDQ graph across native and browser runtimes",
+    "browser_parity": {
+      "tested_at": "2026-10-31T00:17:51.256Z",
+      "browser": "Chrome156 on macOS",
+      "elapsed_ms": 3854,
+      "maximum_absolute_component_error": 0.000016570091247558594,
+      "minimum_patch_cosine": 0.9999999999945383,
+      "compared_components": 196608,
+      "scope": "Same preprocessed tensors; CPU native versus browserWASM. JPEG decoding can differ slightly by platform."
+    },
+    "browser_full_pipeline": {
+      "source_years": [
+        2020,
+        2024
+      ],
+      "elapsed_ms": 3715,
+      "grid": [
+        16,
+        16
+      ],
+      "observed_minimum": 0.03489775480583912,
+      "observed_maximum": 0.49466656037665035,
+      "scope": "One real768px Smith Street source pair; not a benchmark of all phones or proof of detected physical change."
+    },
+    "gzip_transport": {
+      "tested_at": "2026-10-31T00:24:48.001Z",
+      "compressed_and_decoded_hashes_verified_before_inference": true,
+      "browser_native_parity_passed": true,
+      "full_pipeline_passed": true,
+      "all256_discrepancy_values_identical_to_plain_model": true,
+      "parity_elapsed_ms": 1193,
+      "full_pipeline_elapsed_ms": 3793,
+      "hosting_note": "Opaque .onnx.gzip suffix avoids automatic Content-Encoding decompression observed for .gz in the local hosting stack."
+    }
+  },
+  "limitations": [
+    "Natural-image pretrained features have not been calibrated as a NYC aerial change detector.",
+    "Matched export bounds do not guarantee pixel-perfect image registration.",
+    "Shadows, season, lighting, view reconstruction, parked objects and image processing can change features.",
+    "Each cell is a coarse contextual feature; no changed area, structural change, roof condition, flood risk or engineering suitability is inferred."
+  ],
+  "browser_runtime": {
+    "package": "onnxruntime-web",
+    "version": "1.24.3",
+    "execution": "single-thread WASM CPU in a dedicated cancellable Web Worker",
+    "graph_optimization": "disabled",
+    "files": [
+      {
+        "path": "/models/dinov2/runtime/ort-wasm-simd-threaded.wasm",
+        "bytes": 12361745,
+        "sha256": "be0e129949062ad50290ef94683fac8be5bb6156f709e030b7a5f1661a2f6c17"
+      },
+      {
+        "path": "/models/dinov2/runtime/ort-wasm-simd-threaded.mjs",
+        "bytes": 24274,
+        "sha256": "5687566b1bc1c8cf628d76c2ddb16b2a3b81a7997273d4666564880495088e57"
+      },
+      {
+        "path": "/models/dinov2/runtime/dino-worker.js",
+        "bytes": 67864,
+        "sha256": "05f2d9e292815bc61f514dbf20cc3bbb04421004b52e4526ed90e00e51aa7ea8"
+      }
+    ],
+    "license": "MIT",
+    "license_url": "https://raw.githubusercontent.com/microsoft/onnxruntime/v1.24.3/LICENSE",
+    "first_use_model_and_runtime_bytes": 33128249
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "status": "complete_verified",
+  "scope": "all five NYC boroughs; all source land uses; no sample filter",
+  "counts": {
+    "parcels": 858284,
+    "building_footprints": 1082964,
+    "distinct_assigned_bins": 1082951
+  },
+  "sources": [
+    {
+      "dataset_id": "64uk-42ks",
+      "title": "Primary Land Use Tax Lot Output (PLUTO)",
+      "publisher": "NYC Department of City Planning",
+      "url": "https://data.cityofnewyork.us/d/64uk-42ks",
+      "api_url": "https://data.cityofnewyork.us/resource/64uk-42ks.json",
+      "source_rows": 858284,
+      "downloaded_rows": 858284,
+      "source_updated_at": "2026-08-24T20:48:51Z",
+      "retrieval_completed_at": "2026-10-27T18:20:29.562320+00:00",
+      "source_revision_stable": true,
+      "source_count_stable": true,
+      "raw_chunks": 18,
+      "raw_compressed_bytes": 66230773,
+      "download_manifest": "64uk-42ks_download_manifest.json",
+      "download_manifest_sha256": "a2d978596ed39fa403e27e51a9a0997ae6e0925e642e4110f8cff4ffef5737b3"
+    },
+    {
+      "dataset_id": "5zhs-2jue",
+      "title": "BUILDING — Building Footprints",
+      "publisher": "NYC Office of Technology and Innovation",
+      "url": "https://data.cityofnewyork.us/d/5zhs-2jue",
+      "api_url": "https://data.cityofnewyork.us/resource/5zhs-2jue.json",
+      "source_rows": 1082964,
+      "downloaded_rows": 1082964,
+      "source_updated_at": "2026-10-25T08:21:07Z",
+      "retrieval_completed_at": "2026-10-27T18:22:09.204076+00:00",
+      "source_revision_stable": true,
+      "source_count_stable": true,
+      "raw_chunks": 44,
+      "raw_compressed_bytes": 175311865,
+      "download_manifest": "5zhs-2jue_download_manifest.json",
+      "download_manifest_sha256": "660ec23879fdc6034243bdac1d2f0b1c79b8a5e9c44e7fa6a90b9e165244192a"
+    }
+  ],
+  "by_borough": [
+    {
+      "borough_code": 1,
+      "borough": "Manhattan",
+      "parcels": 42504,
+      "building_footprints": 45172
+    },
+    {
+      "borough_code": 2,
+      "borough": "Bronx",
+      "parcels": 89362,
+      "building_footprints": 104268
+    },
+    {
+      "borough_code": 3,
+      "borough": "Brooklyn",
+      "parcels": 276106,
+      "building_footprints": 330113
+    },
+    {
+      "borough_code": 4,
+      "borough": "Queens",
+      "parcels": 324483,
+      "building_footprints": 460950
+    },
+    {
+      "borough_code": 5,
+      "borough": "Staten Island",
+      "parcels": 125829,
+      "building_footprints": 142461
+    }
+  ],
+  "borough_assignment": "PLUTO borocode for lots; leading BIN digit, falling back to source BBL digits, for footprint records",
+  "unknown_borough_footprints": 0,
+  "coverage": {
+    "parcels": {
+      "total": 858284,
+      "unique_bbl": 858284,
+      "point_missing_or_invalid": 937,
+      "address_missing": 577,
+      "primary_zoning_missing": 1442,
+      "total_area_missing": 506,
+      "floors_missing": 42374,
+      "zcta_unmatched": 2030,
+      "hvi_missing": 2814,
+      "flood_2007_flagged": 34736,
+      "flood_2007_unrecorded": 823548,
+      "flood_2015_preliminary_flagged": 65826,
+      "flood_2015_preliminary_unrecorded": 792458,
+      "future_point_membership_unknown": 937,
+      "future_point_membership_inside": 96615
+    },
+    "buildings": {
+      "total": 1082964,
+      "unique_doitt_id": 1082964,
+      "geometry_missing": 0,
+      "geometry_invalid": 7,
+      "point_missing": 0,
+      "bin_unassigned_or_placeholder": 13,
+      "distinct_assigned_bins": 1082951,
+      "placeholder_geometries": 34,
+      "roof_height_unknown": 720,
+      "construction_year_unknown": 10065,
+      "zcta_unmatched": 289,
+      "hvi_missing": 1918,
+      "future_point_membership_unknown": 41,
+      "future_point_membership_inside": 111987,
+      "parcel_join_unmatched": 224
+    },
+    "join": {
+      "methods": [
+        {
+          "match_method": "mappluto_bbl",
+          "count": 1082740
+        },
+        {
+          "match_method": "unmatched",
+          "count": 224
+        }
+      ],
+      "matched_tax_lots": 817016,
+      "tax_lots_without_matched_footprint": 41268,
+      "tax_lots_with_multiple_footprints": 219982,
+      "assigned_bins_with_multiple_footprints": 0
+    }
+  },
+  "timestamps": {
+    "prepared_at": "2026-10-27T18:27:04.258418+00:00",
+    "retrieved_date": "2026-10-27",
+    "pluto_data_updated_at": "2026-08-24T20:48:51Z",
+    "footprints_data_updated_at": "2026-10-25T08:21:07Z"
+  },
+  "limitations": [
+    "Coverage means all records in the two official source datasets at their recorded revisions, not a census of every physical structure in reality.",
+    "Building-footprint row count is not unique BIN count. Source includes garages, auxiliary structures, tanks and placeholder geometries; some BINs repeat or are unassigned.",
+    "Official footprint capture normally includes buildings larger than 400 square feet and taller than 12 feet, plus other buildings with agency BINs; documented exclusions remain excluded by the source.",
+    "BIN/BBL linkage prefers the official mappluto_bbl billing-lot join, then base_bbl if matched. No guessed or spatial nearest-lot matches are created.",
+    "PLUTO building area, floor count and use are tax-lot context and must not be presented as an individual footprint measurement.",
+    "Footprint area is calculated in EPSG:2263 US survey feet. Source shape_area/shape_length are retained for audit but are not used as measurements.",
+    "Footprint representative points are guaranteed internal to valid polygons and are not surveyed entrances. Invalid or missing geometries are counted explicitly.",
+    "HVI is a historical neighborhood vulnerability index joined through Census 2020 ZCTA, not a building heat or future temperature estimate.",
+    "Future membership is an approximate-point overlay with the historical NPCC2013 +31-inch 2050–2059 coastal scenario, outside scoring. It gives no depth or site-specific risk verdict.",
+    "Derived footprint area and spatial risk context are null for seven invalid geometries and 34 placeholder triangles. Source geometry and preview positions are retained for audit.",
+    "Rent, current vacancy, ceiling clearance, floor load, electrical capacity, legal use permission and loading-dock capacity remain unverified."
+  ]
+}

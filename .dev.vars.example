@@ -1,0 +1,8 @@
+# Local development only. Copy to .dev.vars; never commit the filled file.
+MODEL_API_KEY=
+MODEL_NAME=muse-spark-1.3
+META_API_APPROVED=false
+
+# Production only: enable solely behind a trusted Sites edge that strips client
+# identity headers and injects authenticated identity. Leave false elsewhere.
+TRUST_SITES_PROXY_IDENTITY=false

@@ -1,0 +1,1618 @@
+{
+  "schema": "geonos.public-spatial-audit.v1",
+  "snapshot_id": "nyc-surroundings-20261028-v1",
+  "created_at": "2026-10-28T01:53:29.893833+00:00",
+  "status": "pass",
+  "scope": "Stratified numerical audit of 80 distinct archived source footprints; not an independent recomputation or accuracy validation of all 1,082,964 records or DEP model predictions.",
+  "summary": {
+    "records": 80,
+    "pass": 80,
+    "failed_ids": [],
+    "by_borough": {
+      "Manhattan": 16,
+      "Bronx": 16,
+      "Brooklyn": 16,
+      "Queens": 16,
+      "Staten Island": 16
+    },
+    "records_with_footprint_holes": 20,
+    "records_with_mapped_band_area": 30,
+    "records_with_mask_or_water_band_area": 23,
+    "records_all_bands_zero": 36,
+    "records_with_footprint_mask_area": 10,
+    "max_errors": {
+      "nearest_m": 0.000499120527138075,
+      "packaged_band_m2": 0.05377935164676728,
+      "stored_preexport_band_m2": 0.00498545852207144,
+      "footprint_mask_m2": 0.004772668904657218
+    }
+  },
+  "method": {
+    "no_production_pipeline_imports": true,
+    "source_geometry": "Native full-resolution EPSG:2263 polygons read directly from original official FileGDB ZIP; no FGB/WGS84 round-trip for DEP categories. Masks from pinned full-resolution hosted GeoJSON. Footprints from original official CSV WKT, checked against SQLite exact coordinates.",
+    "projection": "Footprints and masks: EPSG:4326 to EPSG:2263 using PROJ. All geometries converted from US survey feet to meters before measurement.",
+    "buffers": "5/10/20 meter buffers, 32 quadrant segments, matching published numerical convention.",
+    "areas": "Bounding-box candidate scan, union complete polygons, intersect four cumulative buffers (including original footprint), subtract adjacent covered areas. Production instead queries STRtree and intersects separate annuli with clipped candidates.",
+    "nearest": "Brute-force minimum distance across all original polygonal parts; no source search cap.",
+    "repair": "Invalid polygon parts repaired with GEOS make_valid, all polygon components retained; no simplification.",
+    "rounding_tolerances": {
+      "distance_m": 0.00051,
+      "published_band_area_m2": 0.0551,
+      "stored_before_export_band_area_m2": 0.0051,
+      "footprint_mask_m2": 0.00551
+    },
+    "shared_dependencies": "Independent code and source-reading path; uses the same GEOS/Shapely and PROJ engines, so this is not independent software-engine validation."
+  },
+  "unit_validation": {
+    "epsg": 2263,
+    "native_unit": "US survey foot",
+    "meter_per_native_unit_from_crs": 0.30480060960121924,
+    "exact_factor": 0.3048006096012192,
+    "one_meter_square_in_native_feet_recomputes_m2": 0.9999999999999998
+  },
+  "sampling": {
+    "method": "16 records per official BIN borough digit; deterministic modular native-ID ordering inside targeted strata; descriptive coverage, not a probability sample.",
+    "strata": [
+      {
+        "borough": "Manhattan",
+        "stratum": "hole",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Manhattan",
+        "stratum": "exclusion_0",
+        "requested": 2,
+        "selected": 2
+      },
+      {
+        "borough": "Manhattan",
+        "stratum": "exclusion_3",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Manhattan",
+        "stratum": "water",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Manhattan",
+        "stratum": "mapped_hit",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Manhattan",
+        "stratum": "all_bands_zero",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Bronx",
+        "stratum": "hole",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Bronx",
+        "stratum": "exclusion_0",
+        "requested": 2,
+        "selected": 2
+      },
+      {
+        "borough": "Bronx",
+        "stratum": "exclusion_3",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Bronx",
+        "stratum": "water",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Bronx",
+        "stratum": "mapped_hit",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Bronx",
+        "stratum": "all_bands_zero",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Brooklyn",
+        "stratum": "hole",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Brooklyn",
+        "stratum": "exclusion_0",
+        "requested": 2,
+        "selected": 2
+      },
+      {
+        "borough": "Brooklyn",
+        "stratum": "exclusion_3",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Brooklyn",
+        "stratum": "water",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Brooklyn",
+        "stratum": "mapped_hit",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Brooklyn",
+        "stratum": "all_bands_zero",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Queens",
+        "stratum": "hole",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Queens",
+        "stratum": "exclusion_0",
+        "requested": 2,
+        "selected": 2
+      },
+      {
+        "borough": "Queens",
+        "stratum": "exclusion_3",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Queens",
+        "stratum": "water",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Queens",
+        "stratum": "mapped_hit",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Queens",
+        "stratum": "all_bands_zero",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Staten Island",
+        "stratum": "hole",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Staten Island",
+        "stratum": "exclusion_0",
+        "requested": 2,
+        "selected": 2
+      },
+      {
+        "borough": "Staten Island",
+        "stratum": "exclusion_3",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Staten Island",
+        "stratum": "water",
+        "requested": 1,
+        "selected": 1
+      },
+      {
+        "borough": "Staten Island",
+        "stratum": "mapped_hit",
+        "requested": 4,
+        "selected": 4
+      },
+      {
+        "borough": "Staten Island",
+        "stratum": "all_bands_zero",
+        "requested": 4,
+        "selected": 4
+      }
+    ],
+    "valid_source_footprints_with_multiple_polygon_parts": 0,
+    "multipart_note": "The valid source snapshot contains no footprints with multiple polygon components. Twenty selected footprints have interior rings; original DEP categories and masks contain multiple polygon components and holes."
+  },
+  "source_identity_matches_packaged_manifest": true,
+  "sources": [
+    {
+      "title": "NYC Building Footprints",
+      "url": "https://data.cityofnewyork.us/d/5zhs-2jue"
+    },
+    {
+      "title": "NYC Stormwater Flood Maps original archive",
+      "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+      "sha256": "5effe9bcca896660f44a5e50c348ab4ebf7550ff3c764ef77f06d775f0c010f5"
+    },
+    {
+      "title": "Pinned hosted 2050 masks and water source identities",
+      "url": "/data/surroundings/manifest.json"
+    }
+  ],
+  "records": [
+    {
+      "doitt_id": 651456,
+      "bin": "1062333",
+      "borough": "Manhattan",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "d6c36be16a2d8df7060331dc92ee0a00d4755fdb5bacf56d413cd26cca8fd248",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.000462046300071961,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 725964,
+      "bin": "1083369",
+      "borough": "Manhattan",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "0c042386dcb72d071821e518c0925ce964b7fc26e0f78adc338e1cb735444ac5",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 2,
+      "max_errors": {
+        "nearest_m": 0.0003380898984914893,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 786371,
+      "bin": "1040900",
+      "borough": "Manhattan",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "a1e55d8b490cd8c7ca86f2187803c46f89eae12055882b4d42e04f3bdcec1b34",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00040373645333602326,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 767654,
+      "bin": "1058513",
+      "borough": "Manhattan",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "5df1bcf44a365e73082293465f6ace17e62f0cf0daba6a622734e1f8629c0fb0",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0004630795605464755,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1291660,
+      "bin": "1090892",
+      "borough": "Manhattan",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "22244fdb9d7130d7f70b648277a0d061af1c629db13f95de7e4d037e072a08ba",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00044887979584018467,
+        "packaged_band_m2": 0.0426545229590829,
+        "stored_preexport_band_m2": 0.0049548295677368515,
+        "footprint_mask_m2": 0.004772668904657218
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 87599,
+      "bin": "1086435",
+      "borough": "Manhattan",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "e049a574a9a770d67d5e12466a88bb3f0993e5ace3841388b195d35323f1975d",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004272669408464935,
+        "packaged_band_m2": 0.04779828513028406,
+        "stored_preexport_band_m2": 0.0031457564259085302,
+        "footprint_mask_m2": 0.0030055938299824447
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 622569,
+      "bin": "1001827",
+      "borough": "Manhattan",
+      "selection_stratum": "exclusion_3",
+      "raw_wkt_sha256": "aa6146082c8307ca636498a9ebb8c0b344bb6701cacb14c945e9572e1ae92a9d",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00029925363054417176,
+        "packaged_band_m2": 0.004669692092740263,
+        "stored_preexport_band_m2": 0.004669692092740263,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1306302,
+      "bin": "1091663",
+      "borough": "Manhattan",
+      "selection_stratum": "water",
+      "raw_wkt_sha256": "38794f33284464bbf380e270d595f15086d893d20bdb413df8acae7c5e912de3",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0002473651558148049,
+        "packaged_band_m2": 0.05235005995108111,
+        "stored_preexport_band_m2": 0.004865355279349615,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 65023,
+      "bin": "1085052",
+      "borough": "Manhattan",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "8352b0c5c047dde43ff9ea57e98bd864e7e5e50a6a2f134d06d6df96fb226010",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00048741635847715514,
+        "packaged_band_m2": 0.04459260343627136,
+        "stored_preexport_band_m2": 0.004928986091755405,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 16950,
+      "bin": "1058690",
+      "borough": "Manhattan",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "5b5c2fee80da3132c440ca328a50684502d379e0e08f0253f30de823b7468c1b",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003596687623748096,
+        "packaged_band_m2": 0.0503530038582356,
+        "stored_preexport_band_m2": 0.003767378250124409,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 710240,
+      "bin": "1081047",
+      "borough": "Manhattan",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "073a64a0c4c4df6cd48af8e911c1e4e8070756adbfe3534c13274703c86afd88",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004259191656323935,
+        "packaged_band_m2": 0.025831178728612514,
+        "stored_preexport_band_m2": 0.004253478116304166,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 533203,
+      "bin": "1068261",
+      "borough": "Manhattan",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "917d1f967f9f046a945c8ae8d5216178ec0673927bd8879cd1aaa26fa5ebc170",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004561217411804819,
+        "packaged_band_m2": 0.040063757656071175,
+        "stored_preexport_band_m2": 0.004757351416230904,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 230736,
+      "bin": "1050025",
+      "borough": "Manhattan",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "dc7cd104a51c68c22153fc2d4a5c5c242b3fe459fd3f2cadcfaef9ec89a40786",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.000445004178459385,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1695,
+      "bin": "1079863",
+      "borough": "Manhattan",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "54aa0c903c86ccc818116c3b2b7c1eefeb91b8af06b0b764ee44967d2ea7de2c",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003096933496067322,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 644135,
+      "bin": "1059560",
+      "borough": "Manhattan",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "110ce1ba2f7a3479c46f8f8667d81435a6f125d285f7385d6733956acf363420",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004469313554409382,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 3390,
+      "bin": "1044848",
+      "borough": "Manhattan",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "a26f64223004acfdd4b8c8aa568bf8ca88457906ac29d8b8690529b9d1359b6d",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00048727951457294694,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 310473,
+      "bin": "2090457",
+      "borough": "Bronx",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "cf70f79365e19f6c4eca31376fb21bdfe506b84f618506be311fe3a686c22808",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00048241339416676965,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 831198,
+      "bin": "2057432",
+      "borough": "Bronx",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "f8781c7e2655f9a5367b3884331669e444dc9af223f96384e8fbb6b04c96813e",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0004894507455901476,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 530895,
+      "bin": "2004464",
+      "borough": "Bronx",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "ea05d5f24ab1720a27e1ec1742180783133ad19311b01cd5ec9435ba80ade087",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00043617242911864196,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 923269,
+      "bin": "2087452",
+      "borough": "Bronx",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "60ae334233664d3ddf1b179b0b5921ea4fef102617dfa863f4de1866edbc8b20",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 2,
+      "max_errors": {
+        "nearest_m": 0.00039148856131987486,
+        "packaged_band_m2": 0.05198633404380537,
+        "stored_preexport_band_m2": 0.003780316211464907,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 624336,
+      "bin": "2048851",
+      "borough": "Bronx",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "f123c321d6b2a908aeea4fe7026bd3319de0d20ecdce9a2eb688dc767a490385",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00030057923879667214,
+        "packaged_band_m2": 0.030923492912969586,
+        "stored_preexport_band_m2": 0.000923492912969337,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1192124,
+      "bin": "2798099",
+      "borough": "Bronx",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "6c7871e8338e3d6ec22aaf1e117ece3e8302dd5a935f51c886acf03ec2753515",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00047314835566680813,
+        "packaged_band_m2": 0.0426468708194534,
+        "stored_preexport_band_m2": 0.0029357014209381305,
+        "footprint_mask_m2": 0.0012349737231716063
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1256606,
+      "bin": "2119579",
+      "borough": "Bronx",
+      "selection_stratum": "exclusion_3",
+      "raw_wkt_sha256": "09a537b839497bf68ae6bbc42cd09b23a67cf3e2561fe6d4ecb3d3a1ff9c0425",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00046643882615171606,
+        "packaged_band_m2": 0.0490578569240796,
+        "stored_preexport_band_m2": 0.004433928388777986,
+        "footprint_mask_m2": 0.0029319072106446242
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 844289,
+      "bin": "2084417",
+      "borough": "Bronx",
+      "selection_stratum": "water",
+      "raw_wkt_sha256": "6e04176be1c89fa015a578d52f0c79798437c2334b31c2d4eac189c1fcc28799",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003220519308229086,
+        "packaged_band_m2": 0.005423145823886699,
+        "stored_preexport_band_m2": 0.004576854176111311,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1288270,
+      "bin": "2129419",
+      "borough": "Bronx",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "1925ff29eaae79e8e7a9cba1fdf1b4dd12eed778f2d8807c351a1d23e1d17913",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004850034081815835,
+        "packaged_band_m2": 0.053471532359886,
+        "stored_preexport_band_m2": 0.0034715323598852876,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 900296,
+      "bin": "2108286",
+      "borough": "Bronx",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "0f49e93ab5a980efa357cbe4e722d6a4411fc824d29cbc97656c3364813a170e",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00046962128201677444,
+        "packaged_band_m2": 0.039144598901909466,
+        "stored_preexport_band_m2": 0.002235321940219137,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 62174,
+      "bin": "2077096",
+      "borough": "Bronx",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "4ad5de7eaf0b1ce2daf30437641bbc6cb6eb4464f69024593e3dc2ec42003083",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003491835632800644,
+        "packaged_band_m2": 0.041050126955916255,
+        "stored_preexport_band_m2": 0.004192397381559174,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1118013,
+      "bin": "2107964",
+      "borough": "Bronx",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "3e3f9f8564b59e27219ee5e1b802a3ab106de74024399be14c475529ffa7f16d",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00043645449755957966,
+        "packaged_band_m2": 0.04850913073431329,
+        "stored_preexport_band_m2": 0.002975802947560169,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1205143,
+      "bin": "2120789",
+      "borough": "Bronx",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "6dc632a4bdd3fab46d6d1d1d3db33b77eed2cc9771bd28b9c152e5ee7fc602c6",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003682675160234794,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 667324,
+      "bin": "2088048",
+      "borough": "Bronx",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "0983b68d0caf56f652b6b56b84d2a88c8ddc9c9423ff49ccae6941a1c0e80b15",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003772384040985344,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 436588,
+      "bin": "2004109",
+      "borough": "Bronx",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "56f368c8d255f824c9d697728e7d54e346754f616afd8291ad211abe7ab40b44",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.000499120527138075,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 26579,
+      "bin": "2074548",
+      "borough": "Bronx",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "bde4b0cd0a1035f70acdcc20890f8161bf023ae5804551ff4d380aa47c9a305d",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00048452810005272795,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 71803,
+      "bin": "3037200",
+      "borough": "Brooklyn",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "6db1f5be9ed91da53e6e1ae44bd0f1f690baaa4b83c47bf50e14528e6d2d2d95",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00027101134730855847,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 403157,
+      "bin": "3034334",
+      "borough": "Brooklyn",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "189c489629977523adc6bd7eee7ca7bae424046c814fa2116e103fee1b7b67f1",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0004530107430582575,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 654233,
+      "bin": "3256719",
+      "borough": "Brooklyn",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "267eb8a2cbb6ea40e7ee45b43578bec275810ff83d07bf535cfd0990ccd55990",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00034008120405815134,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 671724,
+      "bin": "3204131",
+      "borough": "Brooklyn",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "8078309742b54a4285ed66596ebaec29b21b425c5efe11ae13b418634ea23eef",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0004495719249462127,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1261691,
+      "bin": "3398901",
+      "borough": "Brooklyn",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "329ebf961a2f7069e5cf93127590b896082ed1b614610a3adc52520cf86e832c",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004687390271840286,
+        "packaged_band_m2": 0.011791887238445042,
+        "stored_preexport_band_m2": 0.0036202477622850893,
+        "footprint_mask_m2": 0.002363363998838963
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 91602,
+      "bin": "3174311",
+      "borough": "Brooklyn",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "ca19b6decb0030580bf7fb8dca6e40a281ff605578495aa8f5272ca2351da380",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00045154881445341744,
+        "packaged_band_m2": 0.006369762448912297,
+        "stored_preexport_band_m2": 0.004205131791373162,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 270803,
+      "bin": "3224142",
+      "borough": "Brooklyn",
+      "selection_stratum": "exclusion_3",
+      "raw_wkt_sha256": "73ba82f0b29bf7e73c17be65d0b546574169c6dc9468510a9dd9c7866b137a92",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004728172676777831,
+        "packaged_band_m2": 0.04969620569812605,
+        "stored_preexport_band_m2": 0.00498545852207144,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1271717,
+      "bin": "3424295",
+      "borough": "Brooklyn",
+      "selection_stratum": "water",
+      "raw_wkt_sha256": "691c06824ab43e2323a40cb8fd6ac7913594fb4b1a6d9c45b058223182704245",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00043203618930309773,
+        "packaged_band_m2": 0.050391905469354015,
+        "stored_preexport_band_m2": 0.004744120017221576,
+        "footprint_mask_m2": 0.0006849926178063015
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 821713,
+      "bin": "3057349",
+      "borough": "Brooklyn",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "75b1a242bceb971cb659436eb8aa523ad91e7f390f4280a13cb7484e41a1021f",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00015354773404396838,
+        "packaged_band_m2": 0.03392448313209684,
+        "stored_preexport_band_m2": 0.004599271301174213,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 411704,
+      "bin": "3102260",
+      "borough": "Brooklyn",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "17510ebb173f50c4177d07ba2bd0f687c8e71b4840e0064ab6c975208951eb3f",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00016502377329175033,
+        "packaged_band_m2": 0.05276833935949554,
+        "stored_preexport_band_m2": 0.002768339359498384,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 463167,
+      "bin": "3046518",
+      "borough": "Brooklyn",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "b02a82805e95480e4e10aedf9906b2a34be62477755d8cb7d0f02575f7791af1",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00011939925189352607,
+        "packaged_band_m2": 0.01737839926109075,
+        "stored_preexport_band_m2": 0.0037787491422349717,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 33359,
+      "bin": "3092562",
+      "borough": "Brooklyn",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "3ab5388527b3d76c3d1eb03b9ab2f1b92da8f19bad18707b8e993e54a37bf1ba",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004437392492437908,
+        "packaged_band_m2": 0.038869842422073475,
+        "stored_preexport_band_m2": 0.003969649837564759,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 179273,
+      "bin": "3105667",
+      "borough": "Brooklyn",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "e9d4634df4fb4e4f5b68c4538d4f4e458f7ff3b3a3fa632b904520d5aa46f0f0",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00048383995067524666,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 282199,
+      "bin": "3141115",
+      "borough": "Brooklyn",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "e54938300a18feab8f2f3f6a5f747cb4ea8bc2341879f5fa548ef4c3b47dfebe",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004982833174551615,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 795134,
+      "bin": "3231092",
+      "borough": "Brooklyn",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "87f33dd7e8b2d8a2ed9bddb98c5a3aa4aa604506bc17e1e54ba6b1f116e0ff9d",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004932660607437356,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 846597,
+      "bin": "3156457",
+      "borough": "Brooklyn",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "b7b8733a2f1ac0aa78240fd4dec516503137d754343984e934a901ff9ff0b96c",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00047020897250149574,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 451699,
+      "bin": "4120348",
+      "borough": "Queens",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "268cf196ac98f40c08f8a15f9aaf41a9d56c55f3af45d39f4b5890fd6289c2f5",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00045290951950960334,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 79521,
+      "bin": "4135118",
+      "borough": "Queens",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "4a29d7cc5279a4795ce334cf954e63ae8fc0fed706eb6093586af3e711c78d7f",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0003712320307158734,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1040296,
+      "bin": "4588066",
+      "borough": "Queens",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "ce82375ebce7e7874cb85f82e31716fe42c40852c0c43c12cf4197df4862aa09",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00046843364603432747,
+        "packaged_band_m2": 0.04361024354187748,
+        "stored_preexport_band_m2": 0.0036102435418712275,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 285842,
+      "bin": "4059988",
+      "borough": "Queens",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "5a9912d25b055641f62954cd2ce9c2e227a48dca01b5df62f8b0f4dab9a67ccc",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.00043882712945730873,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1027565,
+      "bin": "4558182",
+      "borough": "Queens",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "636745c7f2d4c87c0e6b28de71304b0dfea393ebd11009f2d175d10d3ab6fa4a",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00018574279314975684,
+        "packaged_band_m2": 0.029543383841144077,
+        "stored_preexport_band_m2": 0.0029855353747052504,
+        "footprint_mask_m2": 0.002533422641249672
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 523105,
+      "bin": "4586582",
+      "borough": "Queens",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "7cd12a4989a090fe262d71bc90a34667fadb1e90fb2427835949d1d9841a1dce",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00046078697636176,
+        "packaged_band_m2": 0.02900088698845593,
+        "stored_preexport_band_m2": 0.0038099425841835455,
+        "footprint_mask_m2": 0.002284550333777613
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 464862,
+      "bin": "4292052",
+      "borough": "Queens",
+      "selection_stratum": "exclusion_3",
+      "raw_wkt_sha256": "2da01dd0428777eca80cc02c41e94fe3fdd63b419c72777d71b01179756640ee",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004499353709999099,
+        "packaged_band_m2": 0.04208262016327069,
+        "stored_preexport_band_m2": 0.004878199804124961,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 31664,
+      "bin": "4584679",
+      "borough": "Queens",
+      "selection_stratum": "water",
+      "raw_wkt_sha256": "bcb6558429d0442dd4f423e10090012a70417ac72e76172503693f6c452bfa48",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00024281801410097614,
+        "packaged_band_m2": 0.03523147381150693,
+        "stored_preexport_band_m2": 0.0047685261884851116,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 257315,
+      "bin": "4096322",
+      "borough": "Queens",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "ac7e540fa0cff4734d097dd26b4045f78e246b87991933e3606388dd59e0585c",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003278982576375711,
+        "packaged_band_m2": 0.052321947494959886,
+        "stored_preexport_band_m2": 0.0023219474949627283,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 567788,
+      "bin": "4248241",
+      "borough": "Queens",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "d9379df2757d39bc8b966edf6eb358071086c85e1412660d5036f9d5cba10ba5",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00032400382948161166,
+        "packaged_band_m2": 0.044722953708799196,
+        "stored_preexport_band_m2": 0.004722953708778732,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 825103,
+      "bin": "4018529",
+      "borough": "Queens",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "cf218de168579c39e9e74aa8e393e3406da27cf472421c0b9aec654d718dc271",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003681449588430752,
+        "packaged_band_m2": 0.03373656320255236,
+        "stored_preexport_band_m2": 0.003736563202554777,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1210228,
+      "bin": "4541943",
+      "borough": "Queens",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "0fef39817d1cf7f6a110789dcce59da8dc9e12ac6189303f490e600771a2d175",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0002596724934278427,
+        "packaged_band_m2": 0.05362705752537522,
+        "stored_preexport_band_m2": 0.004478183118351353,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 461472,
+      "bin": "4238525",
+      "borough": "Queens",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "bfbc10f5ddcf71f7b0c8d0407c2f21083015a4cfd74e94580d2a91e151ed0f74",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003296832273917971,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 974407,
+      "bin": "4121104",
+      "borough": "Queens",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "118dc2acce3546e0f87b31127ed4848c93694e9f1de6c69f67db6af1d072b068",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00040055125191429397,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 51463,
+      "bin": "4057375",
+      "borough": "Queens",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "57936901a10505b2848c53950a692f7daf9fe03745dcfe3a187f356f69bb019e",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0001857375173131004,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 564398,
+      "bin": "4165007",
+      "borough": "Queens",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "e676de63a5e6635150d148c34045f20ab4b3a3515e2647965ab17542bfb9be2e",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00040643338707013754,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 843534,
+      "bin": "5037212",
+      "borough": "Staten Island",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "b2bb58515b01621c76f4cd6691617fc0e9964ba32dee9e8be9678e0caa547644",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0004942850923219666,
+        "packaged_band_m2": 0.03900576260287991,
+        "stored_preexport_band_m2": 0.0039612921573848325,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 829289,
+      "bin": "5010473",
+      "borough": "Staten Island",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "f8a95c193e0d8d2b0e7355444295ba3a41411d86a0badfc22ffccacada654cf7",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0003209973583579995,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 1153106,
+      "bin": "5125604",
+      "borough": "Staten Island",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "999315cb7f38b736eea2e622e003f313bbef2062242c244f16a354d1dbedc750",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0003383735436344182,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 546117,
+      "bin": "5087105",
+      "borough": "Staten Island",
+      "selection_stratum": "hole",
+      "raw_wkt_sha256": "64fdeb8b07d0c63aa5cdcabdc4184a068793767509739eb442845ec340ec2208",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 1,
+      "max_errors": {
+        "nearest_m": 0.0004375060181018853,
+        "packaged_band_m2": 0.03704818002355026,
+        "stored_preexport_band_m2": 0.0047855396404941075,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 333662,
+      "bin": "5120606",
+      "borough": "Staten Island",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "18ef9ea9e5feeb394238d71e444776db8873f91138e373c57d2d645d38bb224b",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003896740856532688,
+        "packaged_band_m2": 0.05377935164676728,
+        "stored_preexport_band_m2": 0.003779351646755913,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 214327,
+      "bin": "5105425",
+      "borough": "Staten Island",
+      "selection_stratum": "exclusion_0",
+      "raw_wkt_sha256": "65c4804fc4448284170485a7298b77b5443d4e5ae142d37f3d90ad1032fb26c4",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0004973038870730306,
+        "packaged_band_m2": 0.029735290986081964,
+        "stored_preexport_band_m2": 0.004206183556675569,
+        "footprint_mask_m2": 0.001014982865683578
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 475032,
+      "bin": "5121250",
+      "borough": "Staten Island",
+      "selection_stratum": "exclusion_3",
+      "raw_wkt_sha256": "48cc0985e022e6891070f7158bef9b426cc8b8538558c7e7ae716af452dd9bc8",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003599518573977889,
+        "packaged_band_m2": 0.03392399169962346,
+        "stored_preexport_band_m2": 0.003923991699650742,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 848292,
+      "bin": "5141709",
+      "borough": "Staten Island",
+      "selection_stratum": "water",
+      "raw_wkt_sha256": "40c1027e321599f50a879c8ae9f58fbddabc4a9512c9d4c3ab5c532250cd1073",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 5.269503635219053e-05,
+        "packaged_band_m2": 0.05155279178086403,
+        "stored_preexport_band_m2": 0.0038731505429723256,
+        "footprint_mask_m2": 1.1472836490611371e-05
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 53158,
+      "bin": "5125142",
+      "borough": "Staten Island",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "e2764253453d3709c95d0333765196de6e95a8d7516e556b4512b9d75f1d2713",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00022896119188686725,
+        "packaged_band_m2": 0.04195536053780935,
+        "stored_preexport_band_m2": 0.004597451718126422,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 698988,
+      "bin": "5084018",
+      "borough": "Staten Island",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "e0dffb1ec39d3a83dd1f07bee76563946f11ae1952343fa25c29073d1c5e69f8",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00046059762007644167,
+        "packaged_band_m2": 0.043015422373210654,
+        "stored_preexport_band_m2": 0.003015422373211507,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 879956,
+      "bin": "5138324",
+      "borough": "Staten Island",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "d7150d2e75eab0331c467e3b3e8dc9ae6f9507aa74ebb51501a75070641af541",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00031484031615036656,
+        "packaged_band_m2": 0.014172103225033705,
+        "stored_preexport_band_m2": 0.0041721032250339185,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 803609,
+      "bin": "5094038",
+      "borough": "Staten Island",
+      "selection_stratum": "mapped_hit",
+      "raw_wkt_sha256": "37ad4b96edf5dc287a273c491a92688125f73512a78f4c983aa581f570a7fcc0",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00043593854190948633,
+        "packaged_band_m2": 0.03716717592173069,
+        "stored_preexport_band_m2": 0.004347868512496689,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 692208,
+      "bin": "5042076",
+      "borough": "Staten Island",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "706966b20e040869e6cd49b3a802ed3d974109dc1939b2f150b6499a4d1124c3",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00047638130178029314,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 743671,
+      "bin": "5110073",
+      "borough": "Staten Island",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "7c6071195c7ac8f6337b81a4f2c0008636e906fdd2ba7fc2b250a3e6138f525e",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00042952958312980627,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 615861,
+      "bin": "5025748",
+      "borough": "Staten Island",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "d718455aa3f3296d4b54b487e31c472af102862ac28fd07e13a53fe48a994b14",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.0003652943518659413,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    },
+    {
+      "doitt_id": 949523,
+      "bin": "5146632",
+      "borough": "Staten Island",
+      "selection_stratum": "all_bands_zero",
+      "raw_wkt_sha256": "8fcb219502fd5bb49a5559e3f954f14a536f5c8c7041505b5f614658f5323df7",
+      "raw_csv_geometry_matches_sqlite_exactly": true,
+      "footprint_parts": 1,
+      "footprint_holes": 0,
+      "max_errors": {
+        "nearest_m": 0.00040940872412420504,
+        "packaged_band_m2": 0,
+        "stored_preexport_band_m2": 0,
+        "footprint_mask_m2": 0.0
+      },
+      "pass": true
+    }
+  ]
+}

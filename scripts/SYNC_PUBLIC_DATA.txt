@@ -1,0 +1,38 @@
+Public data regeneration
+
+Run python3 scripts/sync-public-data.py --dry-run to review planned changes.
+Use --destination /temporary/public to produce a disposable output for inspection.
+Run without --dry-run only after the source snapshots and English copy are ready.
+The default source root is the parent of this repository; --source-root can override it.
+
+Catalog wording belongs in scripts/catalog-copy.json. The generator supplies native
+counts, source timestamps, PLUTO version, reporting year, processing status and
+asset paths. New datasets require reviewed English copy before they can publish.
+Curated reports and the dated live-audit result seed fresh outputs; existing English reports are preserved. Context-source vintages come from data/citywide/context_catalog_versions.json, with verification timestamps distinct from data dates.
+
+Every managed file is first built in a temporary staging directory. Source feature
+counts, LL84 reporting-scope fields, and full-city surroundings checksums are checked
+before any public file is replaced. Replacement is atomic per file. No public
+directory is deleted, and unmanaged files are retained. The full local SQLite and
+raw archives never enter public output or JavaScript bundles.
+
+Full integration audit:
+python3 scripts/test-sync-public-data.py --report /temporary/sync-validation.json
+
+The audit runs twice against a disposable destination, verifies byte-identical
+idempotence and preservation of custom content/English reports, injects a missing
+reporting_scope field and proves the failed build changes no destination files,
+then dry-runs the actual public destination without changing it.
+
+Surroundings remain lazy browser static assets. Never import all 129 JSON shards
+into a bundle or load the complete archive into a memory-limited Worker.
+
+Energy shard hashes, original/supplement publisher revision, reporting year and
+scope evidence are mandatory. The source serializer sorts BBLs and stages all
+validated files before replacement. Its standalone supplement script no longer
+writes directly into public/. Run this sync after reviewing rebuilt derivatives.
+
+The full-city analytical scripts pin source bytes, hosted mask edit dates and
+calculation-code hashes. A changed source requires a separately reviewed new
+snapshot, not reuse of old SQLite calculation rows. The browser OTI date/geometry
+guard is separate: it does not poll for a new DEP map publication.

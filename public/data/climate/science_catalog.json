@@ -1,0 +1,781 @@
+{
+  "schema_version": "1.0",
+  "checked_on": "2026-10-28",
+  "datasets": [
+    {
+      "id": "noaa_station_climate",
+      "title": "NOAA NYC-area station climate context, 1991–2025",
+      "status": "acquired_and_derived",
+      "evidence_type": "observed_station_with_derived_statistics",
+      "spatial_support": "four_station_points; nearest_station_is_reference_only",
+      "analysis_period": {
+        "start": "1991-01-01",
+        "end": "2025-12-31"
+      },
+      "baseline_period": [
+        1991,
+        2020
+      ],
+      "recent_period": [
+        2021,
+        2025
+      ],
+      "source_latest_record_date": "2026-10-24",
+      "retrieved_on": "2026-10-27",
+      "source_version": "3.35-upd-2026102517",
+      "urls": [
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00094728.dly",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00094789.dly",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00014732.dly",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00014734.dly"
+      ],
+      "dataset_doi": "https://doi.org/10.7289/V5D21VHZ",
+      "local_files": [
+        "data/climate/station_climate.json",
+        "data/climate/station_summary.json",
+        "data/climate/station_daily_1991_2025.csv.gzip"
+      ],
+      "reference_ids": [
+        "ghcnd_overview",
+        "ghcnd_qc",
+        "ghcnd_format",
+        "climpact_indices",
+        "ghcnd_normals_method"
+      ],
+      "coverage": {
+        "stations": 4,
+        "station_years": 140,
+        "station_months": 1680,
+        "station_days": 51136,
+        "selected_elements": [
+          "TMAX",
+          "TMIN",
+          "PRCP"
+        ],
+        "minimum_valid_daily_fraction": 1.0,
+        "rejected_or_missing_selected_observations": 0
+      },
+      "limitations": [
+        "A five-year recent period is weather/climate context, not a new 30-year normal or attribution study.",
+        "Station siting, relocations, observation practices, airport/park surroundings and ocean proximity affect comparisons.",
+        "Daily temperature and precipitation do not provide humidity, heat index, WBGT, cooling peaks, subdaily rainfall, flood depth or financial losses.",
+        "No 2026 observations are included; no station values are forecasts or parcel-scale measurements.",
+        "Unadjusted derived baseline statistics are not official NOAA Climate Normals.",
+        "Raw source includes 2026 through October 24 but these partial-year records are excluded from the analytical products."
+      ],
+      "daily_archive": {
+        "path": "data/climate/station_daily_1991_2025.csv.gzip",
+        "format": "gzip-compressed CSV download",
+        "compression_level": 9,
+        "gzip_mtime": 0,
+        "compressed_bytes": 302972,
+        "compressed_sha256": "45035e39bab04e075e741e583d02fe21e0595af55c09b5ae35397707954db00a",
+        "decoded_bytes": 1919847,
+        "decoded_sha256": "6ff4c88cbbcb0e7330c91a8417fe068f96c583f5e08080460cb0ab49c438b5d3",
+        "note": "Lossless downloadable archive. Decompression restores the unchanged daily station CSV; the application uses the existing aggregate JSON assets."
+      }
+    },
+    {
+      "id": "npcc4_mean_projections",
+      "title": "NPCC4 temperature and precipitation change",
+      "status": "acquired_and_normalized",
+      "evidence_type": "published_regional_model_ensemble",
+      "spatial_support": "NYC metropolitan/regional climate context; not parcel-specific output",
+      "baseline_period": [
+        1981,
+        2010
+      ],
+      "projection_horizons": [
+        "2030s",
+        "2040s",
+        "2050s",
+        "2060s",
+        "2070s",
+        "2080s",
+        "2100"
+      ],
+      "source_latest_record_date": null,
+      "source_rows_updated_at": "2024-03-26T20:53:00+00:00",
+      "assessment_year": 2024,
+      "retrieved_on": "2026-10-27",
+      "urls": [
+        "https://data.cityofnewyork.us/resource/hmdk-eidg.json",
+        "https://climateassessment.nyc/npcc-datasets/"
+      ],
+      "local_files": [
+        "data/climate/npcc4_projections.json"
+      ],
+      "reference_ids": [
+        "npcc4_climate"
+      ],
+      "limitations": [
+        "Do not add these 1981-2010 changes directly to the separate 1991-2020 station baseline; rebase using consistent observations and methods first.",
+        "The 25th-75th percentile interval is model/scenario spread, not a confidence interval for a building.",
+        "Pooled percentiles combine two scenarios; choose scenario_ensemble_means only when explicitly presenting scenario-specific means.",
+        "Raw GCMs include models with high climate sensitivity; NPCC discusses the hot-model issue and comparison with constrained subsets.",
+        "Annual precipitation percent changes do not scale hourly rainfall, flood depth, property losses, or drainage design storms.",
+        "No parcel differentiation, building indoor temperatures, cooling bills, or flood inundation is derived here."
+      ]
+    },
+    {
+      "id": "npcc4_extreme_projections",
+      "title": "NPCC4 regional extreme temperature and rain-day frequency",
+      "status": "acquired_and_normalized",
+      "evidence_type": "published_regional_model_ensemble",
+      "spatial_support": "NYC metropolitan/regional climate context; not parcel-specific output",
+      "baseline_period": [
+        1981,
+        2010
+      ],
+      "projection_horizons": [
+        "2030s",
+        "2050s",
+        "2080s"
+      ],
+      "source_latest_record_date": null,
+      "source_rows_updated_at": "2024-02-22T14:00:45+00:00",
+      "assessment_year": 2024,
+      "retrieved_on": "2026-10-27",
+      "urls": [
+        "https://data.cityofnewyork.us/resource/38ps-fnsg.json"
+      ],
+      "local_files": [
+        "data/climate/npcc4_projections.json"
+      ],
+      "reference_ids": [
+        "npcc4_climate",
+        "npcc4_extremes"
+      ],
+      "limitations": [
+        "Model/scenario spread is not calibrated probability.",
+        "30-year mean event frequencies are not single-year forecasts.",
+        "Daily rain thresholds do not measure hourly rain intensity.",
+        "Sea-level values exist in preserved source but are not normalized in this climate product."
+      ]
+    },
+    {
+      "id": "noaa_hourly_extension",
+      "title": "NOAA paired airport temperature and dew point, 2021–2025",
+      "status": "acquired_and_derived",
+      "evidence_type": "observed_station_paired_samples_with_derived_summaries",
+      "spatial_support": "JFK, LaGuardia and Newark airport outdoor reference stations; no Central Park or building observations",
+      "analysis_period": {
+        "start": "2021-01-01T00:00:00Z",
+        "end": "2025-12-31T23:59:59Z"
+      },
+      "source_latest_record_date": "2025-12-31T23:51:00Z",
+      "retrieved_on": "2026-10-28",
+      "urls": [
+        "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
+        "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh_DOCUMENTATION.pdf",
+        "https://www.nesdis.noaa.gov/news/service-location-change-integrated-surface-data-global-hourly"
+      ],
+      "local_files": [
+        "data/climate/hourly_context.json"
+      ],
+      "reference_ids": [
+        "noaa_ghcnh_product",
+        "noaa_ghcnh",
+        "noaa_ghcnh_inventory",
+        "noaa_ghcnh_sources",
+        "noaa_isd_transition"
+      ],
+      "limitations": [
+        "Airport outdoor observations are regional context, not measurements at a selected property or inside a building.",
+        "Five complete requested calendar years have small reported gaps after conservative filtering; this is not a 30-year climate normal or an engineering design-weather series.",
+        "Dew point adds observed atmospheric-moisture context. These records alone do not establish latent cooling load, electrical capacity, equipment size, operating cost, health risk, or site suitability.",
+        "All sample timestamps are UTC. UTC calendar boundaries differ from New York local dates; values were not shifted to local-day summaries.",
+        "No climate-change attribution, synthetic future hourly weather, interpolation, heat index, wet-bulb estimate, or load model is produced.",
+        "Source data may be revised. Each station-year source URL, retrieval time, Last-Modified value, and SHA-256 hash is retained.",
+        "Legacy ISD/Global Hourly stopped updating after August 24, 2025. This consistent 2021–2025 acquisition uses NOAA’s GHCNh successor instead."
+      ],
+      "asset_sha256": "f16ed9a32626a4387f6f5326a69d4412a8b1ca7928dc54b72241332c137934ad",
+      "asset_bytes": 119229,
+      "coverage": {
+        "stations": 3,
+        "station_year_files": 15,
+        "raw_records": 190666,
+        "paired_hourly_samples": 130951,
+        "expected_station_hour_bins": 131472
+      },
+      "method": {
+        "pairing": "Both readings must be in the same station/timestamp row, with routine FM15 report type and accepted quality/source codes for each value.",
+        "quality_allowlist": {
+          "223": [
+            "1"
+          ],
+          "343": [
+            "1",
+            "5"
+          ]
+        },
+        "quality_policy": "Conservative project policy: retain explicitly good documented legacy QC only. Blank/unclassified, suspect, erroneous, gross-limit-only, validator-edited and other codes are excluded, even when NOAA may accept a flagged value. This is not a claim that excluded values are wrong.",
+        "hour_selection": "At most one eligible FM15 pair per UTC clock hour; select the minute closest to :51, the observed modal routine report minute at all three stations; ties choose earlier timestamp. No averaging, interpolation, or special-report substitution.",
+        "coverage": "Selected paired samples divided by all UTC hour bins in the calendar year/month. A represented hour is one sampled moment, not complete continuous coverage.",
+        "hot_run": "A descriptive project threshold of dry-bulb temperature ≥30°C at selected samples in at least three consecutive UTC hour bins. Missing/invalid hours or a cooler sample end a run. This is not an official heat-wave definition or continuous exposure duration.",
+        "episode_order": "Top three qualifying runs per station-year, ordered by peak selected temperature, then number of consecutive bins, then start time. All selected observations remain in the local audit CSV.",
+        "peak_ties": "Among selected paired observations, count every tie for the station-year maximum and display the earliest UTC observation. Its coincident companion reading belongs to that timestamp; it may differ at other tied maxima.",
+        "quantiles": "Type-7 linear empirical sample quantiles, rounded to the underlying 0.1°C reporting precision. Quantiles are descriptive, not engineering design percentiles.",
+        "physical_guard": "Exclude non-finite/sentinel/out-of-sanity-range values and pairs with dew point greater than dry-bulb temperature; no substitution.",
+        "central_park": "Not included; this supplemental acquisition intentionally covers the three verified airport stations only."
+      },
+      "documentation_version": "1.1.0; March 10, 2026"
+    },
+    {
+      "id": "era5land_extension",
+      "title": "ERA5-Land contextual reanalysis extension",
+      "status": "researched_not_acquired",
+      "evidence_type": "potential_reanalysis",
+      "spatial_support": "native_approximately_9km; delivered_0.1_degree_grid",
+      "analysis_period": null,
+      "source_latest_record_date": null,
+      "retrieved_on": null,
+      "urls": [
+        "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=overview"
+      ],
+      "local_files": [],
+      "reference_ids": [
+        "era5",
+        "era5_land",
+        "era5land_cds"
+      ],
+      "limitations": [
+        "CDS account/licence and data acquisition not completed here.",
+        "A point request selects grid data; not a parcel observation."
+      ]
+    },
+    {
+      "id": "lst_extension",
+      "title": "Landsat Collection 2 surface temperature extension",
+      "status": "researched_not_acquired",
+      "evidence_type": "potential_satellite_surface_temperature",
+      "spatial_support": "Landsat8_9_native_thermal_100m_resampled_delivery_30m",
+      "analysis_period": null,
+      "source_latest_record_date": null,
+      "retrieved_on": null,
+      "urls": [
+        "https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature"
+      ],
+      "local_files": [],
+      "reference_ids": [
+        "thermal_remote_sensing",
+        "usgs_lst",
+        "usgs_lst_issues"
+      ],
+      "limitations": [
+        "No LST raster or building extraction acquired in this climate package.",
+        "LST is not 2m air temperature or indoor temperature.",
+        "Require cloud/shadow/emissivity QA and date-specific metadata."
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "ghcnd_overview",
+      "title": "An Overview of the Global Historical Climatology Network-Daily Database",
+      "year": 2012,
+      "doi": "10.1175/JTECH-D-11-00103.1",
+      "url": "https://doi.org/10.1175/JTECH-D-11-00103.1",
+      "topics": [
+        "observations",
+        "quality_control"
+      ],
+      "role": "Archive structure and limitations; not a homogenized station trend guarantee.",
+      "source_type": "journal_publication",
+      "publication_kind": "Dataset and methods article",
+      "implementation_scope": "Source interpretation for acquired NOAA daily observations; not independent instrument validation.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "ghcnd_qc",
+      "title": "Comprehensive Automated Quality Assurance of Daily Surface Observations",
+      "year": 2010,
+      "doi": "10.1175/2010JAMC2375.1",
+      "url": "https://doi.org/10.1175/2010JAMC2375.1",
+      "topics": [
+        "quality_control"
+      ],
+      "role": "Automated daily QA methods; passing flags do not establish error-free observations.",
+      "source_type": "journal_publication",
+      "publication_kind": "Quality-control methods article",
+      "implementation_scope": "Interprets native NOAA QA flags. GEONOS excludes failed flags but does not rerun NOAA's full QA procedure.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "npcc4_climate",
+      "title": "NPCC4: New York City climate risk information 2022—observations and projections",
+      "year": 2024,
+      "doi": "10.1111/nyas.15116",
+      "url": "https://doi.org/10.1111/nyas.15116",
+      "topics": [
+        "future_climate",
+        "npcc4"
+      ],
+      "role": "Regional observations/projections and Tables 3–4; no parcel temperatures.",
+      "source_type": "journal_publication",
+      "publication_kind": "Publisher-labeled Technical Report",
+      "implementation_scope": "Source of the shipped mean projections and hot-day/rain-day frequency tables, with their original baseline and ensemble definitions.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "npcc4_energy",
+      "title": "NPCC4: Climate change, energy, and energy insecurity in New York City",
+      "year": 2024,
+      "doi": "10.1111/nyas.15117",
+      "url": "https://doi.org/10.1111/nyas.15117",
+      "topics": [
+        "energy",
+        "climate"
+      ],
+      "role": "Regional energy and wellbeing context; not an individual-building capacity or cost model.",
+      "source_type": "journal_publication",
+      "publication_kind": "Publisher-labeled Technical Report",
+      "implementation_scope": "Regional energy insecurity and system context only; no warehouse refrigeration, electrical-service capacity or cost model.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "npcc4_extremes",
+      "title": "NPCC4: Tail risk, climate drivers of extreme heat, and new methods for extreme event projections",
+      "year": 2024,
+      "doi": "10.1111/nyas.15180",
+      "url": "https://doi.org/10.1111/nyas.15180",
+      "topics": [
+        "extreme_heat",
+        "humidity",
+        "npcc4"
+      ],
+      "role": "Compound heat and projection methods; separate from the acquired historical airport temperature/dew-point pairs.",
+      "source_type": "journal_publication",
+      "publication_kind": "Publisher-labeled Technical Report",
+      "implementation_scope": "Compound humid-heat and tail-risk research context. Its new humid-heat table is not the source of the shipped Braneon Table 4 hot-day/rain-day values; the historical airport temperature/dew-point pairs are a separate NOAA observation product, not those NPCC projections or a humid-heat index.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "era5",
+      "title": "The ERA5 global reanalysis",
+      "year": 2020,
+      "doi": "10.1002/qj.3803",
+      "url": "https://doi.org/10.1002/qj.3803",
+      "topics": [
+        "reanalysis"
+      ],
+      "role": "Global atmospheric reanalysis at approximately 31 km.",
+      "source_type": "journal_publication",
+      "publication_kind": "Reanalysis data and methods article",
+      "implementation_scope": "Researched extension only; ERA5 data were not acquired or used in site calculations.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "era5_land",
+      "title": "ERA5-Land: a state-of-the-art global reanalysis dataset for land applications",
+      "year": 2021,
+      "doi": "10.5194/essd-13-4349-2021",
+      "url": "https://doi.org/10.5194/essd-13-4349-2021",
+      "topics": [
+        "reanalysis"
+      ],
+      "role": "Approximately 9 km land replay forced by ERA5; not a building observation.",
+      "source_type": "journal_publication",
+      "publication_kind": "Data description article",
+      "implementation_scope": "Researched extension only; ERA5-Land data were not acquired or used in site calculations.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "thermal_remote_sensing",
+      "title": "Thermal remote sensing of urban climates",
+      "year": 2003,
+      "doi": "10.1016/S0034-4257(03)00079-8",
+      "url": "https://doi.org/10.1016/S0034-4257(03)00079-8",
+      "topics": [
+        "lst",
+        "urban_heat"
+      ],
+      "role": "Surface radiometric temperature and canopy air temperature are distinct quantities.",
+      "source_type": "journal_publication",
+      "publication_kind": "Urban thermal remote-sensing synthesis",
+      "implementation_scope": "Explains surface/air-temperature distinctions. No satellite LST raster was acquired; USGS product documentation, not this paper, defines current Collection 2 scaling.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "local_climate_zones",
+      "title": "Local Climate Zones for Urban Temperature Studies",
+      "year": 2012,
+      "doi": "10.1175/BAMS-D-11-00019.1",
+      "url": "https://doi.org/10.1175/BAMS-D-11-00019.1",
+      "topics": [
+        "urban_form",
+        "urban_heat"
+      ],
+      "role": "Consistent description of urban/rural local environments and siting.",
+      "source_type": "journal_publication",
+      "publication_kind": "Urban-form classification methods article",
+      "implementation_scope": "Interpretive station/urban-form framework only. No LCZ classification layer or local-temperature model was acquired or fitted.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "nyc_heatwave_physics",
+      "title": "New York City Impacts on a Regional Heat Wave",
+      "year": 2018,
+      "doi": "10.1175/JAMC-D-17-0125.1",
+      "url": "https://doi.org/10.1175/JAMC-D-17-0125.1",
+      "topics": [
+        "urban_heat",
+        "urban_model"
+      ],
+      "role": "Urban processes during a specific 2010 heatwave; not a fixed universal building offset.",
+      "source_type": "journal_publication",
+      "publication_kind": "Urban heatwave simulation study",
+      "implementation_scope": "Specific NYC heatwave mechanism study; simulations were not rerun and their temperature effects are not assigned to buildings.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "nyc_high_resolution_future",
+      "title": "High-resolution projections of extreme heat in New York City",
+      "year": 2019,
+      "doi": "10.1002/joc.6102",
+      "url": "https://doi.org/10.1002/joc.6102",
+      "topics": [
+        "urban_heat",
+        "downscaling"
+      ],
+      "role": "Urban-scale dynamical downscaling and bias correction; no direct parcel/indoor guarantee.",
+      "source_type": "journal_publication",
+      "publication_kind": "Urban downscaling simulation study",
+      "implementation_scope": "Research example with 1 km urban modeling; its grid outputs were not acquired or connected as parcel projections.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "nex_gddp_cmip6",
+      "title": "NASA Global Daily Downscaled Projections, CMIP6",
+      "year": 2022,
+      "doi": "10.1038/s41597-022-01393-4",
+      "url": "https://doi.org/10.1038/s41597-022-01393-4",
+      "topics": [
+        "downscaling"
+      ],
+      "role": "0.25-degree daily statistical projections; copying grid values to buildings does not add resolution.",
+      "source_type": "journal_publication",
+      "publication_kind": "Data descriptor",
+      "implementation_scope": "Researched 0.25-degree statistical-downscaling extension only; NEX-GDDP-CMIP6 arrays were not acquired or connected.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "bias_correction_limits",
+      "title": "Towards process-informed bias correction of climate change simulations",
+      "year": 2017,
+      "doi": "10.1038/nclimate3418",
+      "url": "https://doi.org/10.1038/nclimate3418",
+      "topics": [
+        "downscaling",
+        "uncertainty"
+      ],
+      "role": "Bias correction needs physical-process awareness and does not restore missing processes.",
+      "source_type": "journal_publication",
+      "publication_kind": "Publisher-labeled Perspective",
+      "implementation_scope": "Interpretation of process and bias-correction limits; no bias-correction model was fitted in the application.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "nyc_heat_health",
+      "title": "A case-only study of vulnerability to heat wave-related mortality in New York City (2000–2011)",
+      "year": 2015,
+      "doi": "10.1289/ehp.1408178",
+      "url": "https://doi.org/10.1289/ehp.1408178",
+      "topics": [
+        "heat_vulnerability",
+        "public_health"
+      ],
+      "role": "Health vulnerability and asset engineering suitability use different outcomes.",
+      "source_type": "journal_publication",
+      "publication_kind": "Observational case-only health study",
+      "implementation_scope": "Supports the distinction between resident health vulnerability and asset suitability; it is not the exact 2024 HVI construction algorithm or a warehouse response model.",
+      "citation_checked_on": "2026-10-28"
+    },
+    {
+      "id": "ghcnd_format",
+      "title": "NOAA GHCN-Daily format and QC flags",
+      "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/readme.txt",
+      "topics": [
+        "observations",
+        "quality_control"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "ghcnd_normals_method",
+      "title": "NOAA 1991–2020 Climate Normals methodology",
+      "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/doc/Normals_Calculation_Methodology_2020.pdf",
+      "topics": [
+        "climate_normals"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "climpact_indices",
+      "title": "Climpact climate index definitions",
+      "url": "https://climpact-sci.org/indices/",
+      "topics": [
+        "thresholds"
+      ],
+      "source_type": "expert_method_documentation",
+      "role": "Climate-index threshold definitions; implementation completeness thresholds are GEONOS choices."
+    },
+    {
+      "id": "noaa_lcd",
+      "title": "NOAA Local Climatological Data, version 2",
+      "url": "https://www.ncei.noaa.gov/products/land-based-station/local-climatological-data",
+      "topics": [
+        "hourly_observations"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "noaa_ghcnh",
+      "title": "NOAA GHCNh documentation",
+      "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh_DOCUMENTATION.pdf",
+      "topics": [
+        "hourly_observations"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "era5land_cds",
+      "title": "Copernicus ERA5-Land hourly dataset",
+      "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=overview",
+      "topics": [
+        "reanalysis"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "era5land_timeseries",
+      "title": "Copernicus ERA5-Land point time series",
+      "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries",
+      "topics": [
+        "reanalysis"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "usgs_lst",
+      "title": "USGS Landsat Collection 2 Surface Temperature",
+      "url": "https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature",
+      "topics": [
+        "lst"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "usgs_lst_issues",
+      "title": "USGS Landsat Collection 2 known issues",
+      "url": "https://www.usgs.gov/landsat-missions/landsat-collection-2-known-issues",
+      "topics": [
+        "lst",
+        "quality_control"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "nyc_hvi",
+      "title": "NYC 2024 Heat-Related Mortality Report",
+      "url": "https://a816-dohbesp.nyc.gov/IndicatorPublic/data-features/heat-report-archive/2024/",
+      "topics": [
+        "heat_vulnerability"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "hvi_catalog",
+      "title": "Official Heat Vulnerability Index dataset catalog",
+      "url": "https://catalog.data.gov/dataset/heat-vulnerability-index-rankings",
+      "topics": [
+        "heat_vulnerability"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "ipcc_regional",
+      "title": "IPCC AR6 WGI Chapter 10: Linking Global to Regional Climate Change",
+      "url": "https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-10/",
+      "topics": [
+        "downscaling",
+        "uncertainty"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "nws_degree_days",
+      "title": "NWS heating and cooling degree-day method",
+      "url": "https://www.weather.gov/key/climate_heat_cool",
+      "topics": [
+        "degree_days",
+        "building_energy_limits"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "ashrae_climatic_design",
+      "title": "ASHRAE Handbook: Climatic Design Information (2017 methods chapter)",
+      "url": "https://handbook.ashrae.org/handbooks/f17/si/F17_Ch14/f17_ch14_si.aspx",
+      "topics": [
+        "building_energy_limits",
+        "design_weather"
+      ],
+      "source_type": "expert_handbook",
+      "role": "Historical 2017 design-weather and degree-day methods chapter, not the current edition, a refrigeration load model, or evidence of asset capacity."
+    },
+    {
+      "id": "nws_heatindex",
+      "title": "NWS heat index interpretation",
+      "url": "https://www.weather.gov/safety/heat-index",
+      "topics": [
+        "heat_stress"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "nws_heatindex_equation",
+      "title": "NWS heat index equation and valid range",
+      "url": "https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml",
+      "topics": [
+        "heat_stress"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "nyc_stormwater_plan",
+      "title": "NYC Stormwater Resiliency Plan, May 2021, pp.11 and 20",
+      "url": "https://www.nyc.gov/assets/orr/pdf/publications/stormwater-resiliency-plan.pdf",
+      "topics": [
+        "stormwater",
+        "rainfall_duration"
+      ],
+      "source_type": "official_method_or_dataset",
+      "role": "Rainfall scenario wording and building-as-void model design; not indoor flood depth or site safety."
+    },
+    {
+      "id": "nyc_climate_budget_2026",
+      "title": "NYC Climate Budgeting FY2026 Technical Appendix A, p.3",
+      "url": "https://www.nyc.gov/assets/omb/downloads/pdf/exec25/exec25-nyccbta.pdf",
+      "topics": [
+        "stormwater",
+        "rainfall_duration"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "nysdec_harlem_2025",
+      "title": "NYS DEC Harlem River Use Attainability Analysis, April 2025, p.3-34",
+      "url": "https://dec.ny.gov/sites/default/files/2025-04/harlemriveruseattainanalysis.pdf",
+      "topics": [
+        "stormwater",
+        "rainfall_duration"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "noaa_ghcnh_product",
+      "title": "NOAA GHCNh official hourly product",
+      "url": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
+      "topics": [
+        "hourly_observations"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "noaa_ghcnh_inventory",
+      "title": "NOAA GHCNh station inventory",
+      "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-station-list.txt",
+      "topics": [
+        "hourly_observations",
+        "station_identity"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "noaa_ghcnh_sources",
+      "title": "NOAA GHCNh source-code list",
+      "url": "https://www.ncei.noaa.gov/oa/global-historical-climatology-network/hourly/doc/ghcnh-source-list.pdf",
+      "topics": [
+        "hourly_observations",
+        "quality_control"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "noaa_isd_transition",
+      "title": "NOAA ISD/Global Hourly successor service notice",
+      "url": "https://www.nesdis.noaa.gov/news/service-location-change-integrated-surface-data-global-hourly",
+      "topics": [
+        "hourly_observations",
+        "source_vintage"
+      ],
+      "source_type": "official_method_or_dataset"
+    },
+    {
+      "id": "hackathon_rules",
+      "title": "Meta AI Developer Hackathon official final rules",
+      "url": "https://cerebralvalley.ai/e/meta-ai-developer-hackathon/waiver",
+      "topics": [
+        "hackathon_judging"
+      ],
+      "source_type": "event_rules",
+      "role": "Participation/judging context, excluded from scientific-reference counts."
+    }
+  ],
+  "documents": [
+    {
+      "title": "Scientific evidence and implementation limits",
+      "path": "research/climate/SCIENCE_REVIEW.md"
+    }
+  ],
+  "date_semantics": {
+    "retrieved_on": "Acquisition date, never a substitute for observation date.",
+    "analysis_period": "Actual historical data included.",
+    "source_latest_record_date": "Most recent observed date in preserved raw source; may exceed analytical cutoff.",
+    "source_rows_updated_at": "Publisher catalog update timestamp, not an observation date.",
+    "projection_horizons": "Modeled climate time windows; not actual observation dates."
+  },
+  "stormwater_duration_verification": {
+    "moderate_2050": {
+      "rainfall_inches_in_one_hour": 2.13,
+      "rainfall_mm_in_one_hour": 54.102,
+      "sea_level_rise_inches": 30,
+      "evidence_ids": [
+        "nyc_stormwater_plan",
+        "nyc_climate_budget_2026",
+        "nysdec_harlem_2025"
+      ]
+    },
+    "extreme_2080": {
+      "rainfall_inches_in_one_hour": 3.66,
+      "rainfall_mm_in_one_hour": 92.964,
+      "evidence_ids": [
+        "nysdec_harlem_2025"
+      ]
+    },
+    "caution": "One-hour rainfall scenario wording does not establish a constant within-hour hyetograph or full model simulation duration. Do not substitute the separate NPCC3 coastal flood layer +31-inch assumption for the stormwater map +30-inch assumption."
+  },
+  "reference_summary": {
+    "journal_publications": 14,
+    "supporting_technical_references": 23,
+    "event_rules": 1,
+    "total_reference_entries": 38,
+    "recommended_ui_label": "Journal publications",
+    "recommended_ui_count": 14,
+    "recommended_ui_description": "Research, methods & assessments",
+    "scope": "Counts describe a selected bibliography, not a systematic review, independent replications, acquired data layers, or validations of a building-level model.",
+    "doi_verification": "All 14 DOI/title/year records checked against Crossref registration on 2026-10-28; publisher/authoritative sources checked for citation scope. HTTP access errors are not treated as invalid DOIs.",
+    "verification_file": "research/decision_patterns/reference_audit/registered_references.json"
+  },
+  "independent_audit": {
+    "checked_at": "2026-10-28T00:14:12.765527+00:00",
+    "status": "passed",
+    "compared_values": 192336,
+    "station_days": 51136,
+    "projection_mean_rows": 91,
+    "projection_extreme_rows": 12,
+    "method": "Independent preserved-native-file reconstruction; no production aggregator imported.",
+    "limitations": "Internal consistency does not establish sensor accuracy, homogenization or building-level predictive skill."
+  }
+}

@@ -1,0 +1,613 @@
+{
+  "title": "Brooklyn industrial field study",
+  "description": "Three real industrial records selected for an illustrative comparison. Not property listings, recommendations, or confirmed cold-storage facilities.",
+  "retrieved_at": "2026-10-27T19:10:00.710Z",
+  "snapshot": true,
+  "selection_method": "PLUTO manufacturing land use, M zoning, one building per lot, official valid footprints. Curated for illustration, not an optimized shortlist.",
+  "buildings": [
+    {
+      "entity_type": "building",
+      "feature_code": 2100,
+      "record_type": "Building",
+      "id": "109855",
+      "bin": "3008210",
+      "bbl": "3004880006",
+      "base_bbl": "3004880006",
+      "mappluto_bbl": "3004880006",
+      "match_method": "mappluto_bbl",
+      "address": "572 SMITH STREET",
+      "borough": "Brooklyn",
+      "borough_code": "BK",
+      "latitude": 40.671612326914,
+      "longitude": -74.00009473174343,
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -73.999915250683,
+                40.67134117324
+              ],
+              [
+                -74.000850845169,
+                40.671604908566
+              ],
+              [
+                -74.000925456929,
+                40.671625940427
+              ],
+              [
+                -74.00080147613,
+                40.671880920499
+              ],
+              [
+                -74.000378527147,
+                40.671761697139
+              ],
+              [
+                -73.999875016791,
+                40.671619761166
+              ],
+              [
+                -73.999791266551,
+                40.671596153134
+              ],
+              [
+                -73.999800375863,
+                40.671577419727
+              ],
+              [
+                -73.999915250683,
+                40.67134117324
+              ]
+            ],
+            [
+              [
+                -74.000139787207,
+                40.671564317308
+              ],
+              [
+                -74.000175192917,
+                40.671574163495
+              ],
+              [
+                -74.000189482367,
+                40.67154437352
+              ],
+              [
+                -74.000351768463,
+                40.671589501566
+              ],
+              [
+                -74.000323804682,
+                40.671647800117
+              ],
+              [
+                -74.000361002278,
+                40.671658143326
+              ],
+              [
+                -74.000388712934,
+                40.671600373369
+              ],
+              [
+                -74.000491352546,
+                40.67162891481
+              ],
+              [
+                -74.00049701529,
+                40.67161711083
+              ],
+              [
+                -74.000462607722,
+                40.671607542998
+              ],
+              [
+                -74.000487999006,
+                40.671554606993
+              ],
+              [
+                -74.000352833701,
+                40.671516907411
+              ],
+              [
+                -74.000330680382,
+                40.671527846038
+              ],
+              [
+                -74.000177688201,
+                40.671485302428
+              ],
+              [
+                -74.000139787207,
+                40.671564317308
+              ]
+            ]
+          ]
+        ]
+      },
+      "geometry_quality": "source_geometry",
+      "footprint_area_sqft": 27193,
+      "roof_height_ft": 29.4,
+      "construction_year": 1931,
+      "ground_elevation_ft": 8,
+      "lot_building_area_sqft": 30000,
+      "lot_area_sqft": 30000,
+      "lot_floors": 1,
+      "lot_buildings": 1,
+      "zoning": [
+        "M3-1"
+      ],
+      "land_use": "6",
+      "building_class": "F5",
+      "residential_units": 0,
+      "commercial_area_sqft": 30000,
+      "residential_area_sqft": 0,
+      "storage_area_sqft": 0,
+      "factory_area_sqft": 30000,
+      "built_far": 1,
+      "residential_far": 0,
+      "commercial_far": 2,
+      "facility_far": 0,
+      "year_altered": 2003,
+      "year_altered2": null,
+      "lot_front_ft": 100,
+      "lot_depth_ft": 300,
+      "lot_type": "3",
+      "owner_type": null,
+      "historic_district": null,
+      "landmark": null,
+      "flood_2007": 1,
+      "flood_2015": 1,
+      "pluto_version": "26v2",
+      "footprint_edited_at": "2017-08-22T15:46:36.000Z",
+      "source_ids": [
+        "nyc-footprints",
+        "nyc-pluto"
+      ],
+      "source": "https://data.cityofnewyork.us/d/5zhs-2jue",
+      "join_warning": null
+    },
+    {
+      "entity_type": "building",
+      "feature_code": 2100,
+      "record_type": "Building",
+      "id": "819422",
+      "bin": "3008212",
+      "bbl": "3004900016",
+      "base_bbl": "3004900016",
+      "mappluto_bbl": "3004900016",
+      "match_method": "mappluto_bbl",
+      "address": "592 SMITH STREET",
+      "borough": "Brooklyn",
+      "borough_code": "BK",
+      "latitude": 40.67081414905,
+      "longitude": -74.00035916197695,
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -74.000519664313,
+                40.670869419937
+              ],
+              [
+                -74.000500145331,
+                40.670909646952
+              ],
+              [
+                -74.000471041852,
+                40.670969626811
+              ],
+              [
+                -74.000440183213,
+                40.671033222239
+              ],
+              [
+                -74.00043471565,
+                40.67104449041
+              ],
+              [
+                -74.000425003273,
+                40.671041758283
+              ],
+              [
+                -74.000105067691,
+                40.670951757906
+              ],
+              [
+                -74.000198660209,
+                40.670758878163
+              ],
+              [
+                -74.000350447234,
+                40.670446062112
+              ],
+              [
+                -74.00035217986,
+                40.670442491563
+              ],
+              [
+                -74.000570577601,
+                40.670503928356
+              ],
+              [
+                -74.000681825646,
+                40.670535223364
+              ],
+              [
+                -74.000519664313,
+                40.670869419937
+              ]
+            ]
+          ]
+        ]
+      },
+      "geometry_quality": "source_geometry",
+      "footprint_area_sqft": 19259,
+      "roof_height_ft": 22.06,
+      "construction_year": 1920,
+      "ground_elevation_ft": 9,
+      "lot_building_area_sqft": 23500,
+      "lot_area_sqft": 20000,
+      "lot_floors": 1,
+      "lot_buildings": 1,
+      "zoning": [
+        "M3-1"
+      ],
+      "land_use": "6",
+      "building_class": "E2",
+      "residential_units": 0,
+      "commercial_area_sqft": 3000,
+      "residential_area_sqft": 0,
+      "storage_area_sqft": 0,
+      "factory_area_sqft": 0,
+      "built_far": 1.18,
+      "residential_far": 0,
+      "commercial_far": 2,
+      "facility_far": 0,
+      "year_altered": null,
+      "year_altered2": null,
+      "lot_front_ft": 100,
+      "lot_depth_ft": 200,
+      "lot_type": "3",
+      "owner_type": null,
+      "historic_district": null,
+      "landmark": null,
+      "flood_2007": 1,
+      "flood_2015": 1,
+      "pluto_version": "26v2",
+      "footprint_edited_at": "2017-08-22T15:27:24.000Z",
+      "source_ids": [
+        "nyc-footprints",
+        "nyc-pluto"
+      ],
+      "source": "https://data.cityofnewyork.us/d/5zhs-2jue",
+      "join_warning": null
+    },
+    {
+      "entity_type": "building",
+      "feature_code": 2100,
+      "record_type": "Building",
+      "id": "144401",
+      "bin": "3008232",
+      "bbl": "3005080010",
+      "base_bbl": "3005080010",
+      "mappluto_bbl": "3005080010",
+      "match_method": "mappluto_bbl",
+      "address": "45 BOWNE STREET",
+      "borough": "Brooklyn",
+      "borough_code": "BK",
+      "latitude": 40.681406559467504,
+      "longitude": -74.00667100611737,
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -74.006338373805,
+                40.681361594465
+              ],
+              [
+                -74.006575664557,
+                40.681159824498
+              ],
+              [
+                -74.00664261672,
+                40.68120545782
+              ],
+              [
+                -74.006870373291,
+                40.68136069312
+              ],
+              [
+                -74.007003638527,
+                40.68145152447
+              ],
+              [
+                -74.006766349214,
+                40.681653295312
+              ],
+              [
+                -74.006528014971,
+                40.681490850894
+              ],
+              [
+                -74.006338373805,
+                40.681361594465
+              ]
+            ]
+          ]
+        ]
+      },
+      "geometry_quality": "source_geometry",
+      "footprint_area_sqft": 15701,
+      "roof_height_ft": 23.89,
+      "construction_year": 1931,
+      "ground_elevation_ft": 9,
+      "lot_building_area_sqft": 32000,
+      "lot_area_sqft": 15794,
+      "lot_floors": 2,
+      "lot_buildings": 1,
+      "zoning": [
+        "M1-1"
+      ],
+      "land_use": "6",
+      "building_class": "E1",
+      "residential_units": 0,
+      "commercial_area_sqft": 32000,
+      "residential_area_sqft": 0,
+      "storage_area_sqft": 32000,
+      "factory_area_sqft": 0,
+      "built_far": 2.03,
+      "residential_far": 0,
+      "commercial_far": 1,
+      "facility_far": 2.4,
+      "year_altered": null,
+      "year_altered2": null,
+      "lot_front_ft": 159,
+      "lot_depth_ft": 99.33,
+      "lot_type": "5",
+      "owner_type": null,
+      "historic_district": null,
+      "landmark": null,
+      "flood_2007": 1,
+      "flood_2015": 1,
+      "pluto_version": "26v2",
+      "footprint_edited_at": "2017-08-22T15:44:38.000Z",
+      "source_ids": [
+        "nyc-footprints",
+        "nyc-pluto"
+      ],
+      "source": "https://data.cityofnewyork.us/d/5zhs-2jue",
+      "join_warning": null
+    }
+  ],
+  "contexts": {
+    "109855": {
+      "id": "109855",
+      "point": [
+        -74.00009473174343,
+        40.671612326914
+      ],
+      "retrieved_at": "2026-10-27T19:09:52.915Z",
+      "heat": {
+        "status": "available",
+        "value": {
+          "zcta": "11231",
+          "hvi": 2
+        },
+        "source": "https://data.cityofnewyork.us/d/4mhf-duep",
+        "note": "Resident heat vulnerability linked through Census 2020 ZCTA geography. It does not measure building air temperature, indoor conditions or cooling load."
+      },
+      "future_flood": {
+        "status": "available",
+        "value": {
+          "inside": true,
+          "scenario": "NPCC2013 high90 +31 inches",
+          "period": "2050–2059",
+          "baseline": "2000–2004"
+        },
+        "source": "https://data.cityofnewyork.us/d/27ya-gqtm",
+        "note": "Point membership in a historical 2013 planning scenario. It is not a current forecast, flood depth or whole-building exposure. The source cautions against property-specific risk judgments. Excluded from scoring."
+      },
+      "evacuation": {
+        "status": "available",
+        "value": {
+          "zones": [
+            "1"
+          ]
+        },
+        "source": "https://data.cityofnewyork.us/d/epne-qv9x",
+        "note": "Hurricane evacuation planning zone. It is not annual flood probability, an insurance rating or flood depth. Being outside a zone does not establish safety."
+      },
+      "truck": {
+        "status": "available",
+        "value": {
+          "distance_m": 34,
+          "street": "SMITH STREET",
+          "route_type": "Local",
+          "restriction": null
+        },
+        "source": "https://data.cityofnewyork.us/d/jjja-shxy",
+        "note": "Approximate straight-line distance from the reference point to an official route segment. It does not establish access, vehicle restrictions, travel time or delivery cost."
+      },
+      "stormwater": {
+        "status": "available",
+        "value": {
+          "spatial_test": "Interior reference point of the building geometry; not a whole-footprint intersection test",
+          "rainfall": {
+            "total_mm": 54.102,
+            "duration_hours": 1
+          },
+          "current": {
+            "category": "No intersection with mapped categories at this point; safety is not established",
+            "coverage": "Separate exclusion areas were not independently verified. No intersection confirms neither safety nor model coverage."
+          },
+          "future_2050": {
+            "category": "No intersection with mapped categories at this point; safety is not established",
+            "high_tide_separate": false,
+            "sea_level_rise_inches": 30,
+            "excluded_area": false,
+            "wetland_or_waterbody": false
+          },
+          "queries_succeeded": 7,
+          "queries_total": 7
+        },
+        "source": "https://services.arcgis.com/at3rDjch5X7i9Bag/ArcGIS/rest/services/Moderate_Flood_SLR_2050/FeatureServer",
+        "note": "NYC DEP scenario: 2.13 inches of rain in one hour. Current sea levels and 2050 sea levels (+30 in) remain separate. Mapping thresholds, model coverage and point sampling can omit exposure; an outside point does not establish safety. Categories are not exact depth, losses or annual probabilities. Future high tide is a separate coastal category and is not the historical 2013 +31 in scenario."
+      }
+    },
+    "144401": {
+      "id": "144401",
+      "point": [
+        -74.00667100611737,
+        40.681406559467504
+      ],
+      "retrieved_at": "2026-10-27T19:10:00.710Z",
+      "heat": {
+        "status": "available",
+        "value": {
+          "zcta": "11231",
+          "hvi": 2
+        },
+        "source": "https://data.cityofnewyork.us/d/4mhf-duep",
+        "note": "Resident heat vulnerability linked through Census 2020 ZCTA geography. It does not measure building air temperature, indoor conditions or cooling load."
+      },
+      "future_flood": {
+        "status": "available",
+        "value": {
+          "inside": true,
+          "scenario": "NPCC2013 high90 +31 inches",
+          "period": "2050–2059",
+          "baseline": "2000–2004"
+        },
+        "source": "https://data.cityofnewyork.us/d/27ya-gqtm",
+        "note": "Point membership in a historical 2013 planning scenario. It is not a current forecast, flood depth or whole-building exposure. The source cautions against property-specific risk judgments. Excluded from scoring."
+      },
+      "evacuation": {
+        "status": "available",
+        "value": {
+          "zones": [
+            "1"
+          ]
+        },
+        "source": "https://data.cityofnewyork.us/d/epne-qv9x",
+        "note": "Hurricane evacuation planning zone. It is not annual flood probability, an insurance rating or flood depth. Being outside a zone does not establish safety."
+      },
+      "truck": {
+        "status": "available",
+        "value": {
+          "distance_m": 58,
+          "street": "HAMILTON AVENUE",
+          "route_type": "Local",
+          "restriction": null
+        },
+        "source": "https://data.cityofnewyork.us/d/jjja-shxy",
+        "note": "Approximate straight-line distance from the reference point to an official route segment. It does not establish access, vehicle restrictions, travel time or delivery cost."
+      },
+      "stormwater": {
+        "status": "available",
+        "value": {
+          "spatial_test": "Interior reference point of the building geometry; not a whole-footprint intersection test",
+          "rainfall": {
+            "total_mm": 54.102,
+            "duration_hours": 1
+          },
+          "current": {
+            "category": "No intersection with mapped categories at this point; safety is not established",
+            "coverage": "Separate exclusion areas were not independently verified. No intersection confirms neither safety nor model coverage."
+          },
+          "future_2050": {
+            "category": "No intersection with mapped categories at this point; safety is not established",
+            "high_tide_separate": false,
+            "sea_level_rise_inches": 30,
+            "excluded_area": false,
+            "wetland_or_waterbody": false
+          },
+          "queries_succeeded": 7,
+          "queries_total": 7
+        },
+        "source": "https://services.arcgis.com/at3rDjch5X7i9Bag/ArcGIS/rest/services/Moderate_Flood_SLR_2050/FeatureServer",
+        "note": "NYC DEP scenario: 2.13 inches of rain in one hour. Current sea levels and 2050 sea levels (+30 in) remain separate. Mapping thresholds, model coverage and point sampling can omit exposure; an outside point does not establish safety. Categories are not exact depth, losses or annual probabilities. Future high tide is a separate coastal category and is not the historical 2013 +31 in scenario."
+      }
+    },
+    "819422": {
+      "id": "819422",
+      "point": [
+        -74.00035916197695,
+        40.67081414905
+      ],
+      "retrieved_at": "2026-10-27T19:09:56.402Z",
+      "heat": {
+        "status": "available",
+        "value": {
+          "zcta": "11231",
+          "hvi": 2
+        },
+        "source": "https://data.cityofnewyork.us/d/4mhf-duep",
+        "note": "Resident heat vulnerability linked through Census 2020 ZCTA geography. It does not measure building air temperature, indoor conditions or cooling load."
+      },
+      "future_flood": {
+        "status": "available",
+        "value": {
+          "inside": true,
+          "scenario": "NPCC2013 high90 +31 inches",
+          "period": "2050–2059",
+          "baseline": "2000–2004"
+        },
+        "source": "https://data.cityofnewyork.us/d/27ya-gqtm",
+        "note": "Point membership in a historical 2013 planning scenario. It is not a current forecast, flood depth or whole-building exposure. The source cautions against property-specific risk judgments. Excluded from scoring."
+      },
+      "evacuation": {
+        "status": "available",
+        "value": {
+          "zones": [
+            "1"
+          ]
+        },
+        "source": "https://data.cityofnewyork.us/d/epne-qv9x",
+        "note": "Hurricane evacuation planning zone. It is not annual flood probability, an insurance rating or flood depth. Being outside a zone does not establish safety."
+      },
+      "truck": {
+        "status": "available",
+        "value": {
+          "distance_m": 28,
+          "street": "BAY STREET",
+          "route_type": "Local",
+          "restriction": null
+        },
+        "source": "https://data.cityofnewyork.us/d/jjja-shxy",
+        "note": "Approximate straight-line distance from the reference point to an official route segment. It does not establish access, vehicle restrictions, travel time or delivery cost."
+      },
+      "stormwater": {
+        "status": "available",
+        "value": {
+          "spatial_test": "Interior reference point of the building geometry; not a whole-footprint intersection test",
+          "rainfall": {
+            "total_mm": 54.102,
+            "duration_hours": 1
+          },
+          "current": {
+            "category": "No intersection with mapped categories at this point; safety is not established",
+            "coverage": "Separate exclusion areas were not independently verified. No intersection confirms neither safety nor model coverage."
+          },
+          "future_2050": {
+            "category": "No intersection with mapped categories at this point; safety is not established",
+            "high_tide_separate": false,
+            "sea_level_rise_inches": 30,
+            "excluded_area": false,
+            "wetland_or_waterbody": false
+          },
+          "queries_succeeded": 7,
+          "queries_total": 7
+        },
+        "source": "https://services.arcgis.com/at3rDjch5X7i9Bag/ArcGIS/rest/services/Moderate_Flood_SLR_2050/FeatureServer",
+        "note": "NYC DEP scenario: 2.13 inches of rain in one hour. Current sea levels and 2050 sea levels (+30 in) remain separate. Mapping thresholds, model coverage and point sampling can omit exposure; an outside point does not establish safety. Categories are not exact depth, losses or annual probabilities. Future high tide is a separate coastal category and is not the historical 2013 +31 in scenario."
+      }
+    }
+  }
+}

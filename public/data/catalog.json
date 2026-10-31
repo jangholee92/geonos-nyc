@@ -1,0 +1,663 @@
+{
+  "retrieved_at": "2026-10-27",
+  "layers": [
+    {
+      "id": "footprints",
+      "title": "NYC building footprints · complete source",
+      "category": "Buildings & parcels",
+      "publisher": "NYC OTI",
+      "status": "connected",
+      "scope": "All five boroughs · complete source snapshot",
+      "resolution": "DOITT_ID / BIN · individual footprint",
+      "url": "https://data.cityofnewyork.us/d/5zhs-2jue",
+      "method": "All 1,082,964 source records are archived. The web app queries bounded pages by area, address or identifier from the official service.",
+      "caveats": [
+        "Includes garages, other structures and construction sites. It does not represent every physical structure.",
+        "7 invalid geometries and 34 placeholders are excluded from area and spatial context calculations.",
+        "Plan-view footprint area is distinct from floor area.",
+        "Pinned surroundings are withheld if the selected native outline or edit date differs from the archived footprint; invalid-ID guards describe the dated snapshot."
+      ],
+      "asset": "/data/citywide/citywide_counts.json",
+      "record_count": 1082964,
+      "date": "2026-10-25T08:21:07Z"
+    },
+    {
+      "id": "pluto",
+      "title": "Tax-lot attributes · PLUTO 26v2",
+      "category": "Buildings & parcels",
+      "publisher": "NYC DCP",
+      "status": "connected",
+      "scope": "All five boroughs · all source land uses",
+      "resolution": "BBL · tax lot",
+      "url": "https://data.cityofnewyork.us/d/64uk-42ks",
+      "method": "Tax-lot search, floor area, use, FAR, building count, landmarks and historic districts. Joins prioritize mappluto_bbl.",
+      "caveats": [
+        "219,982 lots link to multiple footprints. Lot attributes are not individual-building measurements.",
+        "224 footprints have no matching lot. Missing values are not estimated.",
+        "Zoning labels and FAR alone do not establish permission to develop or suitability for cold storage."
+      ],
+      "record_count": 858284,
+      "date": "26v2 / 2026-08-24T20:48:51Z"
+    },
+    {
+      "id": "4mhf-duep",
+      "title": "Heat Vulnerability Index · HVI",
+      "category": "Environment & transport",
+      "publisher": "NYC Department of Health and Mental Hygiene",
+      "status": "connected",
+      "scope": "Citywide · subject to source coverage",
+      "resolution": "2020 Census ZCTA",
+      "url": "https://data.cityofnewyork.us/d/4mhf-duep",
+      "method": "A social and environmental index of resident vulnerability to heat-related mortality, linked through the reference-point ZCTA.",
+      "caveats": [
+        "A reference-point query does not measure exposure across the whole building footprint.",
+        "HVI and historical coastal scenarios are excluded from comparison scores.",
+        "The 2024 table uses historical components from 2016–2020. A 2026 metadata edit is not a new temperature observation."
+      ],
+      "date": "2024-09-19T14:16:07+00:00",
+      "source_metadata_updated_at": "2026-04-21T13:20:49+00:00",
+      "metadata_verified_at": "2026-10-28T00:33:38.738673+00:00"
+    },
+    {
+      "id": "jjja-shxy",
+      "title": "Official truck routes",
+      "category": "Environment & transport",
+      "publisher": "NYC Department of Transportation",
+      "status": "connected",
+      "scope": "Citywide · subject to source coverage",
+      "resolution": "Road segments",
+      "url": "https://data.cityofnewyork.us/d/jjja-shxy",
+      "source_data_updated_at": "2026-03-02T19:36:22Z",
+      "source_revision_checked_at": "2026-10-28T01:21:46.592288Z",
+      "source_revision_check_mode": "last-verified-metadata",
+      "current_dot_guidance_url": "https://www.nyc.gov/html/dot/html/motorist/truckrouting.shtml",
+      "method": "Approximate straight-line distance from the reference point to a source route segment, with a bounded query and an unknown result beyond the reliable query limit. Vehicle routing, access and travel time are not calculated.",
+      "caveats": [
+        "Proximity does not establish lawful truck access.",
+        "Publisher metadata checked October 28, 2026 UTC reported a March 2, 2026 data update. This revision is not rechecked on every route query. Incorporation and effective dates of the DOT redesign announced September 4, 2026 have not been independently verified; consult current DOT guidance and restrictions."
+      ],
+      "date": "2026-03-02T19:36:22+00:00",
+      "source_metadata_updated_at": "2026-03-02T19:30:57+00:00",
+      "metadata_verified_at": "2026-10-28T00:33:35.400933+00:00"
+    },
+    {
+      "id": "27ya-gqtm",
+      "title": "2050s coastal flooding · historical scenario",
+      "category": "Environment & transport",
+      "publisher": "NYC climate office / NPCC / CUNY",
+      "status": "connected",
+      "scope": "Citywide · subject to source coverage",
+      "resolution": "NPCC2013 · high90 +31in",
+      "url": "https://data.cityofnewyork.us/d/27ya-gqtm",
+      "method": "Checks reference-point membership in a historical planning scenario. NPCC4 regional projections are presented separately.",
+      "caveats": [
+        "A reference-point query does not measure exposure across the whole building footprint.",
+        "HVI and historical coastal scenarios are excluded from comparison scores.",
+        "Source data date is 2013. Metadata edits in 2026 do not make this a newly modeled coastal projection."
+      ],
+      "date": "2013-07-23T21:50:12+00:00",
+      "source_metadata_updated_at": "2026-04-21T13:10:16+00:00",
+      "metadata_verified_at": "2026-10-28T00:33:35.346067+00:00"
+    },
+    {
+      "id": "subway_stations",
+      "title": "MTA subway stations",
+      "category": "Urban context",
+      "publisher": "Metropolitan Transportation Authority",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.ny.gov/d/39hk-dx4f",
+      "method": "Source coordinates; native fields plus id,label,source",
+      "caveats": [
+        "Station centroids, not entrance locations or walking times.",
+        "Multiple stations may share one complex. ADA status and service can change."
+      ],
+      "asset": "/data/layers/subway_stations.geojson",
+      "display_only": false,
+      "record_count": 496,
+      "date": "2026-10-27T04:08:36+00:00"
+    },
+    {
+      "id": "firehouses",
+      "title": "FDNY firehouses",
+      "category": "Urban context",
+      "publisher": "Fire Department of New York City (FDNY)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/hc8x-tcnd",
+      "method": "Source coordinates; native fields plus id,label,source",
+      "caveats": [
+        "Firehouse locations only; proximity does not determine emergency response time, staffing or capacity."
+      ],
+      "asset": "/data/layers/firehouses.geojson",
+      "display_only": false,
+      "record_count": 219,
+      "date": "2022-04-08T18:08:37+00:00"
+    },
+    {
+      "id": "health_facilities",
+      "title": "Health facilities · classified by type",
+      "category": "Urban context",
+      "publisher": "New York State Department of Health",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://health.data.ny.gov/d/vn5v-hh5r",
+      "method": "Source coordinates; native fields plus id,label,source",
+      "caveats": [
+        "Actual source data contain 17 facility types, beyond the stale hospitals/extension-only catalog description. Retain and filter the native description.",
+        "Coordinates are geocoded mailing addresses; emergency departments, available beds and travel times are not inferred."
+      ],
+      "asset": "/data/layers/health_facilities.geojson",
+      "display_only": false,
+      "record_count": 2128,
+      "date": "2026-10-23T19:30:53+00:00"
+    },
+    {
+      "id": "hospitals",
+      "title": "Hospitals & off-campus emergency facilities",
+      "category": "Urban context",
+      "publisher": "New York State Department of Health",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://health.data.ny.gov/d/vn5v-hh5r",
+      "method": "Filter native description exactly Hospital or Off-Campus Emergency Department; no availability/ED capability inference",
+      "caveats": [
+        "Actual source data contain 17 facility types, beyond the stale hospitals/extension-only catalog description. Retain and filter the native description.",
+        "Coordinates are geocoded mailing addresses; emergency departments, available beds and travel times are not inferred.",
+        "67 source records classified as Hospital and 1 as Off-Campus Emergency Department. This does not establish emergency capability or current availability at every hospital."
+      ],
+      "asset": "/data/layers/hospitals.geojson",
+      "display_only": false,
+      "record_count": 68,
+      "date": "2026-10-23T19:30:53+00:00"
+    },
+    {
+      "id": "parks.overview",
+      "title": "Parks managed properties",
+      "category": "Urban context",
+      "publisher": "Department of Parks and Recreation (DPR)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/enfh-gkve",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 5m",
+      "caveats": [
+        "Each record is a Parks acquisition/property, not necessarily an independent public park or entrance.",
+        "Includes partially managed property; accessible recreation and canopy are not inferred.",
+        "Retired records are retained with the native flag.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview."
+      ],
+      "asset": "/data/layers/parks.overview.geojson",
+      "display_only": true,
+      "record_count": 2061,
+      "date": "2026-10-16T13:05:08+00:00"
+    },
+    {
+      "id": "hurricane_evacuation_zones.overview",
+      "title": "Hurricane evacuation zones",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/epne-qv9x",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 10m",
+      "caveats": [
+        "Emergency evacuation planning zones; not flood probabilities or FEMA insurance zones.",
+        "No zone or absence from this layer is not a no-flood-risk finding.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview."
+      ],
+      "asset": "/data/layers/hurricane_evacuation_zones.overview.geojson",
+      "display_only": true,
+      "record_count": 8,
+      "date": "2026-05-26T19:41:10+00:00"
+    },
+    {
+      "id": "community_districts.overview",
+      "title": "Community district boundaries",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/5crt-au7u",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 10m",
+      "caveats": [
+        "Planning community districts are statistical/context areas, not parcel-specific measurements.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview."
+      ],
+      "asset": "/data/layers/community_districts.overview.geojson",
+      "display_only": true,
+      "record_count": 71,
+      "date": "2026-05-26T19:36:29+00:00"
+    },
+    {
+      "id": "air_quality_2024_cd",
+      "title": "PM2.5 & NO₂ · 2024 annual means",
+      "category": "Urban context",
+      "publisher": "Department of Health and Mental Hygiene (DOHMH)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "District-level statistics",
+      "url": "https://data.cityofnewyork.us/d/c3uy-2p5r",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 10m",
+      "caveats": [
+        "Neighborhood surveillance/model summaries, not on-site monitors or real-time/indoor air.",
+        "Annual, summer and winter means coexist; do not combine time/measure types.",
+        "PM2.5 and NO2 use different units. Preserve measure_info and geography type.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview."
+      ],
+      "asset": "/data/layers/air_quality_2024_cd.geojson",
+      "display_only": true,
+      "record_count": 59,
+      "date": "2026-06-18T18:46:15+00:00"
+    },
+    {
+      "id": "zoning_districts.overview",
+      "title": "Zoning districts",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/mm69-vrje",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 5m",
+      "caveats": [
+        "Zoning geometry and special districts require full text, amendments and site-specific review; they do not by themselves establish a legal use.",
+        "Separate zoning districts, special districts, subdistricts, overlays, height districts and amendments.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview.",
+        "Acquired archive version: 202606 (official catalog description). A stale platform row-update date is not the archive vintage."
+      ],
+      "asset": "/data/layers/zoning_districts.overview.geojson",
+      "display_only": true,
+      "record_count": 5415,
+      "date": "202606 (official catalog description)"
+    },
+    {
+      "id": "zoning_commercial_overlays",
+      "title": "Commercial overlays",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/mm69-vrje",
+      "method": "EPSG:4326; 6 decimal coordinates; raw source retained",
+      "caveats": [
+        "Zoning geometry and special districts require full text, amendments and site-specific review; they do not by themselves establish a legal use.",
+        "Separate zoning districts, special districts, subdistricts, overlays, height districts and amendments.",
+        "Acquired archive version: 202606 (official catalog description). A stale platform row-update date is not the archive vintage."
+      ],
+      "asset": "/data/layers/zoning_commercial_overlays.geojson",
+      "display_only": false,
+      "record_count": 9623,
+      "date": "202606 (official catalog description)"
+    },
+    {
+      "id": "zoning_special_districts",
+      "title": "Special-purpose districts",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/mm69-vrje",
+      "method": "EPSG:4326; 6 decimal coordinates; raw source retained",
+      "caveats": [
+        "Zoning geometry and special districts require full text, amendments and site-specific review; they do not by themselves establish a legal use.",
+        "Separate zoning districts, special districts, subdistricts, overlays, height districts and amendments.",
+        "Acquired archive version: 202606 (official catalog description). A stale platform row-update date is not the archive vintage."
+      ],
+      "asset": "/data/layers/zoning_special_districts.geojson",
+      "display_only": false,
+      "record_count": 95,
+      "date": "202606 (official catalog description)"
+    },
+    {
+      "id": "zoning_special_subdistricts",
+      "title": "Special-purpose subdistricts",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/mm69-vrje",
+      "method": "EPSG:4326; 6 decimal coordinates; raw source retained",
+      "caveats": [
+        "Zoning geometry and special districts require full text, amendments and site-specific review; they do not by themselves establish a legal use.",
+        "Separate zoning districts, special districts, subdistricts, overlays, height districts and amendments.",
+        "Acquired archive version: 202606 (official catalog description). A stale platform row-update date is not the archive vintage."
+      ],
+      "asset": "/data/layers/zoning_special_subdistricts.geojson",
+      "display_only": false,
+      "record_count": 336,
+      "date": "202606 (official catalog description)"
+    },
+    {
+      "id": "zoning_limited_height",
+      "title": "Limited-height districts",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/mm69-vrje",
+      "method": "EPSG:4326; 6 decimal coordinates; raw source retained",
+      "caveats": [
+        "Zoning geometry and special districts require full text, amendments and site-specific review; they do not by themselves establish a legal use.",
+        "Separate zoning districts, special districts, subdistricts, overlays, height districts and amendments.",
+        "Acquired archive version: 202606 (official catalog description). A stale platform row-update date is not the archive vintage."
+      ],
+      "asset": "/data/layers/zoning_limited_height.geojson",
+      "display_only": false,
+      "record_count": 14,
+      "date": "202606 (official catalog description)"
+    },
+    {
+      "id": "zoning_map_amendments",
+      "title": "Zoning map amendments",
+      "category": "Urban context",
+      "publisher": "Department of City Planning (DCP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/mm69-vrje",
+      "method": "EPSG:4326; 6 decimal coordinates; raw source retained",
+      "caveats": [
+        "Zoning geometry and special districts require full text, amendments and site-specific review; they do not by themselves establish a legal use.",
+        "Separate zoning districts, special districts, subdistricts, overlays, height districts and amendments.",
+        "Acquired archive version: 202606 (official catalog description). A stale platform row-update date is not the archive vintage."
+      ],
+      "asset": "/data/layers/zoning_map_amendments.geojson",
+      "display_only": false,
+      "record_count": 1418,
+      "date": "202606 (official catalog description)"
+    },
+    {
+      "id": "canopy_2010_cd",
+      "title": "Tree canopy · 2010 district statistics",
+      "category": "Urban context",
+      "publisher": "Department of Parks and Recreation (DPR)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "District-level statistics",
+      "url": "https://data.cityofnewyork.us/d/hnxz-kkn5",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 10m",
+      "caveats": [
+        "Historical 2010 canopy assessment metrics; not current shade, parcel temperature or future growth.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview."
+      ],
+      "asset": "/data/layers/canopy_2010_cd.geojson",
+      "display_only": true,
+      "record_count": 71,
+      "date": "2012-06-28T16:57:57+00:00"
+    },
+    {
+      "id": "stormwater_extreme_2080.overview",
+      "title": "Stormwater · 2080 extreme scenario",
+      "category": "Urban context",
+      "publisher": "Department of Environmental Protection (DEP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 10m",
+      "caveats": [
+        "Modeled potential flooding under specified rainfall intensity and sea level conditions; not observations or unconditional probabilities.",
+        "Keep the 1.77, 2.13 and 3.66 inches/hour scenarios and current/2050/2080 sea levels distinct.",
+        "No modeled coverage is not a safe-site determination; retain source depth/category definitions before scoring.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview.",
+        "Current and 2050 moderate scenarios use 54.1 mm in one hour; 2050 high tide includes +30 in. The 2080 extreme uses different rainfall, so a simple subtraction is not a comparable change estimate.",
+        "This 2080 product is a simplified map preview only. Selected-site point queries and full-city surroundings currently cover the two moderate scenarios, not this extreme scenario."
+      ],
+      "asset": "/data/layers/stormwater_extreme_2080.overview.geojson",
+      "display_only": true,
+      "record_count": 3,
+      "date": "2024-07-03T21:04:08+00:00"
+    },
+    {
+      "id": "stormwater_moderate_2050.overview",
+      "title": "Stormwater · 2050 sea levels / 54.1 mm in one hour",
+      "category": "Urban context",
+      "publisher": "Department of Environmental Protection (DEP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 10m",
+      "caveats": [
+        "Modeled potential flooding under specified rainfall intensity and sea level conditions; not observations or unconditional probabilities.",
+        "Keep the 1.77, 2.13 and 3.66 inches/hour scenarios and current/2050/2080 sea levels distinct.",
+        "No modeled coverage is not a safe-site determination; retain source depth/category definitions before scoring.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview.",
+        "Current and 2050 moderate scenarios use 54.1 mm in one hour; 2050 high tide includes +30 in. The 2080 extreme uses different rainfall, so a simple subtraction is not a comparable change estimate.",
+        "Map previews omit small fragments and are not used for surroundings calculations. Full-resolution pinned-download geometry is separate from hosted source-service point queries, which may use a different revision.",
+        "Published methodology represents buildings as voids in the surface-water mesh. Blank interiors do not establish low risk. Outside-outline areas are geometric context, not flooded indoor floor area."
+      ],
+      "asset": "/data/layers/stormwater_moderate_2050.overview.geojson",
+      "display_only": true,
+      "record_count": 3,
+      "date": "2024-07-03T21:04:08+00:00",
+      "derived_surroundings": {
+        "manifest": "/data/surroundings/manifest.json",
+        "method_document": "/data/surroundings/method.txt",
+        "footprint_records": 1082964,
+        "computed": 1082923,
+        "unknown_invalid_or_placeholder": 41,
+        "method": "Full-resolution pinned downloadable polygons; global minimum outline distance and 0–5/5–10/10–20 m external-band areas in EPSG:2263. No risk score or indoor-depth inference. Browser lazily fetches one bounded static shard; source geometry and edit date must match."
+      }
+    },
+    {
+      "id": "stormwater_moderate_current.overview",
+      "title": "Stormwater · current sea levels / 54.1 mm in one hour",
+      "category": "Urban context",
+      "publisher": "Department of Environmental Protection (DEP)",
+      "status": "connected",
+      "scope": "NYC · within source coverage",
+      "resolution": "Source-defined points, polygons or categories",
+      "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+      "method": "EPSG:4326; 6 decimal coordinates; topology-preserving simplification 10m",
+      "caveats": [
+        "Modeled potential flooding under specified rainfall intensity and sea level conditions; not observations or unconditional probabilities.",
+        "Keep the 1.77, 2.13 and 3.66 inches/hour scenarios and current/2050/2080 sea levels distinct.",
+        "No modeled coverage is not a safe-site determination; retain source depth/category definitions before scoring.",
+        "Simplified display geometry. Originals are archived locally; precise exposure or distance calculations do not use this preview.",
+        "Current and 2050 moderate scenarios use 54.1 mm in one hour; 2050 high tide includes +30 in. The 2080 extreme uses different rainfall, so a simple subtraction is not a comparable change estimate.",
+        "Map previews omit small fragments and are not used for surroundings calculations. Full-resolution pinned-download geometry is separate from hosted source-service point queries, which may use a different revision.",
+        "Published methodology represents buildings as voids in the surface-water mesh. Blank interiors do not establish low risk. Outside-outline areas are geometric context, not flooded indoor floor area."
+      ],
+      "asset": "/data/layers/stormwater_moderate_current.overview.geojson",
+      "display_only": true,
+      "record_count": 2,
+      "date": "2024-07-03T21:04:08+00:00",
+      "derived_surroundings": {
+        "manifest": "/data/surroundings/manifest.json",
+        "method_document": "/data/surroundings/method.txt",
+        "footprint_records": 1082964,
+        "computed": 1082923,
+        "unknown_invalid_or_placeholder": 41,
+        "method": "Full-resolution pinned downloadable polygons; global minimum outline distance and 0–5/5–10/10–20 m external-band areas in EPSG:2263. No risk score or indoor-depth inference. Browser lazily fetches one bounded static shard; source geometry and edit date must match."
+      }
+    },
+    {
+      "id": "ll84_energy",
+      "title": "Energy & water benchmarking · LL84 2024",
+      "category": "Building energy",
+      "publisher": "Department of Buildings (DOB)",
+      "status": "connected",
+      "scope": "Reporting properties · subset of city buildings",
+      "resolution": "Reported portfolio / many-to-many BBL–BIN links",
+      "url": "https://data.cityofnewyork.us/d/5zyy-y8am",
+      "method": "39,090 source reports are archived and indexed by 26,736 syntactically valid BBLs. Linked reports retain their original reporting scope.",
+      "caveats": [
+        "Latest native report_year observed at retrieval is 2024; year_ending confirms calendar year 2024.",
+        "Owner-submitted benchmarking covers reporting properties, not all NYC buildings.",
+        "A Portfolio Manager property may include multiple BBLs/BINs; do not allocate aggregate energy/GHG to one building or double-count linked lots.",
+        "Missing or nonnumeric values remain null with raw source values; reported data quality alerts retained.",
+        "Do not infer spare electric capacity, utility reliability, or compliance from consumption.",
+        "A valid-format BBL does not verify the mapping reported by the property owner.",
+        "EUI for a multi-building or multi-lot report is not allocated to individual buildings or counted repeatedly.",
+        "Native parent-property IDs and reporting scope are preserved. Parent and child reports may describe overlapping energy; do not sum them or compare their EUI denominators as independent building measurements."
+      ],
+      "asset": "/data/energy/index.json",
+      "record_count": 39090,
+      "date": "Reporting year 2024 · source updated 2025-11-25T19:02:35+00:00"
+    },
+    {
+      "id": "landcover_2017_raster",
+      "title": "Land cover · 2017 high-resolution raster",
+      "category": "Potential data extension",
+      "publisher": "NYC",
+      "status": "reference",
+      "scope": "New York City",
+      "resolution": "6 inch raster",
+      "url": "https://data.cityofnewyork.us/d/he6d-2qns",
+      "method": "Official source and download link verified. The 1.33 GB raster was not acquired or connected in this analysis.",
+      "caveats": [
+        "2017 top-down 8-class land-cover raster; canopy overhanging a surface is assigned to canopy.",
+        "Six-inch pixel spacing is not six-inch positional/prediction accuracy; not current live canopy."
+      ]
+    },
+    {
+      "id": "stormwater_limited_current",
+      "title": "Limited rainfall · current sea levels",
+      "category": "Partially processed",
+      "publisher": "NYC DEP",
+      "status": "partial",
+      "scope": "NYC model coverage",
+      "resolution": "1.77 in/h scenario",
+      "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+      "method": "The official limited-current archive is acquired but not decoded by the current OpenFileGDB driver because this specific layer uses compressed CDF tables. It is not connected to site analysis; no other scenario substitutes for it.",
+      "caveats": [
+        "Other scenarios are not used as substitutes."
+      ]
+    },
+    {
+      "id": "noaa_station_climate",
+      "title": "NOAA NYC-area station climate context, 1991–2025",
+      "category": "Weather & climate",
+      "publisher": "NOAA / NPCC / see source",
+      "status": "connected",
+      "scope": "four_station_points; nearest_station_is_reference_only",
+      "resolution": "observed_station_with_derived_statistics",
+      "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00094728.dly",
+      "method": "Quality-controlled observations or published regional model statistics. Definitions, processing and primary research are documented in the science notes.",
+      "caveats": [
+        "A five-year recent period is weather/climate context, not a new 30-year normal or attribution study.",
+        "Station siting, relocations, observation practices, airport/park surroundings and ocean proximity affect comparisons.",
+        "Daily temperature and precipitation do not provide humidity, heat index, WBGT, cooling peaks, subdaily rainfall, flood depth or financial losses.",
+        "No 2026 observations are included; no station values are forecasts or parcel-scale measurements.",
+        "Unadjusted derived baseline statistics are not official NOAA Climate Normals.",
+        "Raw source includes 2026 through October 24 but these partial-year records are excluded from the analytical products."
+      ],
+      "asset": "/data/climate/station_climate.json",
+      "date": "1991-01-01 to 2025-12-31"
+    },
+    {
+      "id": "npcc4_mean_projections",
+      "title": "NPCC4 temperature and precipitation change",
+      "category": "Weather & climate",
+      "publisher": "NOAA / NPCC / see source",
+      "status": "connected",
+      "scope": "NYC metropolitan/regional climate context; not parcel-specific output",
+      "resolution": "published_regional_model_ensemble",
+      "url": "https://data.cityofnewyork.us/resource/hmdk-eidg.json",
+      "method": "Quality-controlled observations or published regional model statistics. Definitions, processing and primary research are documented in the science notes.",
+      "caveats": [
+        "Do not add these 1981-2010 changes directly to the separate 1991-2020 station baseline; rebase using consistent observations and methods first.",
+        "The 25th-75th percentile interval is model/scenario spread, not a confidence interval for a building.",
+        "Pooled percentiles combine two scenarios; choose scenario_ensemble_means only when explicitly presenting scenario-specific means.",
+        "Raw GCMs include models with high climate sensitivity; NPCC discusses the hot-model issue and comparison with constrained subsets.",
+        "Annual precipitation percent changes do not scale hourly rainfall, flood depth, property losses, or drainage design storms.",
+        "No parcel differentiation, building indoor temperatures, cooling bills, or flood inundation is derived here."
+      ],
+      "asset": "/data/climate/npcc4_projections.json",
+      "date": "2024"
+    },
+    {
+      "id": "npcc4_extreme_projections",
+      "title": "NPCC4 regional extreme temperature and rain-day frequency",
+      "category": "Weather & climate",
+      "publisher": "NOAA / NPCC / see source",
+      "status": "connected",
+      "scope": "NYC metropolitan/regional climate context; not parcel-specific output",
+      "resolution": "published_regional_model_ensemble",
+      "url": "https://data.cityofnewyork.us/resource/38ps-fnsg.json",
+      "method": "Quality-controlled observations or published regional model statistics. Definitions, processing and primary research are documented in the science notes.",
+      "caveats": [
+        "Model/scenario spread is not calibrated probability.",
+        "30-year mean event frequencies are not single-year forecasts.",
+        "Daily rain thresholds do not measure hourly rain intensity.",
+        "Sea-level values exist in preserved source but are not normalized in this climate product."
+      ],
+      "asset": "/data/climate/npcc4_projections.json",
+      "date": "2024"
+    },
+    {
+      "id": "noaa_hourly_extension",
+      "title": "NOAA · paired airport heat and moisture",
+      "category": "Weather & climate",
+      "publisher": "NOAA National Centers for Environmental Information (NCEI)",
+      "status": "connected",
+      "scope": "JFK, LaGuardia and Newark · airport outdoor observations, 2021–2025 UTC",
+      "resolution": "At most one paired routine observation in each UTC hour bin; station points",
+      "url": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
+      "method": "A conservative documented source/QC policy retains temperature and dew point from the same routine FM15 observation. Samples, coverage, empirical summaries and coincident peaks retain exact timestamps. No interpolation or separate-time pairing.",
+      "caveats": [
+        "Airport outdoor observations do not measure a selected property or indoor conditions. Central Park is not included in this supplemental product.",
+        "Coverage is measured against all UTC clock-hour bins. A retained sample does not establish constant or continuous conditions during that hour.",
+        "2021–2025 is a five-year sample, not a 30-year normal or engineering design-weather series. Dew point is moisture context, not a cooling-load or power-capacity estimate.",
+        "Legacy ISD/Global Hourly ended in August 2025; all five years consistently use its GHCNh successor.",
+        "No heat index, wet-bulb, WBGT, synthetic future hourly weather, cost or refrigeration-load model is derived."
+      ],
+      "asset": "/data/climate/hourly_context.json",
+      "date": "2021-01-01T00:00:00Z to 2025-12-31T23:59:59Z",
+      "record_count": 130951,
+      "source_file_count": 15,
+      "coverage": {
+        "stations": 3,
+        "station_year_files": 15,
+        "raw_records": 190666,
+        "paired_hourly_samples": 130951,
+        "expected_station_hour_bins": 131472
+      }
+    },
+    {
+      "id": "era5land_extension",
+      "title": "ERA5-Land contextual reanalysis extension",
+      "category": "Weather & climate",
+      "publisher": "NOAA / NPCC / see source",
+      "status": "reference",
+      "scope": "native_approximately_9km; delivered_0.1_degree_grid",
+      "resolution": "potential_reanalysis",
+      "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=overview",
+      "method": "Primary literature and official documentation reviewed. Data acquisition and building-level analysis have not been performed.",
+      "caveats": [
+        "CDS account/licence and data acquisition not completed here.",
+        "A point request selects grid data; not a parcel observation."
+      ],
+      "date": "See source metadata"
+    },
+    {
+      "id": "lst_extension",
+      "title": "Landsat Collection 2 surface temperature extension",
+      "category": "Weather & climate",
+      "publisher": "NOAA / NPCC / see source",
+      "status": "reference",
+      "scope": "Landsat8_9_native_thermal_100m_resampled_delivery_30m",
+      "resolution": "potential_satellite_surface_temperature",
+      "url": "https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature",
+      "method": "Primary literature and official documentation reviewed. Data acquisition and building-level analysis have not been performed.",
+      "caveats": [
+        "No LST raster or building extraction acquired in this climate package.",
+        "LST is not 2m air temperature or indoor temperature.",
+        "Require cloud/shadow/emissivity QA and date-specific metadata."
+      ],
+      "date": "See source metadata"
+    }
+  ]
+}

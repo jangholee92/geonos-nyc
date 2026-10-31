@@ -1,0 +1,275 @@
+{
+  "id": "smith-street-surroundings",
+  "title": "Two nearby buildings. One important difference.",
+  "created_at": "2026-10-28T00:05:44.350258+00:00",
+  "records": [
+    {
+      "id": "109855",
+      "address": "572 SMITH STREET",
+      "point": [
+        -74.00009473174343,
+        40.671612326914
+      ],
+      "nearest_m": [
+        192.627,
+        233.314,
+        0.0,
+        0.0,
+        70.874
+      ],
+      "band_area_m2": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          183.02,
+          181.48,
+          510.75
+        ],
+        [
+          144.76,
+          220.67,
+          341.62
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "band_total_area_m2": [
+        1511.87,
+        1448.26,
+        3367.57
+      ],
+      "bin": "3008210",
+      "bbl": "3004880006",
+      "feature_code": 2100,
+      "footprint_edited_at": "2017-08-22T15:46:36.000Z",
+      "geometry_sha256": "b08401cd90d379b3795792415f5e7254c0015fae2b6cd8cc15060914b157d067",
+      "reference_point_result": {
+        "method": "Same horizontal-scanline interior point used by the app; intersects predicates against each pinned source category in EPSG:2263. Boundary contact counts as a hit.",
+        "current": {
+          "nuisance": false,
+          "deep": false
+        },
+        "future2050": {
+          "nuisance": false,
+          "deep": false,
+          "high_tide": false,
+          "excluded_layer0": false,
+          "excluded_layer3": false,
+          "wetland_waterbody": false
+        }
+      }
+    },
+    {
+      "id": "819422",
+      "address": "592 SMITH STREET",
+      "point": [
+        -74.00035916197695,
+        40.67081414905
+      ],
+      "nearest_m": [
+        195.55,
+        218.777,
+        0.0,
+        47.299,
+        66.705
+      ],
+      "band_area_m2": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          40.82,
+          72.38,
+          172.88
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "band_total_area_m2": [
+        978.54,
+        1135.55,
+        2742.16
+      ],
+      "bin": "3008212",
+      "bbl": "3004900016",
+      "feature_code": 2100,
+      "footprint_edited_at": "2017-08-22T15:27:24.000Z",
+      "geometry_sha256": "f98c8dffd7f9887134e3fd61386e9e675316d0cc11fe36f1ec4023cbc304850e",
+      "reference_point_result": {
+        "method": "Same horizontal-scanline interior point used by the app; intersects predicates against each pinned source category in EPSG:2263. Boundary contact counts as a hit.",
+        "current": {
+          "nuisance": false,
+          "deep": false
+        },
+        "future2050": {
+          "nuisance": false,
+          "deep": false,
+          "high_tide": false,
+          "excluded_layer0": false,
+          "excluded_layer3": false,
+          "wetland_waterbody": false
+        }
+      }
+    }
+  ],
+  "question": "What does a blank flood-map result actually tell us about these buildings?",
+  "answer": "The published methodology leaves building interiors out of the surface-water mesh. Examine surrounding mapped ground, then verify the actual entrances, loading areas, drainage and equipment elevations.",
+  "key_comparison": "In the 2050 sea-level scenario, the deep-class map touches the 572 Smith outline and appears within 5 m outside it. The nearest deep-class area is 47.299 m from 592 Smith. These are map-proximity facts, not predictions of indoor flooding.",
+  "scenarios": {
+    "current": {
+      "rainfall_inches": 2.13,
+      "rainfall_duration_hours": 1,
+      "sea_level": "current sea-level scenario, not a forecast for today"
+    },
+    "2050": {
+      "rainfall_inches": 2.13,
+      "rainfall_duration_hours": 1,
+      "sea_level_rise_inches": 30,
+      "high_tide_category_separate": true
+    }
+  },
+  "geometry": "smith-street.geojson",
+  "display_geometry_method": "Original source polygons clipped to bounding rectangle45m outside the union of selected footprints; no simplification. Footprints and source interior reference points preserved. Band buffers32segments/quadrant.",
+  "model_void_source": {
+    "url": "https://www.nyc.gov/assets/orr/pdf/publications/stormwater-resiliency-plan.pdf",
+    "printed_page": 20,
+    "pdf_zero_based_page": 19
+  },
+  "full_resolution_source": {
+    "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+    "data_updated_at": "2024-07-03T21:04:08Z",
+    "retrieved_at": "2026-10-27",
+    "metadata_updated_at": "2024-10-17T18:10:13Z"
+  },
+  "limitations": [
+    "Published source classes are4in\u2013<1ft and>=1ft, not exact depths.",
+    "Model treats buildings as voids; surrounding map areas are not floodable indoor floor areas.",
+    "Scenario maps are not observations, annual probabilities, or current drain-condition checks.",
+    "0\u20135/5\u201310/10\u201320m bands are our explicit geometric screening distances, not official risk thresholds.",
+    "Zero mask overlap does not establish complete model coverage or safety.",
+    "Footprint and model dates differ; small intersections may reflect alignment or geometry changes.",
+    "Actual entrances, elevation, private drainage and equipment locations are not known."
+  ],
+  "map_bounds": [
+    -74.00145730581573,
+    40.670037555751016,
+    -73.99925942464903,
+    40.672285860786516
+  ],
+  "map_bounds_note": "Use the same fixed bounds for every point, surroundings and scenario state. All source geometry is clipped to this projected window; an empty current layer is an empty result within this window, not a citywide absence.",
+  "next_question": "Where are the entrances, loading areas, private drains and critical equipment, and how high are they above the surrounding ground?",
+  "scenario_comparison_note": "Compare the two published scenario layers. Do not attribute a local change solely to sea-level rise without confirming the full shared model baseline.",
+  "full_resolution_sources": {
+    "current": {
+      "dataset_id": "9i7c-xyvv",
+      "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+      "data_updated_at": "2024-07-03T21:04:08Z",
+      "metadata_updated_at": "2024-10-17T18:10:13Z",
+      "retrieved_at": "2026-10-27",
+      "file": "stormwater_moderate_current.fgb",
+      "sha256": "3e3d3afe2481d4c8d87b63416810d4e9152e6d96f05c949c674187af1b261f9a",
+      "geometry_processing": "Original full-resolution FileGDB geometries, reprojected; self-touching rings repaired with GEOS make_valid. No simplification. Topology audit preserved."
+    },
+    "2050": {
+      "dataset_id": "9i7c-xyvv",
+      "url": "https://data.cityofnewyork.us/d/9i7c-xyvv",
+      "data_updated_at": "2024-07-03T21:04:08Z",
+      "metadata_updated_at": "2024-10-17T18:10:13Z",
+      "retrieved_at": "2026-10-27",
+      "file": "stormwater_moderate_2050.fgb",
+      "sha256": "a48f6dd3b79ec13a651f81e671f8fe397ae029cd467efc74ce80f4a9d7a37432",
+      "geometry_processing": "Original full-resolution FileGDB geometries, reprojected; self-touching rings repaired with GEOS make_valid. No simplification. Topology audit preserved."
+    }
+  },
+  "live_patch_verification": [
+    {
+      "doitt_id": "109855",
+      "category": "2050_1",
+      "point": [
+        -73.99997442627757,
+        40.67167179050968
+      ],
+      "source_url": "https://services.arcgis.com/at3rDjch5X7i9Bag/ArcGIS/rest/services/Moderate_Flood_SLR_2050/FeatureServer/5",
+      "matched_features": 1,
+      "role": "Independent hosted-service check of an interior point in an original-file exterior-band patch; not used to change the pinned snapshot."
+    },
+    {
+      "doitt_id": "109855",
+      "category": "2050_2",
+      "point": [
+        -73.99979995838484,
+        40.67150782824621
+      ],
+      "source_url": "https://services.arcgis.com/at3rDjch5X7i9Bag/ArcGIS/rest/services/Moderate_Flood_SLR_2050/FeatureServer/4",
+      "matched_features": 1,
+      "role": "Independent hosted-service check of an interior point in an original-file exterior-band patch; not used to change the pinned snapshot."
+    },
+    {
+      "doitt_id": "819422",
+      "category": "2050_1",
+      "point": [
+        -74.00008717998014,
+        40.670977296038195
+      ],
+      "source_url": "https://services.arcgis.com/at3rDjch5X7i9Bag/ArcGIS/rest/services/Moderate_Flood_SLR_2050/FeatureServer/5",
+      "matched_features": 1,
+      "role": "Independent hosted-service check of an interior point in an original-file exterior-band patch; not used to change the pinned snapshot."
+    }
+  ]
+}

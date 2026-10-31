@@ -1,0 +1,2291 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-27T14:26:13.023956-04:00",
+  "data_kind": "published_regional_climate_projection",
+  "assessment": "NPCC4 (2024)",
+  "spatial_support": "NYC metropolitan/regional climate context; not parcel-specific output",
+  "baseline_years": [
+    1981,
+    2010
+  ],
+  "baseline_published_annual": {
+    "temperature_f": 55.2,
+    "precipitation_inches": 49.9
+  },
+  "baseline_extremes": {
+    "hot_days_ge90f_per_year": 17.0,
+    "hot_days_ge95f_per_year": 4.0,
+    "cold_days_tmin_le32f_per_year": 70.0,
+    "heatwaves_per_year": 2.0,
+    "mean_heatwave_length_days": 4.0,
+    "rain_days_ge1inch_per_year": 14.0,
+    "rain_days_ge2inch_per_year": 3.0,
+    "rain_days_ge4inch_per_year": 0.2
+  },
+  "scenarios": [
+    "SSP2-4.5",
+    "SSP5-8.5"
+  ],
+  "methods": {
+    "means": "35 CMIP6 GCMs x 2 SSPs, equally weighted; delta method. p10,p25,p75,p90 are pooled model-scenario outcomes, not separate scenario quantiles or calibrated probabilities.",
+    "extremes": "16 GCMs x 2 SSPs; quantile mapping using local daily baseline observations. Published values are 30-year mean event frequencies, not forecasts for a particular year.",
+    "heatwave_definition": "At least 3 consecutive days with maximum temperature at or above 90 degF.",
+    "horizons": "Decadal labels represent centered 30-year climate time slices; 2100 follows a separate end-century method in report Appendix C. Never interpret as a forecast for one calendar year.",
+    "unit_conversion": "Temperature changes converted degF * 5/9 to degC (no -32 offset). Precipitation changes remain percent.",
+    "rainfall_threshold_note": "Open Data column names say exceeding; report Table 4 labels at-or-above. Normalized names follow the peer-reviewed table. Raw records are retained for audit."
+  },
+  "annual": [
+    {
+      "horizon": "2030s",
+      "season_or_month": "Annual",
+      "temperature_change_f": {
+        "p10": 2.0,
+        "p25": 2.7,
+        "p75": 3.9,
+        "p90": 4.7
+      },
+      "temperature_change_c": {
+        "p10": 1.111,
+        "p25": 1.5,
+        "p75": 2.167,
+        "p90": 2.611
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 2.0,
+        "p75": 7.0,
+        "p90": 10.0
+      },
+      "scenario_ensemble_means": {
+        "ssp245": {
+          "temperature_change_c": 1.722,
+          "precipitation_change_pct": 5.0
+        },
+        "ssp585": {
+          "temperature_change_c": 1.944,
+          "precipitation_change_pct": 5.0
+        }
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "Annual",
+      "temperature_change_f": {
+        "p10": 2.8,
+        "p25": 3.3,
+        "p75": 5.0,
+        "p90": 5.9
+      },
+      "temperature_change_c": {
+        "p10": 1.556,
+        "p25": 1.833,
+        "p75": 2.778,
+        "p90": 3.278
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 3.0,
+        "p75": 9.0,
+        "p90": 13.0
+      },
+      "scenario_ensemble_means": {
+        "ssp245": {
+          "temperature_change_c": 2.111,
+          "precipitation_change_pct": 6.0
+        },
+        "ssp585": {
+          "temperature_change_c": 2.556,
+          "precipitation_change_pct": 7.0
+        }
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "Annual",
+      "temperature_change_f": {
+        "p10": 3.0,
+        "p25": 4.0,
+        "p75": 6.0,
+        "p90": 7.1
+      },
+      "temperature_change_c": {
+        "p10": 1.667,
+        "p25": 2.222,
+        "p75": 3.333,
+        "p90": 3.944
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 4.0,
+        "p75": 11.0,
+        "p90": 14.0
+      },
+      "scenario_ensemble_means": {
+        "ssp245": {
+          "temperature_change_c": 2.389,
+          "precipitation_change_pct": 7.0
+        },
+        "ssp585": {
+          "temperature_change_c": 3.222,
+          "precipitation_change_pct": 8.0
+        }
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "Annual",
+      "temperature_change_f": {
+        "p10": 3.6,
+        "p25": 4.7,
+        "p75": 7.1,
+        "p90": 8.6
+      },
+      "temperature_change_c": {
+        "p10": 2.0,
+        "p25": 2.611,
+        "p75": 3.944,
+        "p90": 4.778
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 5.0,
+        "p75": 13.0,
+        "p90": 16.0
+      },
+      "scenario_ensemble_means": {
+        "ssp245": {
+          "temperature_change_c": 2.722,
+          "precipitation_change_pct": 8.0
+        },
+        "ssp585": {
+          "temperature_change_c": 3.944,
+          "precipitation_change_pct": 10.0
+        }
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "Annual",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 5.1,
+        "p75": 8.4,
+        "p90": 10.2
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 2.833,
+        "p75": 4.667,
+        "p90": 5.667
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 6.0,
+        "p75": 14.0,
+        "p90": 19.0
+      },
+      "scenario_ensemble_means": {
+        "ssp245": {
+          "temperature_change_c": 3.0,
+          "precipitation_change_pct": 8.0
+        },
+        "ssp585": {
+          "temperature_change_c": 4.667,
+          "precipitation_change_pct": 12.0
+        }
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "Annual",
+      "temperature_change_f": {
+        "p10": 4.8,
+        "p25": 5.6,
+        "p75": 9.8,
+        "p90": 11.6
+      },
+      "temperature_change_c": {
+        "p10": 2.667,
+        "p25": 3.111,
+        "p75": 5.444,
+        "p90": 6.444
+      },
+      "precipitation_change_pct": {
+        "p10": 2.0,
+        "p25": 7.0,
+        "p75": 17.0,
+        "p90": 22.0
+      },
+      "scenario_ensemble_means": {
+        "ssp245": {
+          "temperature_change_c": 3.222,
+          "precipitation_change_pct": 9.0
+        },
+        "ssp585": {
+          "temperature_change_c": 5.389,
+          "precipitation_change_pct": 14.0
+        }
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "Annual",
+      "temperature_change_f": {
+        "p10": 5.1,
+        "p25": 6.1,
+        "p75": 10.7,
+        "p90": 13.5
+      },
+      "temperature_change_c": {
+        "p10": 2.833,
+        "p25": 3.389,
+        "p75": 5.944,
+        "p90": 7.5
+      },
+      "precipitation_change_pct": {
+        "p10": -1.0,
+        "p25": 5.0,
+        "p75": 21.0,
+        "p90": 30.0
+      },
+      "scenario_ensemble_means": {
+        "ssp245": {
+          "temperature_change_c": 3.5,
+          "precipitation_change_pct": 10.0
+        },
+        "ssp585": {
+          "temperature_change_c": 5.889,
+          "precipitation_change_pct": 17.0
+        }
+      }
+    }
+  ],
+  "monthly_and_seasonal": [
+    {
+      "horizon": "2030s",
+      "season_or_month": "January",
+      "temperature_change_f": {
+        "p10": 1.8,
+        "p25": 2.6,
+        "p75": 4.7,
+        "p90": 6.2
+      },
+      "temperature_change_c": {
+        "p10": 1.0,
+        "p25": 1.444,
+        "p75": 2.611,
+        "p90": 3.444
+      },
+      "precipitation_change_pct": {
+        "p10": -9.0,
+        "p25": 0.0,
+        "p75": 13.0,
+        "p90": 20.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "February",
+      "temperature_change_f": {
+        "p10": 1.6,
+        "p25": 2.3,
+        "p75": 4.2,
+        "p90": 5.6
+      },
+      "temperature_change_c": {
+        "p10": 0.889,
+        "p25": 1.278,
+        "p75": 2.333,
+        "p90": 3.111
+      },
+      "precipitation_change_pct": {
+        "p10": -5.0,
+        "p25": 1.0,
+        "p75": 18.0,
+        "p90": 26.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "March",
+      "temperature_change_f": {
+        "p10": 0.9,
+        "p25": 2.3,
+        "p75": 4.2,
+        "p90": 5.0
+      },
+      "temperature_change_c": {
+        "p10": 0.5,
+        "p25": 1.278,
+        "p75": 2.333,
+        "p90": 2.778
+      },
+      "precipitation_change_pct": {
+        "p10": -6.0,
+        "p25": 2.0,
+        "p75": 16.0,
+        "p90": 24.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "April",
+      "temperature_change_f": {
+        "p10": 1.1,
+        "p25": 1.9,
+        "p75": 3.8,
+        "p90": 4.7
+      },
+      "temperature_change_c": {
+        "p10": 0.611,
+        "p25": 1.056,
+        "p75": 2.111,
+        "p90": 2.611
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": -2.0,
+        "p75": 12.0,
+        "p90": 24.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "May",
+      "temperature_change_f": {
+        "p10": 1.3,
+        "p25": 2.0,
+        "p75": 3.5,
+        "p90": 4.3
+      },
+      "temperature_change_c": {
+        "p10": 0.722,
+        "p25": 1.111,
+        "p75": 1.944,
+        "p90": 2.389
+      },
+      "precipitation_change_pct": {
+        "p10": -11.0,
+        "p25": -6.0,
+        "p75": 14.0,
+        "p90": 19.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "June",
+      "temperature_change_f": {
+        "p10": 1.2,
+        "p25": 2.5,
+        "p75": 3.8,
+        "p90": 4.8
+      },
+      "temperature_change_c": {
+        "p10": 0.667,
+        "p25": 1.389,
+        "p75": 2.111,
+        "p90": 2.667
+      },
+      "precipitation_change_pct": {
+        "p10": -12.0,
+        "p25": -5.0,
+        "p75": 15.0,
+        "p90": 21.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "July",
+      "temperature_change_f": {
+        "p10": 2.2,
+        "p25": 2.5,
+        "p75": 4.3,
+        "p90": 5.2
+      },
+      "temperature_change_c": {
+        "p10": 1.222,
+        "p25": 1.389,
+        "p75": 2.389,
+        "p90": 2.889
+      },
+      "precipitation_change_pct": {
+        "p10": -11.0,
+        "p25": -4.0,
+        "p75": 15.0,
+        "p90": 23.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "August",
+      "temperature_change_f": {
+        "p10": 2.2,
+        "p25": 2.8,
+        "p75": 4.4,
+        "p90": 5.6
+      },
+      "temperature_change_c": {
+        "p10": 1.222,
+        "p25": 1.556,
+        "p75": 2.444,
+        "p90": 3.111
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": -4.0,
+        "p75": 12.0,
+        "p90": 25.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "September",
+      "temperature_change_f": {
+        "p10": 2.0,
+        "p25": 2.6,
+        "p75": 4.4,
+        "p90": 5.5
+      },
+      "temperature_change_c": {
+        "p10": 1.111,
+        "p25": 1.444,
+        "p75": 2.444,
+        "p90": 3.056
+      },
+      "precipitation_change_pct": {
+        "p10": -18.0,
+        "p25": -6.0,
+        "p75": 15.0,
+        "p90": 29.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "October",
+      "temperature_change_f": {
+        "p10": 1.5,
+        "p25": 2.4,
+        "p75": 4.6,
+        "p90": 5.4
+      },
+      "temperature_change_c": {
+        "p10": 0.833,
+        "p25": 1.333,
+        "p75": 2.556,
+        "p90": 3.0
+      },
+      "precipitation_change_pct": {
+        "p10": -21.0,
+        "p25": -11.0,
+        "p75": 8.0,
+        "p90": 20.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "November",
+      "temperature_change_f": {
+        "p10": 1.5,
+        "p25": 2.1,
+        "p75": 3.9,
+        "p90": 4.8
+      },
+      "temperature_change_c": {
+        "p10": 0.833,
+        "p25": 1.167,
+        "p75": 2.167,
+        "p90": 2.667
+      },
+      "precipitation_change_pct": {
+        "p10": -14.0,
+        "p25": -7.0,
+        "p75": 11.0,
+        "p90": 16.0
+      }
+    },
+    {
+      "horizon": "2030s",
+      "season_or_month": "December",
+      "temperature_change_f": {
+        "p10": 1.7,
+        "p25": 2.5,
+        "p75": 4.2,
+        "p90": 5.9
+      },
+      "temperature_change_c": {
+        "p10": 0.944,
+        "p25": 1.389,
+        "p75": 2.333,
+        "p90": 3.278
+      },
+      "precipitation_change_pct": {
+        "p10": -9.0,
+        "p25": -3.0,
+        "p75": 16.0,
+        "p90": 20.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "January",
+      "temperature_change_f": {
+        "p10": 2.6,
+        "p25": 3.6,
+        "p75": 5.9,
+        "p90": 7.0
+      },
+      "temperature_change_c": {
+        "p10": 1.444,
+        "p25": 2.0,
+        "p75": 3.278,
+        "p90": 3.889
+      },
+      "precipitation_change_pct": {
+        "p10": -7.0,
+        "p25": 2.0,
+        "p75": 15.0,
+        "p90": 22.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "February",
+      "temperature_change_f": {
+        "p10": 2.1,
+        "p25": 3.0,
+        "p75": 5.5,
+        "p90": 6.8
+      },
+      "temperature_change_c": {
+        "p10": 1.167,
+        "p25": 1.667,
+        "p75": 3.056,
+        "p90": 3.778
+      },
+      "precipitation_change_pct": {
+        "p10": -3.0,
+        "p25": 3.0,
+        "p75": 21.0,
+        "p90": 31.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "March",
+      "temperature_change_f": {
+        "p10": 2.0,
+        "p25": 3.0,
+        "p75": 4.9,
+        "p90": 6.1
+      },
+      "temperature_change_c": {
+        "p10": 1.111,
+        "p25": 1.667,
+        "p75": 2.722,
+        "p90": 3.389
+      },
+      "precipitation_change_pct": {
+        "p10": -5.0,
+        "p25": 5.0,
+        "p75": 21.0,
+        "p90": 26.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "April",
+      "temperature_change_f": {
+        "p10": 1.7,
+        "p25": 2.5,
+        "p75": 4.7,
+        "p90": 6.0
+      },
+      "temperature_change_c": {
+        "p10": 0.944,
+        "p25": 1.389,
+        "p75": 2.611,
+        "p90": 3.333
+      },
+      "precipitation_change_pct": {
+        "p10": -7.0,
+        "p25": -2.0,
+        "p75": 18.0,
+        "p90": 24.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "May",
+      "temperature_change_f": {
+        "p10": 1.7,
+        "p25": 2.8,
+        "p75": 4.3,
+        "p90": 5.2
+      },
+      "temperature_change_c": {
+        "p10": 0.944,
+        "p25": 1.556,
+        "p75": 2.389,
+        "p90": 2.889
+      },
+      "precipitation_change_pct": {
+        "p10": -12.0,
+        "p25": -4.0,
+        "p75": 13.0,
+        "p90": 17.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "June",
+      "temperature_change_f": {
+        "p10": 1.8,
+        "p25": 3.3,
+        "p75": 5.0,
+        "p90": 5.8
+      },
+      "temperature_change_c": {
+        "p10": 1.0,
+        "p25": 1.833,
+        "p75": 2.778,
+        "p90": 3.222
+      },
+      "precipitation_change_pct": {
+        "p10": -12.0,
+        "p25": -6.0,
+        "p75": 13.0,
+        "p90": 21.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "July",
+      "temperature_change_f": {
+        "p10": 2.5,
+        "p25": 3.3,
+        "p75": 5.2,
+        "p90": 6.5
+      },
+      "temperature_change_c": {
+        "p10": 1.389,
+        "p25": 1.833,
+        "p75": 2.889,
+        "p90": 3.611
+      },
+      "precipitation_change_pct": {
+        "p10": -14.0,
+        "p25": -2.0,
+        "p75": 17.0,
+        "p90": 26.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "August",
+      "temperature_change_f": {
+        "p10": 2.6,
+        "p25": 3.5,
+        "p75": 5.6,
+        "p90": 6.7
+      },
+      "temperature_change_c": {
+        "p10": 1.444,
+        "p25": 1.944,
+        "p75": 3.111,
+        "p90": 3.722
+      },
+      "precipitation_change_pct": {
+        "p10": -9.0,
+        "p25": -3.0,
+        "p75": 12.0,
+        "p90": 27.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "September",
+      "temperature_change_f": {
+        "p10": 2.5,
+        "p25": 3.5,
+        "p75": 5.4,
+        "p90": 6.8
+      },
+      "temperature_change_c": {
+        "p10": 1.389,
+        "p25": 1.944,
+        "p75": 3.0,
+        "p90": 3.778
+      },
+      "precipitation_change_pct": {
+        "p10": -15.0,
+        "p25": -6.0,
+        "p75": 13.0,
+        "p90": 28.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "October",
+      "temperature_change_f": {
+        "p10": 2.4,
+        "p25": 3.0,
+        "p75": 5.3,
+        "p90": 6.8
+      },
+      "temperature_change_c": {
+        "p10": 1.333,
+        "p25": 1.667,
+        "p75": 2.944,
+        "p90": 3.778
+      },
+      "precipitation_change_pct": {
+        "p10": -23.0,
+        "p25": -13.0,
+        "p75": 11.0,
+        "p90": 27.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "November",
+      "temperature_change_f": {
+        "p10": 2.3,
+        "p25": 2.7,
+        "p75": 5.0,
+        "p90": 5.7
+      },
+      "temperature_change_c": {
+        "p10": 1.278,
+        "p25": 1.5,
+        "p75": 2.778,
+        "p90": 3.167
+      },
+      "precipitation_change_pct": {
+        "p10": -12.0,
+        "p25": -5.0,
+        "p75": 15.0,
+        "p90": 22.0
+      }
+    },
+    {
+      "horizon": "2040s",
+      "season_or_month": "December",
+      "temperature_change_f": {
+        "p10": 2.4,
+        "p25": 3.1,
+        "p75": 5.2,
+        "p90": 6.6
+      },
+      "temperature_change_c": {
+        "p10": 1.333,
+        "p25": 1.722,
+        "p75": 2.889,
+        "p90": 3.667
+      },
+      "precipitation_change_pct": {
+        "p10": -4.0,
+        "p25": 2.0,
+        "p75": 19.0,
+        "p90": 25.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "January",
+      "temperature_change_f": {
+        "p10": 3.0,
+        "p25": 4.0,
+        "p75": 7.0,
+        "p90": 8.0
+      },
+      "temperature_change_c": {
+        "p10": 1.667,
+        "p25": 2.222,
+        "p75": 3.889,
+        "p90": 4.444
+      },
+      "precipitation_change_pct": {
+        "p10": -8.0,
+        "p25": 1.0,
+        "p75": 18.0,
+        "p90": 26.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "February",
+      "temperature_change_f": {
+        "p10": 2.6,
+        "p25": 3.8,
+        "p75": 6.9,
+        "p90": 8.0
+      },
+      "temperature_change_c": {
+        "p10": 1.444,
+        "p25": 2.111,
+        "p75": 3.833,
+        "p90": 4.444
+      },
+      "precipitation_change_pct": {
+        "p10": -1.0,
+        "p25": 4.0,
+        "p75": 23.0,
+        "p90": 35.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "March",
+      "temperature_change_f": {
+        "p10": 2.4,
+        "p25": 3.5,
+        "p75": 6.0,
+        "p90": 7.3
+      },
+      "temperature_change_c": {
+        "p10": 1.333,
+        "p25": 1.944,
+        "p75": 3.333,
+        "p90": 4.056
+      },
+      "precipitation_change_pct": {
+        "p10": -2.0,
+        "p25": 6.0,
+        "p75": 22.0,
+        "p90": 32.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "April",
+      "temperature_change_f": {
+        "p10": 2.3,
+        "p25": 3.4,
+        "p75": 5.5,
+        "p90": 6.7
+      },
+      "temperature_change_c": {
+        "p10": 1.278,
+        "p25": 1.889,
+        "p75": 3.056,
+        "p90": 3.722
+      },
+      "precipitation_change_pct": {
+        "p10": -5.0,
+        "p25": 2.0,
+        "p75": 17.0,
+        "p90": 24.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "May",
+      "temperature_change_f": {
+        "p10": 2.2,
+        "p25": 3.4,
+        "p75": 5.5,
+        "p90": 6.4
+      },
+      "temperature_change_c": {
+        "p10": 1.222,
+        "p25": 1.889,
+        "p75": 3.056,
+        "p90": 3.556
+      },
+      "precipitation_change_pct": {
+        "p10": -13.0,
+        "p25": -5.0,
+        "p75": 13.0,
+        "p90": 18.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "June",
+      "temperature_change_f": {
+        "p10": 2.3,
+        "p25": 3.6,
+        "p75": 5.9,
+        "p90": 7.1
+      },
+      "temperature_change_c": {
+        "p10": 1.278,
+        "p25": 2.0,
+        "p75": 3.278,
+        "p90": 3.944
+      },
+      "precipitation_change_pct": {
+        "p10": -13.0,
+        "p25": -5.0,
+        "p75": 11.0,
+        "p90": 24.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "July",
+      "temperature_change_f": {
+        "p10": 2.9,
+        "p25": 4.1,
+        "p75": 6.4,
+        "p90": 7.7
+      },
+      "temperature_change_c": {
+        "p10": 1.611,
+        "p25": 2.278,
+        "p75": 3.556,
+        "p90": 4.278
+      },
+      "precipitation_change_pct": {
+        "p10": -12.0,
+        "p25": 2.0,
+        "p75": 19.0,
+        "p90": 27.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "August",
+      "temperature_change_f": {
+        "p10": 3.3,
+        "p25": 4.4,
+        "p75": 6.8,
+        "p90": 7.9
+      },
+      "temperature_change_c": {
+        "p10": 1.833,
+        "p25": 2.444,
+        "p75": 3.778,
+        "p90": 4.389
+      },
+      "precipitation_change_pct": {
+        "p10": -11.0,
+        "p25": -4.0,
+        "p75": 15.0,
+        "p90": 26.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "September",
+      "temperature_change_f": {
+        "p10": 3.0,
+        "p25": 4.0,
+        "p75": 6.8,
+        "p90": 7.9
+      },
+      "temperature_change_c": {
+        "p10": 1.667,
+        "p25": 2.222,
+        "p75": 3.778,
+        "p90": 4.389
+      },
+      "precipitation_change_pct": {
+        "p10": -12.0,
+        "p25": -5.0,
+        "p75": 17.0,
+        "p90": 27.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "October",
+      "temperature_change_f": {
+        "p10": 2.7,
+        "p25": 3.6,
+        "p75": 6.4,
+        "p90": 7.7
+      },
+      "temperature_change_c": {
+        "p10": 1.5,
+        "p25": 2.0,
+        "p75": 3.556,
+        "p90": 4.278
+      },
+      "precipitation_change_pct": {
+        "p10": -23.0,
+        "p25": -13.0,
+        "p75": 10.0,
+        "p90": 25.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "November",
+      "temperature_change_f": {
+        "p10": 2.7,
+        "p25": 3.6,
+        "p75": 5.6,
+        "p90": 7.3
+      },
+      "temperature_change_c": {
+        "p10": 1.5,
+        "p25": 2.0,
+        "p75": 3.111,
+        "p90": 4.056
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": -4.0,
+        "p75": 18.0,
+        "p90": 24.0
+      }
+    },
+    {
+      "horizon": "2050s",
+      "season_or_month": "December",
+      "temperature_change_f": {
+        "p10": 2.5,
+        "p25": 3.5,
+        "p75": 6.1,
+        "p90": 7.6
+      },
+      "temperature_change_c": {
+        "p10": 1.389,
+        "p25": 1.944,
+        "p75": 3.389,
+        "p90": 4.222
+      },
+      "precipitation_change_pct": {
+        "p10": -4.0,
+        "p25": 7.0,
+        "p75": 20.0,
+        "p90": 28.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "January",
+      "temperature_change_f": {
+        "p10": 3.6,
+        "p25": 5.0,
+        "p75": 7.8,
+        "p90": 9.4
+      },
+      "temperature_change_c": {
+        "p10": 2.0,
+        "p25": 2.778,
+        "p75": 4.333,
+        "p90": 5.222
+      },
+      "precipitation_change_pct": {
+        "p10": -3.0,
+        "p25": 2.0,
+        "p75": 23.0,
+        "p90": 32.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "February",
+      "temperature_change_f": {
+        "p10": 3.3,
+        "p25": 4.7,
+        "p75": 7.8,
+        "p90": 9.6
+      },
+      "temperature_change_c": {
+        "p10": 1.833,
+        "p25": 2.611,
+        "p75": 4.333,
+        "p90": 5.333
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 6.0,
+        "p75": 27.0,
+        "p90": 41.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "March",
+      "temperature_change_f": {
+        "p10": 3.1,
+        "p25": 3.9,
+        "p75": 6.9,
+        "p90": 8.1
+      },
+      "temperature_change_c": {
+        "p10": 1.722,
+        "p25": 2.167,
+        "p75": 3.833,
+        "p90": 4.5
+      },
+      "precipitation_change_pct": {
+        "p10": -1.0,
+        "p25": 6.0,
+        "p75": 25.0,
+        "p90": 38.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "April",
+      "temperature_change_f": {
+        "p10": 2.8,
+        "p25": 4.1,
+        "p75": 6.8,
+        "p90": 7.9
+      },
+      "temperature_change_c": {
+        "p10": 1.556,
+        "p25": 2.278,
+        "p75": 3.778,
+        "p90": 4.389
+      },
+      "precipitation_change_pct": {
+        "p10": -7.0,
+        "p25": 5.0,
+        "p75": 18.0,
+        "p90": 24.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "May",
+      "temperature_change_f": {
+        "p10": 2.8,
+        "p25": 3.9,
+        "p75": 6.7,
+        "p90": 7.8
+      },
+      "temperature_change_c": {
+        "p10": 1.556,
+        "p25": 2.167,
+        "p75": 3.722,
+        "p90": 4.333
+      },
+      "precipitation_change_pct": {
+        "p10": -14.0,
+        "p25": -6.0,
+        "p75": 10.0,
+        "p90": 21.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "June",
+      "temperature_change_f": {
+        "p10": 3.1,
+        "p25": 4.3,
+        "p75": 7.1,
+        "p90": 8.6
+      },
+      "temperature_change_c": {
+        "p10": 1.722,
+        "p25": 2.389,
+        "p75": 3.944,
+        "p90": 4.778
+      },
+      "precipitation_change_pct": {
+        "p10": -12.0,
+        "p25": -6.0,
+        "p75": 13.0,
+        "p90": 23.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "July",
+      "temperature_change_f": {
+        "p10": 3.6,
+        "p25": 4.6,
+        "p75": 7.6,
+        "p90": 9.2
+      },
+      "temperature_change_c": {
+        "p10": 2.0,
+        "p25": 2.556,
+        "p75": 4.222,
+        "p90": 5.111
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": -2.0,
+        "p75": 22.0,
+        "p90": 31.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "August",
+      "temperature_change_f": {
+        "p10": 3.6,
+        "p25": 5.2,
+        "p75": 8.1,
+        "p90": 9.0
+      },
+      "temperature_change_c": {
+        "p10": 2.0,
+        "p25": 2.889,
+        "p75": 4.5,
+        "p90": 5.0
+      },
+      "precipitation_change_pct": {
+        "p10": -15.0,
+        "p25": -4.0,
+        "p75": 18.0,
+        "p90": 32.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "September",
+      "temperature_change_f": {
+        "p10": 3.4,
+        "p25": 4.9,
+        "p75": 8.1,
+        "p90": 9.3
+      },
+      "temperature_change_c": {
+        "p10": 1.889,
+        "p25": 2.722,
+        "p75": 4.5,
+        "p90": 5.167
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": -5.0,
+        "p75": 19.0,
+        "p90": 26.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "October",
+      "temperature_change_f": {
+        "p10": 3.1,
+        "p25": 4.5,
+        "p75": 7.6,
+        "p90": 9.0
+      },
+      "temperature_change_c": {
+        "p10": 1.722,
+        "p25": 2.5,
+        "p75": 4.222,
+        "p90": 5.0
+      },
+      "precipitation_change_pct": {
+        "p10": -24.0,
+        "p25": -17.0,
+        "p75": 14.0,
+        "p90": 23.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "November",
+      "temperature_change_f": {
+        "p10": 3.0,
+        "p25": 4.4,
+        "p75": 6.7,
+        "p90": 8.7
+      },
+      "temperature_change_c": {
+        "p10": 1.667,
+        "p25": 2.444,
+        "p75": 3.722,
+        "p90": 4.833
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": -5.0,
+        "p75": 17.0,
+        "p90": 28.0
+      }
+    },
+    {
+      "horizon": "2060s",
+      "season_or_month": "December",
+      "temperature_change_f": {
+        "p10": 3.2,
+        "p25": 4.1,
+        "p75": 7.3,
+        "p90": 8.8
+      },
+      "temperature_change_c": {
+        "p10": 1.778,
+        "p25": 2.278,
+        "p75": 4.056,
+        "p90": 4.889
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 6.0,
+        "p75": 23.0,
+        "p90": 33.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "January",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 5.4,
+        "p75": 9.2,
+        "p90": 10.7
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 3.0,
+        "p75": 5.111,
+        "p90": 5.944
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 3.0,
+        "p75": 26.0,
+        "p90": 38.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "February",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 5.3,
+        "p75": 8.6,
+        "p90": 10.7
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 2.944,
+        "p75": 4.778,
+        "p90": 5.944
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 7.0,
+        "p75": 25.0,
+        "p90": 43.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "March",
+      "temperature_change_f": {
+        "p10": 3.1,
+        "p25": 4.4,
+        "p75": 7.8,
+        "p90": 9.7
+      },
+      "temperature_change_c": {
+        "p10": 1.722,
+        "p25": 2.444,
+        "p75": 4.333,
+        "p90": 5.389
+      },
+      "precipitation_change_pct": {
+        "p10": -1.0,
+        "p25": 7.0,
+        "p75": 25.0,
+        "p90": 38.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "April",
+      "temperature_change_f": {
+        "p10": 3.4,
+        "p25": 4.6,
+        "p75": 8.0,
+        "p90": 9.4
+      },
+      "temperature_change_c": {
+        "p10": 1.889,
+        "p25": 2.556,
+        "p75": 4.444,
+        "p90": 5.222
+      },
+      "precipitation_change_pct": {
+        "p10": -6.0,
+        "p25": 7.0,
+        "p75": 21.0,
+        "p90": 31.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "May",
+      "temperature_change_f": {
+        "p10": 3.2,
+        "p25": 4.3,
+        "p75": 7.8,
+        "p90": 9.4
+      },
+      "temperature_change_c": {
+        "p10": 1.778,
+        "p25": 2.389,
+        "p75": 4.333,
+        "p90": 5.222
+      },
+      "precipitation_change_pct": {
+        "p10": -15.0,
+        "p25": -7.0,
+        "p75": 13.0,
+        "p90": 23.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "June",
+      "temperature_change_f": {
+        "p10": 3.8,
+        "p25": 4.9,
+        "p75": 8.2,
+        "p90": 10.3
+      },
+      "temperature_change_c": {
+        "p10": 2.111,
+        "p25": 2.722,
+        "p75": 4.556,
+        "p90": 5.722
+      },
+      "precipitation_change_pct": {
+        "p10": -15.0,
+        "p25": -6.0,
+        "p75": 13.0,
+        "p90": 21.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "July",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 5.3,
+        "p75": 9.1,
+        "p90": 11.2
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 2.944,
+        "p75": 5.056,
+        "p90": 6.222
+      },
+      "precipitation_change_pct": {
+        "p10": -9.0,
+        "p25": 0.0,
+        "p75": 22.0,
+        "p90": 32.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "August",
+      "temperature_change_f": {
+        "p10": 4.1,
+        "p25": 5.8,
+        "p75": 9.5,
+        "p90": 10.6
+      },
+      "temperature_change_c": {
+        "p10": 2.278,
+        "p25": 3.222,
+        "p75": 5.278,
+        "p90": 5.889
+      },
+      "precipitation_change_pct": {
+        "p10": -18.0,
+        "p25": -6.0,
+        "p75": 19.0,
+        "p90": 29.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "September",
+      "temperature_change_f": {
+        "p10": 3.9,
+        "p25": 5.6,
+        "p75": 9.5,
+        "p90": 10.9
+      },
+      "temperature_change_c": {
+        "p10": 2.167,
+        "p25": 3.111,
+        "p75": 5.278,
+        "p90": 6.056
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": -5.0,
+        "p75": 15.0,
+        "p90": 32.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "October",
+      "temperature_change_f": {
+        "p10": 3.5,
+        "p25": 5.0,
+        "p75": 9.0,
+        "p90": 10.4
+      },
+      "temperature_change_c": {
+        "p10": 1.944,
+        "p25": 2.778,
+        "p75": 5.0,
+        "p90": 5.778
+      },
+      "precipitation_change_pct": {
+        "p10": -21.0,
+        "p25": -12.0,
+        "p75": 11.0,
+        "p90": 20.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "November",
+      "temperature_change_f": {
+        "p10": 3.4,
+        "p25": 4.9,
+        "p75": 7.7,
+        "p90": 10.0
+      },
+      "temperature_change_c": {
+        "p10": 1.889,
+        "p25": 2.722,
+        "p75": 4.278,
+        "p90": 5.556
+      },
+      "precipitation_change_pct": {
+        "p10": -11.0,
+        "p25": -4.0,
+        "p75": 19.0,
+        "p90": 31.0
+      }
+    },
+    {
+      "horizon": "2070s",
+      "season_or_month": "December",
+      "temperature_change_f": {
+        "p10": 3.4,
+        "p25": 4.8,
+        "p75": 8.5,
+        "p90": 9.9
+      },
+      "temperature_change_c": {
+        "p10": 1.889,
+        "p25": 2.667,
+        "p75": 4.722,
+        "p90": 5.5
+      },
+      "precipitation_change_pct": {
+        "p10": 3.0,
+        "p25": 7.0,
+        "p75": 26.0,
+        "p90": 37.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "January",
+      "temperature_change_f": {
+        "p10": 5.1,
+        "p25": 6.2,
+        "p75": 10.0,
+        "p90": 12.1
+      },
+      "temperature_change_c": {
+        "p10": 2.833,
+        "p25": 3.444,
+        "p75": 5.556,
+        "p90": 6.722
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 7.0,
+        "p75": 32.0,
+        "p90": 45.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "February",
+      "temperature_change_f": {
+        "p10": 4.4,
+        "p25": 5.7,
+        "p75": 9.8,
+        "p90": 12.0
+      },
+      "temperature_change_c": {
+        "p10": 2.444,
+        "p25": 3.167,
+        "p75": 5.444,
+        "p90": 6.667
+      },
+      "precipitation_change_pct": {
+        "p10": 5.0,
+        "p25": 10.0,
+        "p75": 32.0,
+        "p90": 49.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "March",
+      "temperature_change_f": {
+        "p10": 3.7,
+        "p25": 5.2,
+        "p75": 8.7,
+        "p90": 11.2
+      },
+      "temperature_change_c": {
+        "p10": 2.056,
+        "p25": 2.889,
+        "p75": 4.833,
+        "p90": 6.222
+      },
+      "precipitation_change_pct": {
+        "p10": 3.0,
+        "p25": 7.0,
+        "p75": 29.0,
+        "p90": 40.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "April",
+      "temperature_change_f": {
+        "p10": 3.4,
+        "p25": 5.0,
+        "p75": 8.6,
+        "p90": 11.0
+      },
+      "temperature_change_c": {
+        "p10": 1.889,
+        "p25": 2.778,
+        "p75": 4.778,
+        "p90": 6.111
+      },
+      "precipitation_change_pct": {
+        "p10": -2.0,
+        "p25": 6.0,
+        "p75": 24.0,
+        "p90": 30.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "May",
+      "temperature_change_f": {
+        "p10": 3.8,
+        "p25": 4.8,
+        "p75": 9.0,
+        "p90": 10.8
+      },
+      "temperature_change_c": {
+        "p10": 2.111,
+        "p25": 2.667,
+        "p75": 5.0,
+        "p90": 6.0
+      },
+      "precipitation_change_pct": {
+        "p10": -17.0,
+        "p25": -6.0,
+        "p75": 15.0,
+        "p90": 28.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "June",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 5.4,
+        "p75": 9.7,
+        "p90": 11.7
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 3.0,
+        "p75": 5.389,
+        "p90": 6.5
+      },
+      "precipitation_change_pct": {
+        "p10": -17.0,
+        "p25": -6.0,
+        "p75": 16.0,
+        "p90": 26.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "July",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 5.9,
+        "p75": 10.2,
+        "p90": 12.4
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 3.278,
+        "p75": 5.667,
+        "p90": 6.889
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": 2.0,
+        "p75": 19.0,
+        "p90": 38.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "August",
+      "temperature_change_f": {
+        "p10": 4.5,
+        "p25": 6.2,
+        "p75": 10.7,
+        "p90": 12.5
+      },
+      "temperature_change_c": {
+        "p10": 2.5,
+        "p25": 3.444,
+        "p75": 5.944,
+        "p90": 6.944
+      },
+      "precipitation_change_pct": {
+        "p10": -18.0,
+        "p25": -4.0,
+        "p75": 18.0,
+        "p90": 32.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "September",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 6.2,
+        "p75": 11.0,
+        "p90": 12.4
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 3.444,
+        "p75": 6.111,
+        "p90": 6.889
+      },
+      "precipitation_change_pct": {
+        "p10": -11.0,
+        "p25": -3.0,
+        "p75": 21.0,
+        "p90": 32.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "October",
+      "temperature_change_f": {
+        "p10": 4.3,
+        "p25": 5.5,
+        "p75": 10.2,
+        "p90": 12.6
+      },
+      "temperature_change_c": {
+        "p10": 2.389,
+        "p25": 3.056,
+        "p75": 5.667,
+        "p90": 7.0
+      },
+      "precipitation_change_pct": {
+        "p10": -24.0,
+        "p25": -13.0,
+        "p75": 10.0,
+        "p90": 28.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "November",
+      "temperature_change_f": {
+        "p10": 3.8,
+        "p25": 5.6,
+        "p75": 9.5,
+        "p90": 11.4
+      },
+      "temperature_change_c": {
+        "p10": 2.111,
+        "p25": 3.111,
+        "p75": 5.278,
+        "p90": 6.333
+      },
+      "precipitation_change_pct": {
+        "p10": -11.0,
+        "p25": -3.0,
+        "p75": 19.0,
+        "p90": 35.0
+      }
+    },
+    {
+      "horizon": "2080s",
+      "season_or_month": "December",
+      "temperature_change_f": {
+        "p10": 4.0,
+        "p25": 5.4,
+        "p75": 9.4,
+        "p90": 11.0
+      },
+      "temperature_change_c": {
+        "p10": 2.222,
+        "p25": 3.0,
+        "p75": 5.222,
+        "p90": 6.111
+      },
+      "precipitation_change_pct": {
+        "p10": 0.0,
+        "p25": 7.0,
+        "p75": 29.0,
+        "p90": 40.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "January",
+      "temperature_change_f": {
+        "p10": 4.6,
+        "p25": 6.8,
+        "p75": 11.7,
+        "p90": 14.2
+      },
+      "temperature_change_c": {
+        "p10": 2.556,
+        "p25": 3.778,
+        "p75": 6.5,
+        "p90": 7.889
+      },
+      "precipitation_change_pct": {
+        "p10": -15.0,
+        "p25": -3.0,
+        "p75": 50.0,
+        "p90": 68.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "February",
+      "temperature_change_f": {
+        "p10": 4.1,
+        "p25": 6.0,
+        "p75": 11.6,
+        "p90": 14.5
+      },
+      "temperature_change_c": {
+        "p10": 2.278,
+        "p25": 3.333,
+        "p75": 6.444,
+        "p90": 8.056
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": 9.0,
+        "p75": 56.0,
+        "p90": 83.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "March",
+      "temperature_change_f": {
+        "p10": 4.0,
+        "p25": 5.8,
+        "p75": 10.1,
+        "p90": 12.5
+      },
+      "temperature_change_c": {
+        "p10": 2.222,
+        "p25": 3.222,
+        "p75": 5.611,
+        "p90": 6.944
+      },
+      "precipitation_change_pct": {
+        "p10": -10.0,
+        "p25": 9.0,
+        "p75": 50.0,
+        "p90": 75.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "April",
+      "temperature_change_f": {
+        "p10": 3.0,
+        "p25": 5.0,
+        "p75": 9.9,
+        "p90": 13.3
+      },
+      "temperature_change_c": {
+        "p10": 1.667,
+        "p25": 2.778,
+        "p75": 5.5,
+        "p90": 7.389
+      },
+      "precipitation_change_pct": {
+        "p10": -18.0,
+        "p25": -6.0,
+        "p75": 40.0,
+        "p90": 59.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "May",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 5.7,
+        "p75": 10.4,
+        "p90": 13.1
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 3.167,
+        "p75": 5.778,
+        "p90": 7.278
+      },
+      "precipitation_change_pct": {
+        "p10": -27.0,
+        "p25": -10.0,
+        "p75": 22.0,
+        "p90": 46.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "June",
+      "temperature_change_f": {
+        "p10": 4.5,
+        "p25": 6.4,
+        "p75": 11.2,
+        "p90": 13.6
+      },
+      "temperature_change_c": {
+        "p10": 2.5,
+        "p25": 3.556,
+        "p75": 6.222,
+        "p90": 7.556
+      },
+      "precipitation_change_pct": {
+        "p10": -25.0,
+        "p25": -8.0,
+        "p75": 33.0,
+        "p90": 53.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "July",
+      "temperature_change_f": {
+        "p10": 4.2,
+        "p25": 6.3,
+        "p75": 11.7,
+        "p90": 14.0
+      },
+      "temperature_change_c": {
+        "p10": 2.333,
+        "p25": 3.5,
+        "p75": 6.5,
+        "p90": 7.778
+      },
+      "precipitation_change_pct": {
+        "p10": -37.0,
+        "p25": -21.0,
+        "p75": 25.0,
+        "p90": 53.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "August",
+      "temperature_change_f": {
+        "p10": 4.9,
+        "p25": 6.5,
+        "p75": 12.1,
+        "p90": 14.3
+      },
+      "temperature_change_c": {
+        "p10": 2.722,
+        "p25": 3.611,
+        "p75": 6.722,
+        "p90": 7.944
+      },
+      "precipitation_change_pct": {
+        "p10": -22.0,
+        "p25": -5.0,
+        "p75": 36.0,
+        "p90": 59.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "September",
+      "temperature_change_f": {
+        "p10": 4.0,
+        "p25": 6.1,
+        "p75": 12.1,
+        "p90": 15.5
+      },
+      "temperature_change_c": {
+        "p10": 2.222,
+        "p25": 3.389,
+        "p75": 6.722,
+        "p90": 8.611
+      },
+      "precipitation_change_pct": {
+        "p10": -41.0,
+        "p25": -14.0,
+        "p75": 25.0,
+        "p90": 49.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "October",
+      "temperature_change_f": {
+        "p10": 4.0,
+        "p25": 6.1,
+        "p75": 11.8,
+        "p90": 14.5
+      },
+      "temperature_change_c": {
+        "p10": 2.222,
+        "p25": 3.389,
+        "p75": 6.556,
+        "p90": 8.056
+      },
+      "precipitation_change_pct": {
+        "p10": -47.0,
+        "p25": -26.0,
+        "p75": 25.0,
+        "p90": 45.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "November",
+      "temperature_change_f": {
+        "p10": 3.4,
+        "p25": 5.1,
+        "p75": 11.3,
+        "p90": 13.1
+      },
+      "temperature_change_c": {
+        "p10": 1.889,
+        "p25": 2.833,
+        "p75": 6.278,
+        "p90": 7.278
+      },
+      "precipitation_change_pct": {
+        "p10": -44.0,
+        "p25": -21.0,
+        "p75": 24.0,
+        "p90": 47.0
+      }
+    },
+    {
+      "horizon": "2100",
+      "season_or_month": "December",
+      "temperature_change_f": {
+        "p10": 3.9,
+        "p25": 6.0,
+        "p75": 10.7,
+        "p90": 13.6
+      },
+      "temperature_change_c": {
+        "p10": 2.167,
+        "p25": 3.333,
+        "p75": 5.944,
+        "p90": 7.556
+      },
+      "precipitation_change_pct": {
+        "p10": -19.0,
+        "p25": -5.0,
+        "p75": 30.0,
+        "p90": 48.0
+      }
+    }
+  ],
+  "extremes": [
+    {
+      "horizon": "2030s",
+      "percentile": 10,
+      "hot_days_ge90f_per_year": 27.0,
+      "hot_days_ge95f_per_year": 8.0,
+      "cold_days_tmin_le32f_per_year": 34.0,
+      "heatwaves_per_year": 3.0,
+      "mean_heatwave_length_days": 5.0,
+      "rain_days_ge1inch_per_year": 14.0,
+      "rain_days_ge2inch_per_year": 3.0,
+      "rain_days_ge4inch_per_year": 0.2
+    },
+    {
+      "horizon": "2030s",
+      "percentile": 25,
+      "hot_days_ge90f_per_year": 27.0,
+      "hot_days_ge95f_per_year": 8.0,
+      "cold_days_tmin_le32f_per_year": 39.0,
+      "heatwaves_per_year": 3.0,
+      "mean_heatwave_length_days": 5.0,
+      "rain_days_ge1inch_per_year": 14.0,
+      "rain_days_ge2inch_per_year": 3.0,
+      "rain_days_ge4inch_per_year": 0.3
+    },
+    {
+      "horizon": "2030s",
+      "percentile": 75,
+      "hot_days_ge90f_per_year": 46.0,
+      "hot_days_ge95f_per_year": 17.0,
+      "cold_days_tmin_le32f_per_year": 52.0,
+      "heatwaves_per_year": 6.0,
+      "mean_heatwave_length_days": 5.0,
+      "rain_days_ge1inch_per_year": 16.0,
+      "rain_days_ge2inch_per_year": 4.0,
+      "rain_days_ge4inch_per_year": 0.4
+    },
+    {
+      "horizon": "2030s",
+      "percentile": 90,
+      "hot_days_ge90f_per_year": 54.0,
+      "hot_days_ge95f_per_year": 27.0,
+      "cold_days_tmin_le32f_per_year": 58.0,
+      "heatwaves_per_year": 7.0,
+      "mean_heatwave_length_days": 6.0,
+      "rain_days_ge1inch_per_year": 17.0,
+      "rain_days_ge2inch_per_year": 5.0,
+      "rain_days_ge4inch_per_year": 0.4
+    },
+    {
+      "horizon": "2050s",
+      "percentile": 10,
+      "hot_days_ge90f_per_year": 32.0,
+      "hot_days_ge95f_per_year": 10.0,
+      "cold_days_tmin_le32f_per_year": 17.0,
+      "heatwaves_per_year": 4.0,
+      "mean_heatwave_length_days": 5.0,
+      "rain_days_ge1inch_per_year": 14.0,
+      "rain_days_ge2inch_per_year": 3.0,
+      "rain_days_ge4inch_per_year": 0.2
+    },
+    {
+      "horizon": "2050s",
+      "percentile": 25,
+      "hot_days_ge90f_per_year": 38.0,
+      "hot_days_ge95f_per_year": 14.0,
+      "cold_days_tmin_le32f_per_year": 31.0,
+      "heatwaves_per_year": 5.0,
+      "mean_heatwave_length_days": 5.0,
+      "rain_days_ge1inch_per_year": 15.0,
+      "rain_days_ge2inch_per_year": 4.0,
+      "rain_days_ge4inch_per_year": 0.3
+    },
+    {
+      "horizon": "2050s",
+      "percentile": 75,
+      "hot_days_ge90f_per_year": 62.0,
+      "hot_days_ge95f_per_year": 32.0,
+      "cold_days_tmin_le32f_per_year": 48.0,
+      "heatwaves_per_year": 8.0,
+      "mean_heatwave_length_days": 6.0,
+      "rain_days_ge1inch_per_year": 17.0,
+      "rain_days_ge2inch_per_year": 5.0,
+      "rain_days_ge4inch_per_year": 0.4
+    },
+    {
+      "horizon": "2050s",
+      "percentile": 90,
+      "hot_days_ge90f_per_year": 69.0,
+      "hot_days_ge95f_per_year": 35.0,
+      "cold_days_tmin_le32f_per_year": 52.0,
+      "heatwaves_per_year": 9.0,
+      "mean_heatwave_length_days": 6.0,
+      "rain_days_ge1inch_per_year": 17.0,
+      "rain_days_ge2inch_per_year": 5.0,
+      "rain_days_ge4inch_per_year": 0.4
+    },
+    {
+      "horizon": "2080s",
+      "percentile": 10,
+      "hot_days_ge90f_per_year": 46.0,
+      "hot_days_ge95f_per_year": 17.0,
+      "cold_days_tmin_le32f_per_year": 3.0,
+      "heatwaves_per_year": 6.0,
+      "mean_heatwave_length_days": 5.0,
+      "rain_days_ge1inch_per_year": 14.0,
+      "rain_days_ge2inch_per_year": 4.0,
+      "rain_days_ge4inch_per_year": 0.3
+    },
+    {
+      "horizon": "2080s",
+      "percentile": 25,
+      "hot_days_ge90f_per_year": 46.0,
+      "hot_days_ge95f_per_year": 17.0,
+      "cold_days_tmin_le32f_per_year": 9.0,
+      "heatwaves_per_year": 6.0,
+      "mean_heatwave_length_days": 5.0,
+      "rain_days_ge1inch_per_year": 15.0,
+      "rain_days_ge2inch_per_year": 4.0,
+      "rain_days_ge4inch_per_year": 0.4
+    },
+    {
+      "horizon": "2080s",
+      "percentile": 75,
+      "hot_days_ge90f_per_year": 85.0,
+      "hot_days_ge95f_per_year": 54.0,
+      "cold_days_tmin_le32f_per_year": 39.0,
+      "heatwaves_per_year": 9.0,
+      "mean_heatwave_length_days": 8.0,
+      "rain_days_ge1inch_per_year": 17.0,
+      "rain_days_ge2inch_per_year": 6.0,
+      "rain_days_ge4inch_per_year": 0.6
+    },
+    {
+      "horizon": "2080s",
+      "percentile": 90,
+      "hot_days_ge90f_per_year": 108.0,
+      "hot_days_ge95f_per_year": 73.0,
+      "cold_days_tmin_le32f_per_year": 48.0,
+      "heatwaves_per_year": 10.0,
+      "mean_heatwave_length_days": 10.0,
+      "rain_days_ge1inch_per_year": 18.0,
+      "rain_days_ge2inch_per_year": 6.0,
+      "rain_days_ge4inch_per_year": 0.7
+    }
+  ],
+  "limitations": [
+    "Do not add these 1981-2010 changes directly to the separate 1991-2020 station baseline; rebase using consistent observations and methods first.",
+    "The 25th-75th percentile interval is model/scenario spread, not a confidence interval for a building.",
+    "Pooled percentiles combine two scenarios; choose scenario_ensemble_means only when explicitly presenting scenario-specific means.",
+    "Raw GCMs include models with high climate sensitivity; NPCC discusses the hot-model issue and comparison with constrained subsets.",
+    "Annual precipitation percent changes do not scale hourly rainfall, flood depth, property losses, or drainage design storms.",
+    "No parcel differentiation, building indoor temperatures, cooling bills, or flood inundation is derived here."
+  ],
+  "provenance": {
+    "retrieved_on": "2026-10-27",
+    "assessment_year": 2024,
+    "source_rows_updated_at": {
+      "temperature_precipitation": "2024-03-26T20:53:00+00:00",
+      "extremes": "2024-02-22T14:00:45+00:00"
+    },
+    "date_semantics": "Retrieved date is acquisition time; source update dates are catalog revision times. Projected horizons are modeled climate time slices, not observation dates.",
+    "dataset_landing": "https://climateassessment.nyc/npcc-datasets/",
+    "temperature_precipitation": "https://data.cityofnewyork.us/resource/hmdk-eidg.json",
+    "extremes": "https://data.cityofnewyork.us/resource/38ps-fnsg.json",
+    "paper": "https://doi.org/10.1111/nyas.15116",
+    "paper_tables": [
+      3,
+      4
+    ],
+    "methods_paper": "https://doi.org/10.1111/nyas.15180",
+    "raw_sha256": {
+      "npcc4_extremes_metadata.json": "ffa0f2a9f83fdde5fd9c5a80279d1bc0fd3ea0fae52cb2abdb53e541cdbc2cee",
+      "npcc4_extremes_sea_level.json": "8f61dcfb9d2b0f45df88de72d5525e153dba9fa47752dd8ba48f6ee0553ffe2d",
+      "npcc4_temperature_metadata.json": "892a475ad15fe0ddb401ad8591f6b2e4660731727a8c3dd2197cdc6a656f4c3c",
+      "npcc4_temperature_precipitation.json": "b5992db540da8aee4984c61dd069321d1dbd97a75c475be76b659695b86f6031"
+    }
+  }
+}

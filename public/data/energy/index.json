@@ -1,0 +1,390 @@
+{
+  "source_id": "ll84_energy",
+  "calendar_year": 2024,
+  "lookup": "energy/{bbl.slice(0,3)}.json then payload.records[bbl]",
+  "many_to_many_warning": "Each record is the full reporting property; do not allocate or sum replicated values across BBLs.",
+  "identifier_validation": "Syntactic validation only; exact BBL string join is not proof that owner-reported mapping is correct. Raw strings retained.",
+  "shards": {
+    "100": {
+      "path": "energy/100.json",
+      "bbl_count": 3791,
+      "bytes": 5168305,
+      "sha256": "4de708235ff4f53461984fbf0661611fcc44844aacaf71193304f21b9d6f1397",
+      "gzip_bytes": 509220,
+      "report_references": 4791
+    },
+    "101": {
+      "path": "energy/101.json",
+      "bbl_count": 4536,
+      "bytes": 6353146,
+      "sha256": "26bcf2a3228b2becda589928f50460580116efe3c6f275adb64d7875f495e500",
+      "gzip_bytes": 617740,
+      "report_references": 5897
+    },
+    "102": {
+      "path": "energy/102.json",
+      "bbl_count": 1458,
+      "bytes": 2006954,
+      "sha256": "ca078df66ae0070b0e17a151d912de607bcda6453efed3de524a8ea674f755a1",
+      "gzip_bytes": 183040,
+      "report_references": 1826
+    },
+    "123": {
+      "path": "energy/123.json",
+      "bbl_count": 1,
+      "bytes": 1915,
+      "sha256": "74464db8f5966f93ff2a1f9e755933cf582e0ef31fbadf5803d49aa80c34dfda",
+      "gzip_bytes": 905,
+      "report_references": 1
+    },
+    "200": {
+      "path": "energy/200.json",
+      "bbl_count": 1,
+      "bytes": 3042,
+      "sha256": "7ce813c625a35058fa4c96403aa3f96fea53062903c46b95d97637e46bc5ba9d",
+      "gzip_bytes": 1028,
+      "report_references": 2
+    },
+    "201": {
+      "path": "energy/201.json",
+      "bbl_count": 1,
+      "bytes": 1942,
+      "sha256": "6e3713e846b2b169bf97615ce200fce3b14b170b20a1038a9c8dd4555683a34c",
+      "gzip_bytes": 932,
+      "report_references": 1
+    },
+    "202": {
+      "path": "energy/202.json",
+      "bbl_count": 2181,
+      "bytes": 2979438,
+      "sha256": "e6d65d813035b3bc1c588262a6c42357ab66ca9711bd3c93b45ca5c59225cba1",
+      "gzip_bytes": 284250,
+      "report_references": 2778
+    },
+    "203": {
+      "path": "energy/203.json",
+      "bbl_count": 1944,
+      "bytes": 2812201,
+      "sha256": "aba46bb893d78e71567575c082a7edd1ad49296f78bb6ad88daab63dc58c064d",
+      "gzip_bytes": 265036,
+      "report_references": 2603
+    },
+    "204": {
+      "path": "energy/204.json",
+      "bbl_count": 539,
+      "bytes": 892588,
+      "sha256": "a3368b1e2dda7af614b37f397d7d03960fe287a554aaadc821276eceea852bf7",
+      "gzip_bytes": 82115,
+      "report_references": 825
+    },
+    "205": {
+      "path": "energy/205.json",
+      "bbl_count": 410,
+      "bytes": 740297,
+      "sha256": "95c759d8142f2533bd3f34e945722856bab0cf7ac30c99a7022a2c2f23ea7b14",
+      "gzip_bytes": 67674,
+      "report_references": 636
+    },
+    "300": {
+      "path": "energy/300.json",
+      "bbl_count": 761,
+      "bytes": 1101061,
+      "sha256": "f0eba15df38ca0bf99e2ee422928684fbb6edda0a29709ad47a4c74cd4060365",
+      "gzip_bytes": 110481,
+      "report_references": 1030
+    },
+    "301": {
+      "path": "energy/301.json",
+      "bbl_count": 1328,
+      "bytes": 2030544,
+      "sha256": "1e4a1de0a5545a20f39b84a1e44a840eb6787a82db4dc4aa7a7fc661e7947131",
+      "gzip_bytes": 182380,
+      "report_references": 1806
+    },
+    "302": {
+      "path": "energy/302.json",
+      "bbl_count": 810,
+      "bytes": 1211022,
+      "sha256": "e8f5d0bf90e5588898f49684eaa507a8dbb16c950a9e48a09e507bb397a64b1c",
+      "gzip_bytes": 121480,
+      "report_references": 1145
+    },
+    "303": {
+      "path": "energy/303.json",
+      "bbl_count": 625,
+      "bytes": 1871759,
+      "sha256": "70d2a62613a06c4a6422ae9fbfa63c6f6f541d91c7cd3c56db2b21ac507c76ae",
+      "gzip_bytes": 116679,
+      "report_references": 1595
+    },
+    "304": {
+      "path": "energy/304.json",
+      "bbl_count": 480,
+      "bytes": 855447,
+      "sha256": "9a8c82c7aede8f71f1cb7e60a45ede5fb66c8df9763124356b5ec66747d255d8",
+      "gzip_bytes": 73561,
+      "report_references": 762
+    },
+    "305": {
+      "path": "energy/305.json",
+      "bbl_count": 1227,
+      "bytes": 1526301,
+      "sha256": "a6043eec8f9952fdf9e2845e854fffbb286e39a345813004bce0797f8b3cb43a",
+      "gzip_bytes": 154280,
+      "report_references": 1445
+    },
+    "306": {
+      "path": "energy/306.json",
+      "bbl_count": 849,
+      "bytes": 1110986,
+      "sha256": "3e76b684353b4f3092410a028eec91fabba3bd10ffa71ab819460183ce3de98d",
+      "gzip_bytes": 112250,
+      "report_references": 1049
+    },
+    "307": {
+      "path": "energy/307.json",
+      "bbl_count": 508,
+      "bytes": 731918,
+      "sha256": "65ad94ad8da9709b9ac9c2c8b1be345b3af4483a575dc45eef612994ee15aa3a",
+      "gzip_bytes": 73865,
+      "report_references": 682
+    },
+    "308": {
+      "path": "energy/308.json",
+      "bbl_count": 290,
+      "bytes": 607223,
+      "sha256": "c7579521efafc2a50578b294167538dbc93b06881e453cfbee36dc498d15a4f9",
+      "gzip_bytes": 53245,
+      "report_references": 539
+    },
+    "400": {
+      "path": "energy/400.json",
+      "bbl_count": 1001,
+      "bytes": 1480165,
+      "sha256": "639d245a106187eae893ddb9233cd863aacfbd9707349cc9b75f40e386bba8d8",
+      "gzip_bytes": 143867,
+      "report_references": 1352
+    },
+    "401": {
+      "path": "energy/401.json",
+      "bbl_count": 665,
+      "bytes": 986859,
+      "sha256": "03e82f8d4b7c24c3490136d247c1eb213e5f1efbaf6050a40c1c9adc2bb3b0fc",
+      "gzip_bytes": 98141,
+      "report_references": 911
+    },
+    "402": {
+      "path": "energy/402.json",
+      "bbl_count": 409,
+      "bytes": 692302,
+      "sha256": "ba66c312e743be944005f252ce2e517f39ea190722f0f0eab1dd06603cc8fbfd",
+      "gzip_bytes": 67558,
+      "report_references": 647
+    },
+    "403": {
+      "path": "energy/403.json",
+      "bbl_count": 410,
+      "bytes": 555296,
+      "sha256": "ab5b6a3f268f771ea762145c230e273c8ba750dc6ccc38ba57a4e5427d68cf73",
+      "gzip_bytes": 58202,
+      "report_references": 522
+    },
+    "404": {
+      "path": "energy/404.json",
+      "bbl_count": 263,
+      "bytes": 454978,
+      "sha256": "a14c489bc29074672a4d4ccde4767c132c57a02081add06b6d118a3b1faa74f6",
+      "gzip_bytes": 43680,
+      "report_references": 399
+    },
+    "405": {
+      "path": "energy/405.json",
+      "bbl_count": 406,
+      "bytes": 1119673,
+      "sha256": "294aa0a97c3d1c99c6d57d4b872b77f8e172f6e4c299fa6c00ea1ea3bc6c7a0d",
+      "gzip_bytes": 84485,
+      "report_references": 1004
+    },
+    "406": {
+      "path": "energy/406.json",
+      "bbl_count": 142,
+      "bytes": 965259,
+      "sha256": "59bf2ddf6390acff986b929602a6d900f4596d814421f07febd0f82c845671f4",
+      "gzip_bytes": 56132,
+      "report_references": 818
+    },
+    "407": {
+      "path": "energy/407.json",
+      "bbl_count": 102,
+      "bytes": 2126094,
+      "sha256": "856c0ce267cd7baf24b520a7c5fa5faf06b2cc8a7055154d9362da13ec523012",
+      "gzip_bytes": 106364,
+      "report_references": 1800
+    },
+    "408": {
+      "path": "energy/408.json",
+      "bbl_count": 95,
+      "bytes": 658050,
+      "sha256": "3218a382c9eda7bbd53b0e11212bea2da1e5874cdd0310289ba882eab1d96b6f",
+      "gzip_bytes": 47598,
+      "report_references": 538
+    },
+    "409": {
+      "path": "energy/409.json",
+      "bbl_count": 421,
+      "bytes": 600279,
+      "sha256": "b6a5bc17ba49e3bcc64c7dc5e7dea318e12fb0fbb61ccdc610a47510ae57c348",
+      "gzip_bytes": 62631,
+      "report_references": 565
+    },
+    "410": {
+      "path": "energy/410.json",
+      "bbl_count": 155,
+      "bytes": 269617,
+      "sha256": "15a20561f48052dfdc3daa16461475cbb172b652e0a863d5bc8672745ee4b71c",
+      "gzip_bytes": 26623,
+      "report_references": 236
+    },
+    "411": {
+      "path": "energy/411.json",
+      "bbl_count": 68,
+      "bytes": 296326,
+      "sha256": "f97db9f264e66f81ee26fa439e3eeeca539d9e5767a18b39fe615d200713faa8",
+      "gzip_bytes": 21989,
+      "report_references": 269
+    },
+    "412": {
+      "path": "energy/412.json",
+      "bbl_count": 80,
+      "bytes": 117522,
+      "sha256": "df6cd8b5b80fbbb62d740a573f49ec3c316890da5dac1c210b67c56cde40b66a",
+      "gzip_bytes": 14353,
+      "report_references": 104
+    },
+    "413": {
+      "path": "energy/413.json",
+      "bbl_count": 51,
+      "bytes": 110679,
+      "sha256": "d8fb0d79148cf9408adc664bc7efe279114595faee1eb62395da248b6ca22011",
+      "gzip_bytes": 10408,
+      "report_references": 102
+    },
+    "414": {
+      "path": "energy/414.json",
+      "bbl_count": 8,
+      "bytes": 11371,
+      "sha256": "dfc4c039f4220bbd8a9d51a3808928238d6771f5000e1f8c1185e89494621b98",
+      "gzip_bytes": 2217,
+      "report_references": 10
+    },
+    "415": {
+      "path": "energy/415.json",
+      "bbl_count": 149,
+      "bytes": 234940,
+      "sha256": "6c54c38f1e5667a22f8fadb5a4c5d75a4154d18f2707c8d4ab3c0fc460a88e16",
+      "gzip_bytes": 24578,
+      "report_references": 220
+    },
+    "416": {
+      "path": "energy/416.json",
+      "bbl_count": 77,
+      "bytes": 170304,
+      "sha256": "5e4e3968662ccf19c6268cf1d3ba9143be780762244a0191e2d8390bcddfa14b",
+      "gzip_bytes": 15896,
+      "report_references": 156
+    },
+    "500": {
+      "path": "energy/500.json",
+      "bbl_count": 189,
+      "bytes": 511171,
+      "sha256": "3c4b4e9705a68e07cdc1ee4354928763eb6bff209b800764f28746bdb6757eb6",
+      "gzip_bytes": 42363,
+      "report_references": 467
+    },
+    "501": {
+      "path": "energy/501.json",
+      "bbl_count": 70,
+      "bytes": 115482,
+      "sha256": "950899d36912706bcb0833de21a767c3dff164f9b429b44897aabb3bd313ad9f",
+      "gzip_bytes": 13617,
+      "report_references": 106
+    },
+    "502": {
+      "path": "energy/502.json",
+      "bbl_count": 87,
+      "bytes": 142964,
+      "sha256": "c84baecaf6e81d0c6c82946de9df527cb34ace6d3580ed40556a490f621528f2",
+      "gzip_bytes": 16276,
+      "report_references": 133
+    },
+    "503": {
+      "path": "energy/503.json",
+      "bbl_count": 63,
+      "bytes": 139857,
+      "sha256": "7449b1bd289b69d9923e9e9c1db854a07caa1a0ae631544f3b759c4940c33294",
+      "gzip_bytes": 14827,
+      "report_references": 131
+    },
+    "504": {
+      "path": "energy/504.json",
+      "bbl_count": 15,
+      "bytes": 25297,
+      "sha256": "72ac4c2d3d6abc826e4c1c6bdf1c46a20756cd551c396d74bc00153f6780c084",
+      "gzip_bytes": 3622,
+      "report_references": 18
+    },
+    "505": {
+      "path": "energy/505.json",
+      "bbl_count": 25,
+      "bytes": 59118,
+      "sha256": "a6a2e272e8d23b3614e2c756cde9edf67290ffef11d1e4e90de3a1272defb334",
+      "gzip_bytes": 6684,
+      "report_references": 55
+    },
+    "506": {
+      "path": "energy/506.json",
+      "bbl_count": 15,
+      "bytes": 31003,
+      "sha256": "6a5e518c90a84d0da0ebd4843ad4be3877dd5f426becc0bbf845763809153081",
+      "gzip_bytes": 4087,
+      "report_references": 28
+    },
+    "507": {
+      "path": "energy/507.json",
+      "bbl_count": 28,
+      "bytes": 34381,
+      "sha256": "a4f535ab096887c1242d8e7ebe5602b0712f09059aeb37c415d41442607ce238",
+      "gzip_bytes": 4881,
+      "report_references": 31
+    },
+    "508": {
+      "path": "energy/508.json",
+      "bbl_count": 2,
+      "bytes": 7243,
+      "sha256": "ca2ea33e29c31bc98954e61be2eaa55e2b528f1c70cecd562738b2117d2797f8",
+      "gzip_bytes": 1464,
+      "report_references": 6
+    }
+  },
+  "reporting_scope_source": {
+    "source_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json",
+    "query_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?%24select=report_year%2Cproperty_id%2Cparent_property_id%2Cparent_property_name%2Csite_energy_use_kbtu%2Cproperty_gfa_self_reported%2Csite_eui_kbtu_ft&%24where=report_year%3D2024&%24order=property_id&%24limit=50000",
+    "dataset_url": "https://data.cityofnewyork.us/d/5zyy-y8am",
+    "retrieved_at": "2026-10-27T23:56:16.370576+00:00",
+    "source_rows_updated_at": 1764097355,
+    "calendar_year": 2024,
+    "record_count": 39090,
+    "sha256": "ca8c16b1bc0f7dbd15b730f57c5976560474e99ed6ad5d013f9799abb4c4b36a",
+    "method": "Native parent-property ID, name and site-energy total; join exact report year and property ID. Existing floor-area and EUI must agree before use. No allocation or parent/child summation."
+  },
+  "counts": {
+    "shards": 45,
+    "bbls": 26736,
+    "unique_source_reports": 39090,
+    "unique_indexed_reports": 37931,
+    "report_references": 40041
+  },
+  "bytes": 43922319,
+  "gzip_bytes": 4002704,
+  "max_shard_bytes": 6353146
+}

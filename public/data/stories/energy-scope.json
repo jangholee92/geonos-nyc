@@ -1,0 +1,531 @@
+{
+  "id": "lombardy-energy-scope",
+  "version": 1,
+  "title": "One address. Three energy records.",
+  "question": "How much energy does this building use?",
+  "short_answer": "The answer depends on which reporting boundary you mean.",
+  "reveal": "66.7 and 127.6 are both reported values. One describes the parent property; the other describes a child report with a different floor area.",
+  "status": "Verified public-source example. Deterministic evidence, not an AI-generated assessment.",
+  "report_year": 2024,
+  "retrieved_at": "2026-10-27T23:56:16.370576+00:00",
+  "bbl": "3028220001",
+  "units": {
+    "site_energy": "kBtu/year",
+    "floor_area": "ft² of reported gross floor area",
+    "site_eui": "kBtu/ft²/year",
+    "footprint_area": "ft² of ground coverage"
+  },
+  "steps": [
+    {
+      "id": "parent",
+      "title": "Start with the whole property.",
+      "text": "The parent report covers two listed buildings and 79,551 ft² of reported floor area. Its reported site EUI is 66.7.",
+      "report_keys": [
+        "2024:2784952"
+      ]
+    },
+    {
+      "id": "boundary",
+      "title": "Now follow the reporting boundary.",
+      "text": "The same tax lot connects two real footprints. A tax-lot address does not identify a single energy reporting scope.",
+      "building_ids": [
+        "348650",
+        "691162"
+      ]
+    },
+    {
+      "id": "child",
+      "title": "The building-level question changes the answer.",
+      "text": "The child report for BIN 3338236 uses 41,583 ft² and reports 127.6. It contains the same native site-energy total as the parent. The other child has no reported energy total or EUI.",
+      "report_keys": [
+        "2024:66128693",
+        "2024:66128992"
+      ]
+    },
+    {
+      "id": "next",
+      "title": "Ask the question the map cannot answer.",
+      "text": "Which meters and operating uses do these reports cover? Obtain building-specific metering or a documented allocation before assigning shared consumption to a footprint."
+    }
+  ],
+  "reported_values": {
+    "parent": {
+      "report_key": "2024:2784952",
+      "label": "Parent property · two listed buildings",
+      "site_energy_kbtu": 5307042.6,
+      "floor_area_ft2": 79551,
+      "site_eui_kbtu_ft2": 66.7
+    },
+    "child": {
+      "report_key": "2024:66128693",
+      "label": "Child report · BIN 3338236",
+      "site_energy_kbtu": 5307042.6,
+      "floor_area_ft2": 41583,
+      "site_eui_kbtu_ft2": 127.6
+    },
+    "other_child": {
+      "report_key": "2024:66128992",
+      "label": "Other child · BIN 3330118",
+      "site_energy_kbtu": null,
+      "floor_area_ft2": 37968,
+      "site_eui_kbtu_ft2": null
+    }
+  },
+  "calculation": {
+    "method": "Native reported site-energy total divided by each report’s gross floor area, rounded to one decimal; no use of footprint area.",
+    "parent_recomputed_eui": 66.71245616019911,
+    "child_recomputed_eui": 127.62529399033258,
+    "caveat": "The identical total and differing denominators reproduce the reported intensities. They do not prove a data error, independent meters, efficiency, costs or a valid allocation."
+  },
+  "records": [
+    {
+      "property_id": "2784952",
+      "name": "211 LOMBARDY ST LLC (Parent)",
+      "report_year": 2024,
+      "year_ending": "2024-12-31T00:00:00.000",
+      "bbls": [
+        "3028220001"
+      ],
+      "bins": [
+        "3330118",
+        "3338236"
+      ],
+      "bbl_raw": "3028220001",
+      "bin_raw": "3330118;3338236",
+      "address": "211 LOMBARDY STREET",
+      "property_type": "Refrigerated Warehouse",
+      "number_of_buildings": 2.0,
+      "latitude": 40.723881,
+      "longitude": -73.93221,
+      "metrics": {
+        "site_eui_kbtu_ft2": 66.7,
+        "weather_normalized_site_eui_kbtu_ft2": 71.4,
+        "energy_star_score": null,
+        "total_ghg_tco2e": 424.24,
+        "ghg_intensity_kgco2e_ft2": 5.33,
+        "floor_area_ft2": 79551.0
+      },
+      "data_quality": {
+        "estimated_values_energy": "No",
+        "alert_energy_meter_has_less": "Ok",
+        "alert_energy_meter_has_gaps": "Ok",
+        "alert_gross_floor_area_is": "Ok"
+      },
+      "reporting_scope": {
+        "alignment": "matched",
+        "parent_property_id_raw": "2784952",
+        "parent_property_name": "211 LOMBARDY ST LLC (Parent)",
+        "site_energy_use_kbtu": 5307042.6,
+        "site_energy_use_kbtu_raw": "5307042.6",
+        "source_property_id": "2784952",
+        "source_report_year": 2024,
+        "source_floor_area_ft2": 79551.0,
+        "source_site_eui_kbtu_ft2": 66.7
+      }
+    },
+    {
+      "property_id": "66128693",
+      "name": "211 LOMBARDY STREET (Child)",
+      "report_year": 2024,
+      "year_ending": "2024-12-31T00:00:00.000",
+      "bbls": [
+        "3028220001"
+      ],
+      "bins": [
+        "3338236"
+      ],
+      "bbl_raw": "3028220001",
+      "bin_raw": "3338236",
+      "address": "211 LOMBARDY ST",
+      "property_type": "Refrigerated Warehouse",
+      "number_of_buildings": 1.0,
+      "latitude": 40.723881,
+      "longitude": -73.93221,
+      "metrics": {
+        "site_eui_kbtu_ft2": 127.6,
+        "weather_normalized_site_eui_kbtu_ft2": 136.6,
+        "energy_star_score": 22.0,
+        "total_ghg_tco2e": 424.24,
+        "ghg_intensity_kgco2e_ft2": 10.2,
+        "floor_area_ft2": 41583.0
+      },
+      "data_quality": {
+        "estimated_values_energy": "No",
+        "alert_energy_meter_has_less": "Ok",
+        "alert_energy_meter_has_gaps": "Ok",
+        "alert_gross_floor_area_is": "Ok"
+      },
+      "reporting_scope": {
+        "alignment": "matched",
+        "parent_property_id_raw": "2784952",
+        "parent_property_name": "211 LOMBARDY ST LLC (Parent)",
+        "site_energy_use_kbtu": 5307042.6,
+        "site_energy_use_kbtu_raw": "5307042.6",
+        "source_property_id": "66128693",
+        "source_report_year": 2024,
+        "source_floor_area_ft2": 41583.0,
+        "source_site_eui_kbtu_ft2": 127.6
+      }
+    },
+    {
+      "property_id": "66128992",
+      "name": "245 LOMBARDY STREET (Child)",
+      "report_year": 2024,
+      "year_ending": "2024-12-31T00:00:00.000",
+      "bbls": [
+        "3028220001"
+      ],
+      "bins": [
+        "3330118"
+      ],
+      "bbl_raw": "3028220001",
+      "bin_raw": "3330118",
+      "address": "211 LOMBARDY ST",
+      "property_type": "Refrigerated Warehouse",
+      "number_of_buildings": 1.0,
+      "latitude": 40.723881,
+      "longitude": -73.93221,
+      "metrics": {
+        "site_eui_kbtu_ft2": null,
+        "weather_normalized_site_eui_kbtu_ft2": null,
+        "energy_star_score": null,
+        "total_ghg_tco2e": null,
+        "ghg_intensity_kgco2e_ft2": null,
+        "floor_area_ft2": 37968.0
+      },
+      "data_quality": {
+        "estimated_values_energy": "Unable to Check (not enough data)",
+        "alert_energy_meter_has_less": "Unable to Check (not enough data)",
+        "alert_energy_meter_has_gaps": "Unable to Check (not enough data)",
+        "alert_gross_floor_area_is": "Ok"
+      },
+      "reporting_scope": {
+        "alignment": "matched",
+        "parent_property_id_raw": "2784952",
+        "parent_property_name": "211 LOMBARDY ST LLC (Parent)",
+        "site_energy_use_kbtu": null,
+        "site_energy_use_kbtu_raw": "Not Available",
+        "source_property_id": "66128992",
+        "source_report_year": 2024,
+        "source_floor_area_ft2": 37968.0,
+        "source_site_eui_kbtu_ft2": null
+      }
+    }
+  ],
+  "buildings": [
+    {
+      "id": "348650",
+      "doitt_id": 348650,
+      "bin": "3338236",
+      "bbl": "3028220001",
+      "entity_type": "building",
+      "address": "211 LOMBARDY STREET",
+      "address_scope": "PLUTO tax-lot address; both footprints share this address in the source join",
+      "label": "Building BIN 3338236",
+      "reported_child_name": "211 LOMBARDY STREET (Child)",
+      "report_property_id": "66128693",
+      "borough": "Brooklyn",
+      "borough_code": "BK",
+      "latitude": 40.7242846344655,
+      "longitude": -73.93215648452193,
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -73.931754864363,
+                40.724222726425
+              ],
+              [
+                -73.931766360621,
+                40.724219756154
+              ],
+              [
+                -73.931925884995,
+                40.7241785478
+              ],
+              [
+                -73.931868142856,
+                40.724049168041
+              ],
+              [
+                -73.931867960991,
+                40.724048760903
+              ],
+              [
+                -73.931886772883,
+                40.724043901176
+              ],
+              [
+                -73.93213737013,
+                40.723979165621
+              ],
+              [
+                -73.932367595807,
+                40.723919691841
+              ],
+              [
+                -73.932369555014,
+                40.723924082076
+              ],
+              [
+                -73.932558105446,
+                40.724346542506
+              ],
+              [
+                -73.932598443961,
+                40.724436924163
+              ],
+              [
+                -73.932599029724,
+                40.724438236548
+              ],
+              [
+                -73.93256395844,
+                40.724447295852
+              ],
+              [
+                -73.932467978245,
+                40.724472090063
+              ],
+              [
+                -73.932439239937,
+                40.724479514116
+              ],
+              [
+                -73.932408602547,
+                40.724487428724
+              ],
+              [
+                -73.932365094292,
+                40.724498667651
+              ],
+              [
+                -73.93227282094,
+                40.724522503934
+              ],
+              [
+                -73.932056209885,
+                40.72457846006
+              ],
+              [
+                -73.931928368771,
+                40.724611484585
+              ],
+              [
+                -73.931858252292,
+                40.724454380726
+              ],
+              [
+                -73.931754864363,
+                40.724222726425
+              ]
+            ]
+          ]
+        ]
+      },
+      "footprint_area_sqft": 36668.315297455076,
+      "roof_height_ft": 18.27,
+      "lot_building_area_sqft": 77295.0,
+      "lot_area_sqft": 80000.0,
+      "lot_building_count": 2.0,
+      "zoning": [
+        "M3-1"
+      ],
+      "record_type": "Building",
+      "feature_code": 2100,
+      "source": "https://data.cityofnewyork.us/d/5zhs-2jue",
+      "retrieval": {
+        "mode": "source-snapshot",
+        "retrieved_at": "2026-10-27",
+        "scope": "Preserved citywide source snapshot; no claim of current occupancy or availability"
+      }
+    },
+    {
+      "id": "691162",
+      "doitt_id": 691162,
+      "bin": "3330118",
+      "bbl": "3028220001",
+      "entity_type": "building",
+      "address": "211 LOMBARDY STREET",
+      "address_scope": "PLUTO tax-lot address; both footprints share this address in the source join",
+      "label": "Building BIN 3330118",
+      "reported_child_name": "245 LOMBARDY STREET (Child)",
+      "report_property_id": "66128992",
+      "borough": "Brooklyn",
+      "borough_code": "BK",
+      "latitude": 40.72441594841,
+      "longitude": -73.93145826379862,
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -73.931754864363,
+                40.724222726425
+              ],
+              [
+                -73.931858252292,
+                40.724454380726
+              ],
+              [
+                -73.931928368771,
+                40.724611484585
+              ],
+              [
+                -73.931848095801,
+                40.724632220862
+              ],
+              [
+                -73.931799894108,
+                40.724644672485
+              ],
+              [
+                -73.931610926768,
+                40.724693486893
+              ],
+              [
+                -73.931533106788,
+                40.724713588648
+              ],
+              [
+                -73.93124184146,
+                40.724788827364
+              ],
+              [
+                -73.931241507258,
+                40.72478807794
+              ],
+              [
+                -73.931114093989,
+                40.724502587065
+              ],
+              [
+                -73.93105827567,
+                40.724377516094
+              ],
+              [
+                -73.931024241794,
+                40.724301258564
+              ],
+              [
+                -73.931011497418,
+                40.724272700271
+              ],
+              [
+                -73.931229842863,
+                40.724216297789
+              ],
+              [
+                -73.931469996496,
+                40.72415426168
+              ],
+              [
+                -73.931689248076,
+                40.724097624734
+              ],
+              [
+                -73.931698020025,
+                40.724095358852
+              ],
+              [
+                -73.931751092448,
+                40.724214274707
+              ],
+              [
+                -73.931754864363,
+                40.724222726425
+              ]
+            ]
+          ]
+        ]
+      },
+      "footprint_area_sqft": 39907.636516970975,
+      "roof_height_ft": 33.47,
+      "lot_building_area_sqft": 77295.0,
+      "lot_area_sqft": 80000.0,
+      "lot_building_count": 2.0,
+      "zoning": [
+        "M3-1"
+      ],
+      "record_type": "Building",
+      "feature_code": 2100,
+      "source": "https://data.cityofnewyork.us/d/5zhs-2jue",
+      "retrieval": {
+        "mode": "source-snapshot",
+        "retrieved_at": "2026-10-27",
+        "scope": "Preserved citywide source snapshot; no claim of current occupancy or availability"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "ll84",
+      "title": "NYC LL84 energy disclosure · calendar year 2024",
+      "url": "https://data.cityofnewyork.us/d/5zyy-y8am",
+      "record_query_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?%24where=report_year%3D2024+and+%28property_id%3D%272784952%27+or+parent_property_id%3D%272784952%27%29&%24limit=50"
+    },
+    {
+      "id": "campus-method",
+      "title": "NYC Department of Buildings · Benchmarking a Campus",
+      "url": "https://www.nyc.gov/assets/buildings/pdf/benchmarking_campus.pdf",
+      "pages": [
+        2,
+        9,
+        17
+      ],
+      "supports": "Parent properties represent aggregate child consumption and floor area; retain each BIN and BBL."
+    },
+    {
+      "id": "eui-method",
+      "title": "US EPA ENERGY STAR · What is Energy Use Intensity?",
+      "url": "https://www.energystar.gov/buildings/benchmark/understand-metrics/what-eui",
+      "supports": "Annual energy divided by gross floor area; use type matters when comparing performance."
+    },
+    {
+      "id": "footprints",
+      "title": "NYC official building footprints",
+      "url": "https://data.cityofnewyork.us/d/5zhs-2jue"
+    },
+    {
+      "id": "pluto",
+      "title": "NYC PLUTO tax-lot context",
+      "url": "https://data.cityofnewyork.us/d/64uk-42ks"
+    }
+  ],
+  "limitations": [
+    "These are owner-submitted 2024 reports, not current meters or verified operating conditions.",
+    "Native parent-property IDs establish the reporting links; names are not used to infer relationships.",
+    "Do not sum parent and child energy or count the same report once per linked BBL.",
+    "Do not assign a parent EUI or shared consumption to an individual footprint.",
+    "A missing child value is unknown, not zero. A listed use is not proof of present use, available premises or electrical capacity.",
+    "The map shows two-dimensional footprint geometry; reported energy floor area is a different measurement."
+  ],
+  "provenance": {
+    "scope_supplement": {
+      "source_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json",
+      "query_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?%24select=report_year%2Cproperty_id%2Cparent_property_id%2Cparent_property_name%2Csite_energy_use_kbtu%2Cproperty_gfa_self_reported%2Csite_eui_kbtu_ft&%24where=report_year%3D2024&%24order=property_id&%24limit=50000",
+      "dataset_url": "https://data.cityofnewyork.us/d/5zyy-y8am",
+      "retrieved_at": "2026-10-27T23:56:16.370576+00:00",
+      "source_rows_updated_at": 1764097355,
+      "calendar_year": 2024,
+      "record_count": 39090,
+      "sha256": "ca8c16b1bc0f7dbd15b730f57c5976560474e99ed6ad5d013f9799abb4c4b36a",
+      "method": "Native parent-property ID, name and site-energy total; join exact report year and property ID. Existing floor-area and EUI must agree before use. No allocation or parent/child summation."
+    },
+    "report_record_path": "/data/energy/302.json",
+    "native_relationship_fields": [
+      "property_id",
+      "parent_property_id",
+      "parent_property_name"
+    ],
+    "native_metric_fields": [
+      "site_energy_use_kbtu",
+      "property_gfa_self_reported",
+      "site_eui_kbtu_ft"
+    ],
+    "original_record_fields_preserved": true
+  }
+}

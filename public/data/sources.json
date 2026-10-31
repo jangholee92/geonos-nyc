@@ -1,0 +1,242 @@
+{
+  "retrieved_at": "2026-10-27",
+  "scope": "NYC industrial/storage parcel prototype; 45 tax lots in Brooklyn, Queens and Bronx",
+  "sources": [
+    {
+      "id": "nyc-pluto-26v2",
+      "title": "Primary Land Use Tax Lot Output (PLUTO)",
+      "publisher": "NYC Department of City Planning",
+      "dataset_id": "64uk-42ks",
+      "url": "https://data.cityofnewyork.us/d/64uk-42ks",
+      "api_url": "https://data.cityofnewyork.us/resource/64uk-42ks.json",
+      "version": "26v2",
+      "source_data_updated_at": "2026-08-24T20:48:51Z",
+      "source_metadata_updated_at": "2026-08-24T20:20:47Z",
+      "retrieved_at": "2026-10-27",
+      "spatial_resolution": "Tax lot (approximate lot point in this app, not building footprint)",
+      "fields_used": [
+        "bbl",
+        "address",
+        "borough",
+        "bldgclass",
+        "landuse",
+        "lotarea",
+        "bldgarea",
+        "strgearea",
+        "factryarea",
+        "numfloors",
+        "yearbuilt",
+        "zonedist1..4",
+        "latitude",
+        "longitude",
+        "firm07_flag",
+        "pfirm15_flag"
+      ],
+      "processing": "Filter BK/QN/BX, building class beginning E or F, total building area >=20,000 sqft, valid coordinates; sort BBL within borough; take 15 equally spaced row indices per borough (45 of 1,879 qualifying lots). This is a deterministic demo sample, not a statistically representative or complete market search.",
+      "caveats": [
+        "Tax-lot and assessment records do not establish present vacancy, lease availability, current occupancy, physical condition, or interior suitability.",
+        "Building area is approximate gross floor area of the tax lot and may aggregate multiple structures. It is not usable floor area or zoning floor area.",
+        "Zoning labels are screening context only. Permitted uses require review of the current zoning text, overlays, special districts, and parcel-specific restrictions.",
+        "Source zero in storage/factory area may mean unavailable or not applicable; it does not necessarily mean confirmed absence.",
+        "PLUTO approximate lot coordinates are used as points; parcel/footprint geometry is not included."
+      ]
+    },
+    {
+      "id": "nyc-pluto-flood-flags",
+      "title": "PLUTO FEMA floodplain intersection flags",
+      "publisher": "NYC Department of City Planning / FEMA",
+      "dataset_id": "64uk-42ks",
+      "url": "https://data.cityofnewyork.us/d/64uk-42ks",
+      "api_url": "https://data.cityofnewyork.us/resource/64uk-42ks.json",
+      "version": "2007 FIRM / 2015 preliminary FIRM carried in PLUTO 26v2",
+      "source_data_updated_at": "2026-08-24T20:48:51Z",
+      "source_metadata_updated_at": "2026-08-24T20:20:47Z",
+      "retrieved_at": "2026-10-27",
+      "spatial_resolution": "Any portion of tax lot intersects mapped 1% annual chance floodplain",
+      "fields_used": [
+        "firm07_flag",
+        "pfirm15_flag"
+      ],
+      "processing": "Copied directly from source flags; no invented flood score. flood_status selects 2015 preliminary flag first, then 2007 flag, else not_recorded.",
+      "caveats": [
+        "A source value 1 indicates that some portion of the tax lot is in the mapped floodplain. Buildings on that tax lot may or may not be in the floodplain.",
+        "Missing source flags remain null and are displayed as not recorded. Null must never be treated as confirmed outside floodplain or safe.",
+        "2007 effective and 2015 preliminary layers have distinct statuses. These flags are not a flood-zone designation, current flood depth, parcel elevation, stormwater flooding model, insurance determination, or prediction of future flood risk."
+      ]
+    },
+    {
+      "id": "nyc-heat-hvi",
+      "title": "Heat Vulnerability Index Rankings",
+      "publisher": "NYC Department of Health and Mental Hygiene",
+      "dataset_id": "4mhf-duep",
+      "url": "https://data.cityofnewyork.us/d/4mhf-duep",
+      "api_url": "https://data.cityofnewyork.us/resource/4mhf-duep.json",
+      "version": "2024 published table; component observations 2016–2020",
+      "source_data_updated_at": "2024-09-19T14:16:07Z",
+      "source_metadata_updated_at": "2026-04-21T13:20:49Z",
+      "retrieved_at": "2026-10-27",
+      "spatial_resolution": "2020 ZIP Code Tabulation Area (neighborhood)",
+      "fields_used": [
+        "zcta20",
+        "hvi"
+      ],
+      "processing": "Spatial point-in-polygon join of PLUTO approximate location to Census 2020 ZCTA geometry, then exact ZCTA code join to HVI. Postal ZIP code is not used.",
+      "caveats": [
+        "HVI is a 1–5 neighborhood-level relative vulnerability ranking for residents during extreme heat; it is not a temperature, building measurement, indoor cooling load, or site-specific heat risk.",
+        "HVI combines social and environmental factors, including income, vegetation, race, surface temperature and air conditioning access. Industrial parcel HVI should be presented as neighborhood context, not an independent measure of building suitability.",
+        "The data were last updated September 19, 2024. April 2026 is a metadata update and must not be described as new heat observations."
+      ]
+    },
+    {
+      "id": "census2020-zcta",
+      "title": "2020 ZIP Code Tabulation Area boundaries",
+      "publisher": "U.S. Census Bureau",
+      "dataset_id": null,
+      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/84",
+      "api_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/84/query",
+      "version": "Census 2020 / January 1, 2020 vintage",
+      "source_data_updated_at": "2020-01-01 (geographic vintage; service update time not exposed)",
+      "source_metadata_updated_at": null,
+      "retrieved_at": "2026-10-27",
+      "spatial_resolution": "ZCTA polygons",
+      "fields_used": [
+        "GEOID",
+        "ZCTA5",
+        "geometry"
+      ],
+      "processing": "ArcGIS query of bounding envelope -74.3,40.48,-73.65,40.94 in EPSG:4326, output GeoJSON. Census2020 layer 84 explicitly identifies January 1, 2020 vintage.",
+      "caveats": [
+        "ZCTAs are Census statistical areas and are not equivalent to USPS delivery ZIP boundaries.",
+        "Assignment uses one approximate parcel coordinate, not parcel intersection area. Parcels crossing a ZCTA boundary may require manual verification."
+      ]
+    },
+    {
+      "id": "nyc-truck-routes",
+      "title": "New York City Truck Routes",
+      "publisher": "NYC Department of Transportation",
+      "dataset_id": "jjja-shxy",
+      "url": "https://data.cityofnewyork.us/d/jjja-shxy",
+      "api_url": "https://data.cityofnewyork.us/resource/jjja-shxy.json",
+      "version": "Data update March 2, 2026",
+      "source_data_updated_at": "2026-03-02T19:36:22Z",
+      "source_metadata_updated_at": "2026-03-02T19:30:57Z",
+      "retrieved_at": "2026-10-27",
+      "spatial_resolution": "Street centerline segments",
+      "fields_used": [
+        "the_geom",
+        "street",
+        "routetype",
+        "restrictio",
+        "segmentid",
+        "truckroute"
+      ],
+      "processing": "Nearest segment among all 32,939 official source rows. Euclidean point-to-line distance using a fixed local equirectangular projection at latitude 40.7°, rounded to whole meters; a screening approximation, not survey-grade distance.",
+      "caveats": [
+        "Distance is approximate straight-line distance from the lot point to the nearest truck-route centerline, not a driving route, travel time, or proof of legal vehicle access.",
+        "Nearby segments may be separated by barriers or be otherwise inaccessible. Delivery routes, axle/weight/height/width restrictions, street approaches, loading capacity, and last-mile access must be checked separately.",
+        "A null or blank route restriction is not proof of no restriction. RouteType is retained to distinguish local/limited local/through routes."
+      ]
+    },
+    {
+      "id": "nyc-boroughs",
+      "title": "Borough Boundaries (water areas excluded)",
+      "publisher": "NYC Department of City Planning",
+      "dataset_id": "gthc-hcne",
+      "url": "https://data.cityofnewyork.us/d/gthc-hcne",
+      "api_url": "https://data.cityofnewyork.us/resource/gthc-hcne.json",
+      "version": "26b",
+      "source_data_updated_at": "2026-05-26T19:35:50Z",
+      "source_metadata_updated_at": "2026-05-26T19:35:48Z",
+      "retrieved_at": "2026-10-27",
+      "spatial_resolution": "Borough multipolygons",
+      "fields_used": [
+        "borocode",
+        "boroname",
+        "the_geom"
+      ],
+      "processing": "Downloaded all five features as GeoJSON, serialized compactly.",
+      "caveats": [
+        "Geographic base map only. Borough boundaries do not supply parcel footprints or site access information.",
+        "Unmodified source geometry is retained (about 3.2 MB) to preserve topology; no synthetic outlines or simplification artifacts."
+      ]
+    },
+    {
+      "id": "nyc-future-flood-2050s-npcc2013",
+      "title": "Future Floodplain 2050s — historical NPCC 2013 high-estimate scenario",
+      "publisher": "NYC Mayor’s Office of Climate and Environmental Justice / NPCC / CUNY Institute for Sustainable Cities",
+      "dataset_id": "27ya-gqtm",
+      "url": "https://data.cityofnewyork.us/Environment/Future-Floodplain-2050s/27ya-gqtm",
+      "api_url": "https://data.cityofnewyork.us/resource/27ya-gqtm.geojson?%24select=the_geom&%24limit=20000",
+      "report_url": "https://www.nyc.gov/html/planyc2030/downloads/pdf/npcc_climate_risk_information_2013_report.pdf",
+      "source_data_updated_at": "2013-07-23",
+      "source_metadata_updated_at": "2026-04-21",
+      "retrieved_at": "2026-10-27",
+      "scenario": "NPCC 2013 90th-percentile high estimate; +31 inches sea-level rise; coastal 1% annual-chance event",
+      "period": "2050s",
+      "nominal_year": 2050,
+      "sea_level_rise_inches": 31,
+      "annual_chance_percent": 1,
+      "spatial_resolution": "Source mapping used 2010 NYC LiDAR interpolated to a 1-foot DEM (NAVD88). Output is a vector flood-zone extent, not a 1-foot-accurate prediction. This join uses a PLUTO approximate tax-lot point, not parcel area or building footprint.",
+      "method": "Point-in-polygon inclusion (boundary included), EPSG:4326. Value 1 means the approximate lot point intersects one or more polygons; 0 means it does not intersect this scenario layer. This is not a parcel-wide or building-wide intersection test.",
+      "metric": "projected_flood_zone",
+      "unit": "binary membership (0 outside / 1 inside this scenario polygon)",
+      "depth_unit": null,
+      "depth_available": false,
+      "limitations": [
+        "Historical 2013 planning scenario, not the latest available projection or an exact forecast for calendar year 2050.",
+        "The NPCC 2013 report explicitly advises against using these illustrative maps to judge site-specific risks, insurance rates or property values; use this layer as scenario context only, outside suitability scoring.",
+        "0 does not mean no future flood risk or no lot/building exposure: the point can be outside while another part of the lot is inside.",
+        "A 1 does not provide flood depth, floor inundation, damage, insurance requirements or a regulatory determination.",
+        "Model and data uncertainties mean mapped boundaries must not be read as the actual future inundation extent.",
+        "This layer concerns coastal flooding with sea-level rise; rainfall, sewer, groundwater and future protective works are not inferred.",
+        "Do not compare a future point-membership result with a current any-portion-of-lot PLUTO flag as a quantified change in risk; the spatial methods differ."
+      ],
+      "period_start_year": 2050,
+      "period_end_year": 2059,
+      "sea_level_baseline_period": "2000-2004",
+      "source_mapping_method": "NPCC 2013 added its high-estimate sea-level increment to FEMA June 2013 Preliminary Work Map base flood elevations, then extended the extent landward to corresponding terrain elevations."
+    }
+  ],
+  "missing_inputs": [
+    {
+      "field": "available_for_lease",
+      "status": "unavailable",
+      "required_evidence": "Current owner/broker listing or direct availability confirmation"
+    },
+    {
+      "field": "asking_rent_per_sqft",
+      "status": "unavailable",
+      "required_evidence": "Current commercial lease quote with terms and date"
+    },
+    {
+      "field": "ceiling_height_ft",
+      "status": "unavailable",
+      "required_evidence": "Measured plans, owner/architect specifications or site inspection"
+    },
+    {
+      "field": "electrical_capacity_kw",
+      "status": "unavailable",
+      "required_evidence": "Utility/service documentation and engineering review"
+    },
+    {
+      "field": "floor_load_psf",
+      "status": "unavailable",
+      "required_evidence": "Structural drawings and engineer verification"
+    },
+    {
+      "field": "loading_docks",
+      "status": "unavailable",
+      "required_evidence": "Plans or current inspection"
+    },
+    {
+      "field": "food_use_approval",
+      "status": "unavailable",
+      "required_evidence": "Use-specific zoning, building, health and operational review"
+    },
+    {
+      "field": "current_flood_zone_and_depth",
+      "status": "unavailable",
+      "required_evidence": "Applicable current effective/preliminary FEMA and NYC flood layers; parcel or building-footprint intersection; elevations where needed"
+    }
+  ]
+}

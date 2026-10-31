@@ -1,0 +1,1324 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.89126942977671,
+              40.8143551830944
+            ],
+            [
+              -73.89169008354163,
+              40.815931224800764
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "TIFFANY STREET",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0077590",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "176.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.90266352276906,
+              40.844628573622934
+            ],
+            [
+              -73.90158188663867,
+              40.84450433419963
+            ],
+            [
+              -73.90131729946185,
+              40.84447394072694
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "CROSS BRONX EXPRESSWAY",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0140718",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "348.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.88723296565618,
+              40.8100525267137
+            ],
+            [
+              -73.88631262787483,
+              40.810192802987075
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "OAK POINT AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0077683",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "596.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.93160271561324,
+              40.832316463229766
+            ],
+            [
+              -73.93097205522405,
+              40.83469095173078
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "SEDGWICK AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0071220",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "634.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.90847018707787,
+              40.80281784400471
+            ],
+            [
+              -73.90729383610491,
+              40.80213158798065
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "EAST 138 STREET",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0070475",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "679.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.90288034421701,
+              40.808744793276034
+            ],
+            [
+              -73.90222284770519,
+              40.804948113033134
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "EAST 149 STREET",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0121040",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "715.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.86261234629768,
+              40.897406235179574
+            ],
+            [
+              -73.86242758058464,
+              40.898090744836765
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "WEBSTER AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0089037",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "1197.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.89557755956726,
+              40.847854641837834
+            ],
+            [
+              -73.89494628065201,
+              40.849104852833385
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "3 AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0078698",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "1262.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.93084078452426,
+              40.814091950730365
+            ],
+            [
+              -73.93074148062878,
+              40.814255267463004
+            ],
+            [
+              -73.93066273012356,
+              40.814427269158266
+            ],
+            [
+              -73.93060629209651,
+              40.81460564263818
+            ],
+            [
+              -73.93057335344433,
+              40.814787837540585
+            ],
+            [
+              -73.93056440430263,
+              40.814971164395054
+            ],
+            [
+              -73.93057920825451,
+              40.815152930577746
+            ],
+            [
+              -73.9306168685817,
+              40.81533054030701
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "GERARD AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0069655",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "1827.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.8853963645472,
+              40.80669122505489
+            ],
+            [
+              -73.88447429262273,
+              40.806830953668275
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "VIELE AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0077680",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "2291.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.84324615165183,
+              40.82555394459591
+            ],
+            [
+              -73.84341053549993,
+              40.8262804726373
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "ZEREGA AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0086910",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "2971.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.92157135893152,
+              40.804345175888926
+            ],
+            [
+              -73.91978018837328,
+              40.803592305889495
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "BRUCKNER BOULEVARD",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0069900",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "3461.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.82203939284497,
+              40.88906227447326
+            ],
+            [
+              -73.82151651919085,
+              40.8893722757086
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "BOSTON ROAD",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0146689",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "3698.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.84117073783722,
+              40.837710357963
+            ],
+            [
+              -73.84161539981613,
+              40.838387286211535
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "COMMERCE AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0087195",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "4061.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.90778591777736,
+              40.806753154566366
+            ],
+            [
+              -73.9075606263076,
+              40.80684779665002
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "BRUCKNER BOULEVARD",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0185986",
+        "truckroute": "Y",
+        "boroname": "Bronx",
+        "objectid_1": "4145.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.9387275628425,
+              40.72218315330513
+            ],
+            [
+              -73.9390326005116,
+              40.72285872537466
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "MORGAN AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0066007",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "6044.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.98534222529148,
+              40.57903048998763
+            ],
+            [
+              -73.98521063891305,
+              40.57893714280853
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "CROPSEY AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0109273",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "6085.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.93453329082628,
+              40.71275330458272
+            ],
+            [
+              -73.93480281917653,
+              40.71337249568491
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "MORGAN AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0044487",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "6686.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.89586724960635,
+              40.67189284474867
+            ],
+            [
+              -73.89554341858879,
+              40.670625787318315
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "PENNSYLVANIA AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0047560",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "6901.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.98951103650522,
+              40.67327082449606
+            ],
+            [
+              -73.99001383956131,
+              40.67266881995156
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "3 AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0022613",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "7409.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -74.01669110237187,
+              40.65276823807074
+            ],
+            [
+              -74.01738078971266,
+              40.65210889422321
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "1 AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0126980",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "7474.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.93172871755611,
+              40.70354599051852
+            ],
+            [
+              -73.93115533961037,
+              40.70377233487337
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "FLUSHING AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0044586",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "7561.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.95300177010745,
+              40.73822545557296
+            ],
+            [
+              -73.95278707625256,
+              40.73890417485619
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "PULASKI BRIDGE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0158337",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "7709.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.95295919967465,
+              40.65524930032682
+            ],
+            [
+              -73.9528272102921,
+              40.65397703522345
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "ROGERS AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0028620",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "8066.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -74.00898332118193,
+              40.67196815773069
+            ],
+            [
+              -74.00912811645168,
+              40.6717582101178
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "COLUMBIA STREET",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0021620",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "8106.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.98669000745144,
+              40.702422925535075
+            ],
+            [
+              -73.98470489202201,
+              40.70235361861232
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "FRONT STREET",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0024321",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "8779.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.87830017021545,
+              40.663712502791675
+            ],
+            [
+              -73.87747471721035,
+              40.66405608328831
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "LINDEN BOULEVARD",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0149705",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "9241.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.95430689679803,
+              40.69479056445641
+            ],
+            [
+              -73.95341398021603,
+              40.694893135094446
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "MYRTLE AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0030845",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "10788.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.9371506305825,
+              40.60094886620186
+            ],
+            [
+              -73.93619686496864,
+              40.601055070574226
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "AVENUE U",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0039854",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "10803.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.92423426699344,
+              40.707337006274564
+            ],
+            [
+              -73.92416905008605,
+              40.70739444928691
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "FLUSHING AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0261891",
+        "truckroute": "Y",
+        "boroname": "Brooklyn",
+        "objectid_1": "12244.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.82882265717107,
+              40.584161591895786
+            ],
+            [
+              -73.82914472734402,
+              40.584073306495256
+            ],
+            [
+              -73.8294752360455,
+              40.58400122416287
+            ],
+            [
+              -73.82981207937227,
+              40.58394599098823
+            ],
+            [
+              -73.83015300050322,
+              40.583908016019926
+            ],
+            [
+              -73.83049572069228,
+              40.58388751288629
+            ],
+            [
+              -73.83083794531146,
+              40.58388444127104
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "BEACH CHANNEL DRIVE",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0149022",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "19419.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.9549512700275,
+              40.74135622725557
+            ],
+            [
+              -73.95573787864414,
+              40.741506537838255
+            ],
+            [
+              -73.95692180957192,
+              40.74173275741251
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "QUEENS MIDTOWN TUNNEL",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0106162",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "20195.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.93406582229134,
+              40.73812612028385
+            ],
+            [
+              -73.93407590137983,
+              40.73820568591209
+            ],
+            [
+              -73.9341092170381,
+              40.73828864173955
+            ],
+            [
+              -73.93416868752126,
+              40.73836914511914
+            ],
+            [
+              -73.93425372789,
+              40.73844018072144
+            ],
+            [
+              -73.93435944338125,
+              40.738495108958645
+            ],
+            [
+              -73.93447736155272,
+              40.73852953948168
+            ],
+            [
+              -73.93459758475302,
+              40.738542413038985
+            ],
+            [
+              -73.93471129309148,
+              40.73853584982183
+            ],
+            [
+              -73.93481240775463,
+              40.73851406078474
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "LIE WB ENTRANCE VAN DAM ST",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0066192",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "20982.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.92161909582907,
+              40.753027654054286
+            ],
+            [
+              -73.92047926013328,
+              40.75328523696919
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "NORTHERN BOULEVARD",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0067745",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "21102.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.95089469638715,
+              40.75244148812466
+            ],
+            [
+              -73.95226461732712,
+              40.75080094512318
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "VERNON BOULEVARD",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0036736",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "22147.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.81195527862486,
+              40.764867720643046
+            ],
+            [
+              -73.81099348631356,
+              40.76470474008569
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "NORTHERN BOULEVARD",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0091815",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "23428.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.93858976909334,
+              40.766817359492755
+            ],
+            [
+              -73.93969995901502,
+              40.76641124226245
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "VERNON BOULEVARD",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0067325",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "23475.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.84050398424782,
+              40.7816931020842
+            ],
+            [
+              -73.8396040611203,
+              40.78169313085764
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "20 AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0084946",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "23604.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.75575128415385,
+              40.675740254969305
+            ],
+            [
+              -73.75600588705498,
+              40.674180331896395
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "SPRINGFIELD BOULEVARD",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0144591",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "23719.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.7664252009732,
+              40.693852482305175
+            ],
+            [
+              -73.76522150635938,
+              40.692758196904535
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "DUNKIRK STREET",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0061369",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "24601.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.91331372571148,
+              40.72207735015045
+            ],
+            [
+              -73.91298420370511,
+              40.7216008479867
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "RUST STREET",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0172469",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "25757.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.91677467353581,
+              40.72082369251648
+            ],
+            [
+              -73.91711669785651,
+              40.7201263771314
+            ],
+            [
+              -73.91744193780026,
+              40.71942446503871
+            ],
+            [
+              -73.91744200899352,
+              40.719424320107635
+            ],
+            [
+              -73.91744208020685,
+              40.719424158967364
+            ],
+            [
+              -73.91775042945866,
+              40.71871785734874
+            ],
+            [
+              -73.91804181725294,
+              40.718007355395635
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "PAGE PLACE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0116319",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "26215.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.89609567837402,
+              40.70066693967784
+            ],
+            [
+              -73.89457448987571,
+              40.70079805781454
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "MYRTLE AVENUE",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0115539",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "26216.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.89223102154375,
+              40.739390923678194
+            ],
+            [
+              -73.89094823746294,
+              40.73914299494934
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "QUEENS BOULEVARD",
+        "routetype": "Through",
+        "restrictio": "",
+        "segmentid": "0188511",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "26549.0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -73.90623087950398,
+              40.77967739677757
+            ],
+            [
+              -73.9052209817929,
+              40.77896594527253
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "street": "20 AVENUE",
+        "routetype": "Local",
+        "restrictio": "",
+        "segmentid": "0309185",
+        "truckroute": "Y",
+        "boroname": "Queens",
+        "objectid_1": "28167.0"
+      }
+    }
+  ]
+}
