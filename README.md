@@ -6,7 +6,7 @@ This is a sanitized public source snapshot of the hackathon application, based o
 
 ## Recorded demo
 
-Planned video page: [jangholee92.github.io/geonos-nyc](https://jangholee92.github.io/geonos-nyc/) — **publication pending; not yet verified reachable**. The page contains a three-minute overview and a ten-minute supporting walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — access and overview playback verified on 31 October 2026. The page contains a three-minute overview and a ten-minute supporting walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
 
 These are edited actual product states with synthetic English narration, not a continuous live recording or an interactive deployment. The Muse Image concept is an earlier separate verified example, as disclosed beside the videos. No API key is needed to watch. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for the interactive walkthrough and access requirements.
 

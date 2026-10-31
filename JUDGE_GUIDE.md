@@ -4,7 +4,7 @@ GEONOS helps you compare what public evidence says about two NYC buildings and i
 
 ## Watch the recorded demo
 
-Planned video page: [jangholee92.github.io/geonos-nyc](https://jangholee92.github.io/geonos-nyc/) — **publication pending; not yet verified reachable**. It includes the three-minute overview and ten-minute supporting walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watching requires no key and does not run the application.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — access and overview playback verified on 31 October 2026. It includes the three-minute overview and ten-minute supporting walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watching requires no key and does not run the application.
 
 The recordings use edited actual product states and synthetic English narration. The Muse Image illustration is an earlier, separate verified example, not the outcome of the later recorded two-building sequence or a retry of a refused request.
 
