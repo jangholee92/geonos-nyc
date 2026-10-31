@@ -1,45 +1,45 @@
 GEONOS — overview-3min
 
-Edited authentic captured states, editorial motion; Microsoft Andrew neural synthetic English narration. Not continuous live recording.
+Edited actual product captures and recorded interaction sequences, with local Qwen3-TTS Ryan AI narration.
 
-[00:00:00,000 – 00:00:11,167] What would change your choice?
-Heat and flooding threaten cold-chain reliability. Before committing to a retrofit, investigate what could change your choice. I’m Jangho Lee, and this is GEONOS.
+[00:00:00,000 – 00:00:12,292] Climate evidence for building decisions
+Heat and flooding shape cold storage decisions. This is GEONOS. Compare two buildings, inspect the evidence, and plan your next site visit.
 
-[00:00:11,167 – 00:00:25,292] NYC implementation built Oct 27–31 · existing public data / models
-Built during the hackathon: this NYC workspace, evidence pipeline, and six-model workflow. Explore all five boroughs and more than a million official outlines. Public data and pretrained models remain acknowledged foundations.
+[00:00:12,292 – 00:00:21,292] Built October 27–31 · Official public data and six Meta models
+Built during the hackathon, this NYC workspace brings six Meta models together with official public data.
 
-[00:00:25,292 – 00:00:40,583] Select native records · compare scopes
-Select 572 Smith Street, then 592. Their records compare immediately. Search, filters, layers, and recorded-height 3D locate candidates; tax-lot floor area stays distinct from building measurements.
+[00:00:21,292 – 00:00:39,583] Find buildings across New York City and compare their records
+Search over a million outlines across five boroughs. Select 572 Smith, then 592. Explore layers and 3D, with building and whole-lot measurements clearly organized.
 
-[00:00:40,583 – 00:00:54,375] An explicit condition · usable space versus mapped footprint
-Require twenty thousand square feet of usable area: unknown. Change the measurement to mapped footprint: 572 meets it; 592 does not. That is a checked condition, not a suitability score.
+[00:00:39,583 – 00:00:50,375] Set your conditions and compare mapped measurements
+Choose a measurement and test twenty thousand square feet. See each building’s result, then choose the next fact to verify.
 
-[00:00:54,375 – 00:01:08,792] The map leaves building interiors out
-A blank flood-map point isn’t clearance. DEP models building interiors as voids. In its published 2050 scenario, the deep class touches 572’s outline and is about forty-seven meters from 592.
+[00:00:50,375 – 00:01:07,000] Explore the modeled ground around each building
+Explore modeled surface water around each building. Compare the current sea-level scenario with 2050, then focus on surrounding ground and drainage questions.
 
-[00:01:08,792 – 00:01:21,583] Station history, regional futures, actual weather pairs
-The next check: survey entrances, drains, and equipment elevations. Regional climate projections and station history add context; JFK’s paired weather keeps actual heat and moisture together.
+[00:01:07,000 – 00:01:19,042] Connect station history, regional projections and paired weather
+Bring regional projections, station history and paired heat and moisture observations into the discussion. Use them to shape equipment and operating questions.
 
-[00:01:21,583 – 00:01:33,125] Separate example · Lombardy energy reporting boundaries
-Energy has boundaries, too. At Lombardy Street, parent and child reports repeat energy but use different areas. Request the meter-to-building schedule before judging efficiency.
+[00:01:19,042 – 00:01:30,958] Lombardy energy records · Connect reported totals and floor areas
+Follow Lombardy’s parent and child energy reports. Trace each reported area and ask which meters and operating uses each report covers.
 
-[00:01:33,125 – 00:01:45,250] Synthetic sample → editable Voice draft → bounded tools
-Muse Voice turns a sample question into an editable draft. Muse Spark orchestrates bounded official-data tools, carrying the user’s goal and source references into the conversation.
+[00:01:30,958 – 00:01:42,708] Muse Voice and Spark · From an editable question to sourced records
+Muse Voice turns spoken questions into editable text. Muse Spark connects your conversation to official records, tools and their source references.
 
-[00:01:45,250 – 00:01:57,208] SAM 3.1 · actual dated imagery, uncertain detections
-SAM 3.1 segments roofs and trees in the actual dated aerial crops. Switch between sites and the original imagery. A missed detection never proves absence.
+[00:01:42,708 – 00:01:55,250] SAM 3.1 · Explore roof and tree regions in 2024 aerial images
+SAM 3.1 locates roof and tree image regions in dated aerials. Switch between sites, inspect overlays, and open the original images.
 
-[00:01:57,208 – 00:02:13,167] Wonder reviews typed summaries · not unseen pixels
-Muse Wonder reviews typed summaries, not unseen pixels, and proposes survey targets. Map-mask disagreement directs inspection; it is not a condition rating or resilience score. Both image analyses completed before Wonder reviewed their summaries.
+[00:01:55,250 – 00:02:05,792] Muse Wonder · Turn evidence summaries into survey targets
+Muse Wonder reviews structured summaries from both sites and suggests checks covering roofs, equipment, tree context and the map and image.
 
-[00:02:13,167 – 00:02:26,375] Meta DINOv2 · local visual features, not proven change
-DINOv2 runs locally, comparing contextual features in 2020 and 2024 images. Highlighted windows suggest where to look; shadows, season and alignment can also explain differences.
+[00:02:05,792 – 00:02:18,417] Meta DINOv2 · Inspect visual features across 2020 and 2024 aerials
+DINOv2 highlights imagery windows for closer inspection. Compare the 2020 and 2024 aerials in your browser and prepare a site-visit question.
 
-[00:02:26,375 – 00:02:37,542] Muse Image concept · not evidence · Oct 30 · 572 Smith / 611 Court
-Muse Image illustrates the inspection plan: what we know, what to verify, and what could change. The diagram stays visibly separate from photographs and evidence.
+[00:02:18,417 – 00:02:28,083] Muse Image · Generated concept · Oct 30 · 572 Smith / 611 Court
+Muse Image illustrates the inspection plan: what we know, what to verify, and what could change.
 
-[00:02:37,542 – 00:02:49,000] Keep the evidence · preserve a real provider refusal
-Sources keep their dates and scope. Export the comparison and unresolved requirements. If Meta filters a question, the app preserves that refusal and labels any public-data brief.
+[00:02:28,083 – 00:02:40,292] Export dated evidence and prepare the next site visit
+Open sources and record dates. Export the comparison and your conditions, ready for a conversation with the owner or project team.
 
-[00:02:49,000 – 00:03:00,000] The next useful investigation
-GEONOS makes the next step concrete: request roof plans, inspect drainage, verify usable space and power. Investigate what could change the choice before choosing a building.
+[00:02:40,292 – 00:02:52,208] Move from the map to a focused site investigation
+Request roof plans and meter schedules. Verify usable space and power. Then visit the site to inspect entrances, drainage and equipment elevations.

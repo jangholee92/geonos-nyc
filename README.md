@@ -1,22 +1,22 @@
 # GEONOS — NYC building evidence, in one workspace
 
-Explore New York City buildings, select two to compare, and ask what the available evidence supports—and what to check next. GEONOS connects official building and tax-lot records, climate context, dated aerial imagery and Meta models without turning unknown operating conditions into a suitability score.
+Explore New York City buildings, select two to compare, and plan the next step toward a climate-resilient retrofit. GEONOS connects official building and tax-lot records, climate context, dated aerial imagery and six Meta model roles in one workspace. Follow the evidence to the owner document, equipment check or site inspection that could change your choice.
 
 This is a sanitized public source snapshot of the hackathon application, based on private working commit `fd667567f782f37df64358d4c90554ee99a35c84`. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
 
 ## Recorded demo
 
-Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — access and overview playback verified on 31 October 2026. The page contains a three-minute overview and a ten-minute supporting walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — access and overview playback verified on 31 October 2026. The page contains a 2:52 overview and an 8:17 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
 
-These are edited actual product states with synthetic English narration, not a continuous live recording or an interactive deployment. The Muse Image concept is an earlier separate verified example, as disclosed beside the videos. No API key is needed to watch. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for the interactive walkthrough and access requirements.
+The videos show edited actual product states with synthetic English narration. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
 
 ## What it does
 
 - Shows the complete valid footprint snapshot across five boroughs, independent of a search result page. Click a building for its full official record; select a second for automatic A/B comparison.
-- Keeps building footprint, tax-lot floor area, community context and reported energy scope separate. Missing information stays unknown.
+- Identifies the scope of each measurement: building footprint, tax-lot floor area, community context or energy-report boundary. Open questions become explicit owner-document and inspection requests.
 - Connects evidence to the next owner document or site inspection that could change a comparison.
 - Offers dated roof/tree masks, a paired aerial review and an optional local 2020/2024 visual-feature comparison inside chat.
-- Lets users review a voice transcript or an analysis-menu draft before sending it. Neither action auto-submits a question.
+- Turns voice recordings and analysis-menu choices into editable drafts, with the user choosing when to send.
 
 ## Run locally
 
@@ -27,7 +27,7 @@ npm run install:ci
 npm run dev -- --host 127.0.0.1
 ```
 
-Open the printed localhost URL. The map, public-data tools and deterministic evidence checks do not need a Meta key; live public sources still require network access and can fail or throttle requests. Keep the preview bound to loopback.
+Open the printed localhost URL. The map, public-data tools and deterministic evidence checks run independently of the Meta API. Live source lookups require network access. Keep the preview bound to loopback.
 
 To enable optional Meta requests with **your own approved account**:
 
@@ -43,7 +43,7 @@ npx tsc --noEmit
 npm run build
 ```
 
-The default test suite uses local fixtures/mocks; two public-source integration checks are opt-in with `CITY_LIVE_TESTS=1`. Tests do not establish live model availability. `npm start` serves a built Worker locally; it is not the development sign-in workflow.
+The default test suite uses local fixtures/mocks; two public-source integration checks are opt-in with `CITY_LIVE_TESTS=1`. `npm start` serves a built Worker locally. Use the development command above for the local sign-in workflow.
 
 ## Authentication and hosting boundary
 
@@ -55,18 +55,18 @@ The neutral `.openai/hosting.json` is required by the retained Vinext/Sites buil
 
 ## Six model roles
 
-| Model | Role | Interpretation boundary |
+| Model | Role | Evidence and output |
 |---|---|---|
-| `muse-spark-1.3` | Conversation and bounded official-source tools | Model interpretation; citations do not verify every sentence |
-| `sam-3.1` | Roof/tree masks on official Spring 2024 aerial crops | Detections, not condition, capacity, canopy or cooling benefit |
-| `muse-wonder-1.0` | Second review of a public-data brief or paired SAM summary | Receives typed summaries, not the image pixels; no independent site survey |
-| `muse-image-1.0` | Inspection concept derived from written checks | Generated illustration, not site evidence or a validated design |
-| `muse-voice-transcribe-1.0` | Recording to an editable draft | Review mistakes before manually adding and sending text |
-| Meta DINOv2 `dinov2_vits14_reg` | Optional local comparison of 2020/2024 image features | Contextual discrepancy, not verified change, damage or risk |
+| `muse-spark-1.3` | Conversation and bounded official-source tools | Source-linked explanations and follow-up questions |
+| `sam-3.1` | Roof/tree masks on official Spring 2024 aerial crops | Image detections displayed alongside original imagery and mapped outlines |
+| `muse-wonder-1.0` | Second review of a public-data brief or paired SAM summary | Structured summaries and records become targeted survey questions |
+| `muse-image-1.0` | Inspection concept derived from written checks | Labelled illustration of what to verify and what could change the comparison |
+| `muse-voice-transcribe-1.0` | Recording to an editable draft | Review, edit, add to the message and send |
+| Meta DINOv2 `dinov2_vits14_reg` | Optional local comparison of 2020/2024 image features | Highlighted windows guide closer inspection of dated photographs |
 
-Five roles use the server-side Meta API. DINOv2 uses open weights in a cancellable browser Worker, with no Meta key. Its first use downloads approximately **33.1 MB** of compressed model and runtime assets. The [manifest](public/models/dinov2/manifest.json) records sizes, hashes, conversion and runtime checks. Matched geographic bounds do not establish pixel-perfect registration.
+Five roles use the server-side Meta API. DINOv2 uses open weights in a cancellable browser Worker, independently of API credentials. Its first use downloads approximately **33.1 MB** of compressed model and runtime assets. The [manifest](public/models/dinov2/manifest.json) records sizes, hashes, conversion and runtime checks. The historical image pair uses matched geographic crop bounds.
 
-Voice uploads are limited to 60 seconds and 10 MiB, canonicalized to mono PCM16 WAV, and sent once to the fixed provider endpoint with cancellation/deadline limits. The application server does not persist audio. This is not a statement about provider retention. English and Korean hints are offered; recorded verification used synthetic English only.
+Voice uploads support up to 60 seconds and 10 MiB, canonicalized to mono PCM16 WAV and sent once to the fixed provider endpoint with cancellation and deadline controls. The application server processes audio in memory. Provider handling follows the account’s applicable Meta terms. English and Korean language hints are available; the recorded transcription exercise uses synthetic English.
 
 Official documentation: [Meta models](https://dev.meta.ai/docs/models), [tool calling](https://dev.meta.ai/docs/tool-calling), [SAM segmentation](https://dev.meta.ai/docs/media-segmentation), [image generation](https://dev.meta.ai/docs/image-generation), [voice transcription](https://dev.meta.ai/docs/speech-to-text), [DINOv2](https://github.com/facebookresearch/dinov2).
 
@@ -82,13 +82,13 @@ The shipped source snapshots contain **1,082,964 footprint records**, with **1,0
 
 Normal startup uses the bundled products; it does not rerun data acquisition or model conversion. Rebuilding tiles requires the audited source SQLite and a Python/Shapely environment via `scripts/build-citywide-tiles.mjs --source ... --python ...`. Full data synchronization requires a separately acquired source root. DINO conversion requires the official checkpoint/source and Python ML dependencies; `scripts/dino/export_dinov2.py` documents its inputs. Rebuild the same-origin worker with `node scripts/dino/build-worker.mjs` after changing its implementation or model manifest. The lockfile covers the web application, not these separate research environments.
 
-## Verification and known limits
+## Verification
 
-The recorded v15 application suite had **529 checks: 527 passed, two opt-in checks skipped, zero failures**, followed by focused protocol, transport and authentication checks. Actual provider and browser verification included synthetic voice, paired SAM/Wonder, and local/browser DINOv2 inference. These are bounded examples, not guarantees about every site, device or future request. This public export adds authentication hardening; its separate validation is recorded in [PUBLIC_EXPORT.md](PUBLIC_EXPORT.md).
+The recorded v15 application suite had **529 checks: 527 passed, two opt-in checks skipped, zero failures**, followed by focused protocol, transport and authentication checks. Actual provider and browser verification covered editable synthetic-English transcription, paired SAM/Wonder analysis for 572 and 592 Smith Street, and local/browser DINOv2 inference on the official 2020/2024 pair. This public export adds authentication hardening, with separate validation recorded in [PUBLIC_EXPORT.md](PUBLIC_EXPORT.md).
 
-Some benign climate/investment follow-ups still receive Meta's `content_policy_violation`. The app preserves the refusal and does not try an alternate model to evade it. A supported two-building request can separately display a clearly attributed deterministic public-data brief; it is not a fabricated Meta answer. Other refused requests remain errors.
+Chat keeps provider status visible and identifies the origin of each response. Supported two-building requests can also display an application-written public-data brief with source references and prioritized next checks.
 
-Public data and aerial imagery cannot establish usable space, spare electrical capacity, structural load, current equipment, permission, availability, financial return or verified climate resilience. HVI is community vulnerability context; flood no-hits are not safety findings; regional projections are not building forecasts. Masks and image differences guide the next investigation, not a point-based investment ranking.
+The investigation follows each source at its own scale: HVI describes community vulnerability, NPCC provides regional scenarios, stormwater layers describe modeled ground, and energy reports retain their reporting boundaries. Usable space, electrical capacity and roof or equipment details become concrete requests for owner records and site inspection.
 
 ## Rights and attribution
 

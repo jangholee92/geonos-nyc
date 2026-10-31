@@ -1,121 +1,88 @@
 WEBVTT
 
-00:00:00.230 --> 00:00:03.510
-Heat and flooding threaten cold-chain reliability.
+00:00:00.280 --> 00:00:03.050
+Heat and flooding shape cold storage decisions.
 
-00:00:03.560 --> 00:00:08.112
-Before committing to a retrofit, investigate what could change your choice.
+00:00:03.080 --> 00:00:05.050
+This is GEONOS.
 
-00:00:08.162 --> 00:00:11.067
-I’m Jangho Lee, and this is GEONOS.
+00:00:05.080 --> 00:00:11.100
+Compare two buildings, inspect the evidence, and plan your next site visit.
 
-00:00:11.374 --> 00:00:16.904
-Built during the hackathon: this NYC workspace, evidence pipeline, and six-model workflow.
+00:00:12.572 --> 00:00:20.112
+Built during the hackathon, this NYC workspace brings six Meta models together with official public data.
 
-00:00:16.954 --> 00:00:21.124
-Explore all five boroughs and more than a million official outlines.
+00:00:21.572 --> 00:00:25.542
+Search over a million outlines across five boroughs.
 
-00:00:21.174 --> 00:00:25.192
-Public data and pretrained models remain acknowledged foundations.
+00:00:25.572 --> 00:00:30.872
+Select 572 Smith, then 592.
 
-00:00:25.488 --> 00:00:29.850
-Select 572 Smith Street, then 592.
+00:00:30.932 --> 00:00:38.472
+Explore layers and 3D, with building and whole-lot measurements clearly organized.
 
-00:00:29.900 --> 00:00:32.036
-Their records compare immediately.
+00:00:39.863 --> 00:00:44.203
+Choose a measurement and test twenty thousand square feet.
 
-00:00:32.086 --> 00:00:37.179
-Search, filters, layers, and recorded-height 3D locate candidates;
+00:00:44.263 --> 00:00:49.163
+See each building’s result, then choose the next fact to verify.
 
-00:00:37.229 --> 00:00:40.483
-tax-lot floor area stays distinct from building measurements.
+00:00:50.655 --> 00:00:54.995
+Explore modeled surface water around each building.
 
-00:00:40.791 --> 00:00:44.872
-Require twenty thousand square feet of usable area: unknown.
+00:00:55.295 --> 00:01:05.795
+Compare the current sea-level scenario with 2050, then focus on surrounding ground and drainage questions.
 
-00:00:44.922 --> 00:00:51.317
-Change the measurement to mapped footprint: 572 meets it; 592 does not.
+00:01:07.280 --> 00:01:14.180
+Bring regional projections, station history and paired heat and moisture observations into the discussion.
 
-00:00:51.367 --> 00:00:54.275
-That is a checked condition, not a suitability score.
+00:01:14.640 --> 00:01:17.860
+Use them to shape equipment and operating questions.
 
-00:00:54.572 --> 00:00:57.320
-A blank flood-map point isn’t clearance.
+00:01:19.322 --> 00:01:23.052
+Follow Lombardy’s parent and child energy reports.
 
-00:00:57.370 --> 00:01:00.579
-DEP models building interiors as voids.
+00:01:23.082 --> 00:01:29.822
+Trace each reported area and ask which meters and operating uses each report covers.
 
-00:01:00.629 --> 00:01:08.692
-In its published 2050 scenario, the deep class touches 572’s outline and is about forty-seven meters from 592.
+00:01:31.238 --> 00:01:35.258
+Muse Voice turns spoken questions into editable text.
 
-00:01:08.999 --> 00:01:13.667
-The next check: survey entrances, drains, and equipment elevations.
+00:01:35.398 --> 00:01:41.578
+Muse Spark connects your conversation to official records, tools and their source references.
 
-00:01:13.717 --> 00:01:20.652
-Regional climate projections and station history add context; JFK’s paired weather keeps actual heat and moisture
+00:01:42.988 --> 00:01:47.838
+SAM 3.1 locates roof and tree image regions in dated aerials.
 
-00:01:20.702 --> 00:01:21.483
-together.
+00:01:47.868 --> 00:01:54.048
+Switch between sites, inspect overlays, and open the original images.
 
-00:01:21.780 --> 00:01:23.688
-Energy has boundaries, too.
+00:01:55.530 --> 00:02:01.740
+Muse Wonder reviews structured summaries from both sites and suggests checks covering roofs, equipment, tree
 
-00:01:23.738 --> 00:01:29.079
-At Lombardy Street, parent and child reports repeat energy but use different areas.
+00:02:01.770 --> 00:02:04.590
+context and the map and image.
 
-00:01:29.129 --> 00:01:33.025
-Request the meter-to-building schedule before judging efficiency.
+00:02:06.072 --> 00:02:10.252
+DINOv2 highlights imagery windows for closer inspection.
 
-00:01:33.322 --> 00:01:37.935
-Muse Voice turns a sample question into an editable draft.
+00:02:10.472 --> 00:02:17.212
+Compare the 2020 and 2024 aerials in your browser and prepare a site-visit question.
 
-00:01:37.985 --> 00:01:44.108
-Muse Spark orchestrates bounded official-data tools, carrying the user’s goal and source references into the
-
-00:01:44.158 --> 00:01:45.150
-conversation.
-
-00:01:45.458 --> 00:01:51.548
-SAM 3.1 segments roofs and trees in the actual dated aerial crops.
-
-00:01:51.598 --> 00:01:54.640
-Switch between sites and the original imagery.
-
-00:01:54.690 --> 00:01:57.108
-A missed detection never proves absence.
-
-00:01:57.405 --> 00:02:03.475
-Muse Wonder reviews typed summaries, not unseen pixels, and proposes survey targets.
-
-00:02:03.525 --> 00:02:08.904
-Map-mask disagreement directs inspection; it is not a condition rating or resilience score.
-
-00:02:08.954 --> 00:02:13.067
-Both image analyses completed before Wonder reviewed their summaries.
-
-00:02:13.363 --> 00:02:19.990
-DINOv2 runs locally, comparing contextual features in 2020 and 2024 images.
-
-00:02:20.040 --> 00:02:26.275
-Highlighted windows suggest where to look; shadows, season and alignment can also explain differences.
-
-00:02:26.572 --> 00:02:32.812
+00:02:18.697 --> 00:02:26.957
 Muse Image illustrates the inspection plan: what we know, what to verify, and what could change.
 
-00:02:32.862 --> 00:02:37.442
-The diagram stays visibly separate from photographs and evidence.
+00:02:28.363 --> 00:02:31.103
+Open sources and record dates.
 
-00:02:37.749 --> 00:02:39.789
-Sources keep their dates and scope.
+00:02:31.483 --> 00:02:39.103
+Export the comparison and your conditions, ready for a conversation with the owner or project team.
 
-00:02:39.839 --> 00:02:43.062
-Export the comparison and unresolved requirements.
+00:02:40.572 --> 00:02:42.862
+Request roof plans and meter schedules.
 
-00:02:43.112 --> 00:02:48.900
-If Meta filters a question, the app preserves that refusal and labels any public-data brief.
+00:02:42.892 --> 00:02:45.792
+Verify usable space and power.
 
-00:02:49.186 --> 00:02:56.251
-GEONOS makes the next step concrete: request roof plans, inspect drainage, verify usable space and power.
-
-00:02:56.301 --> 00:02:59.900
-Investigate what could change the choice before choosing a building.
+00:02:45.932 --> 00:02:51.072
+Then visit the site to inspect entrances, drainage and equipment elevations.
