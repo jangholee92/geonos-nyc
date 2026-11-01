@@ -34,7 +34,7 @@ function context(id:string):SiteContext {
 }
 function tool(name:string,args:Obj,id='call-1') {return{role:'assistant',content:null,tool_calls:[{id,type:'function',function:{name,arguments:JSON.stringify(args)}}]};}
 function finish(ids=['101','102'],intent='find',requirements:Obj[]=[],requirementOrigins:Obj[]=[]) {return tool('evaluate_decision',{plan:{intent,requirements},ids,requirementOrigins},'finish')}
-function harness(provider:(body:Obj,n:number)=>Obj, options:Obj={}) {
+function harness(provider:(body:Obj,n:number)=>Obj|Promise<Obj>, options:Obj={}) {
  const requests:Obj[]=[],queries:CityQuery[]=[],sodaCalls:Obj[]=[],contextCalls:string[]=[],energyCalls:string[]=[],planningCalls:string[][]=[],imageryCalls:Obj[]=[],reviewCalls:Obj[]=[],conceptCalls:Obj[]=[],visualCalls:Obj[]=[],temporalCalls:Obj[]=[],groundCalls:Obj[]=[],diagnostics:unknown[][]=[];
  const records=(options.records??[building(),building('102')]) as CityBuilding[];
  const investigation=compile('../lib/investigation-tools.ts',(s)=>{
@@ -51,7 +51,7 @@ function harness(provider:(body:Obj,n:number)=>Obj, options:Obj={}) {
  const temporalRequest=compile('../lib/temporal-request.ts',()=>{throw Error('Pure temporal request')});
  const exports=compile('../app/api/chat/route.ts',(s)=>{
   if(s==='cloudflare:workers')return{env:{MODEL_API_KEY:options.configured===false?'':'synthetic-test-key',META_API_APPROVED:options.approved===false?'false':options.approvalMissing?undefined:'true'}};
-  if(s==='../../chatgpt-auth')return{getChatGPTUser:async()=>options.auth===false?null:{userId:'unit-test-user'}};
+  if(s==='../../chatgpt-auth')return{getChatGPTUser:async()=>options.auth===false?null:{userId:options.userId??'unit-test-user'}};
   if(s==='../../../lib/decision-plan')return planner;
   if(s==='../../../lib/building-description')return descriptions;
   if(s==='../../../lib/resilience-brief')return resilience;
@@ -81,10 +81,64 @@ function harness(provider:(body:Obj,n:number)=>Obj, options:Obj={}) {
   if(s==='../../../lib/site-context')return{fetchSiteContext:async(id:string)=>{contextCalls.push(id);if(options.contextFailure)throw Error('test unavailable');return context(id)}};
   if(s==='../../../lib/city')return{...city,queryCity:async(q:CityQuery)=>{queries.push(q);if(options.queryFailure||queries.length===options.queryFailureAt)throw Error('test source unavailable');return{buildings:q.unit==='parcel'?records.filter(b=>b.id==='p:'+q.q):records,next_cursor:102,next_page:null,has_more:true,mode:'building-search',query:q,fetched_at:'2026-10-27T00:00:00Z',warnings:['Bounded page'],source_url:'https://data.cityofnewyork.us/d/5zhs-2jue'}},soda:async(dataset:string,p:Obj,ttl:number)=>{sodaCalls.push({dataset,...p,ttl});if(options.sodaFailure)throw Error('Public source unavailable');if(dataset==='5zhs-2jue'){const id=String(p.$where).split('=')[1];return records.filter(b=>b.id===id).map(b=>({doitt_id:b.id,bin:b.bin,mappluto_bbl:b.bbl,base_bbl:b.bbl,the_geom:b.geometry}))}return[{bbl:'1000010001',address:'Official source address',bldgarea:'50000',lotarea:'25000'}]}};
   throw Error('Unexpected module '+s);
- },{console:{warn:(...args:unknown[])=>diagnostics.push(args)},fetch:async(url:string,init:RequestInit)=>{assert.equal(url,'https://api.meta.ai/v1/chat/completions');assert.equal((init.headers as Obj).Authorization,'Bearer synthetic-test-key');const body=JSON.parse(String(init.body));requests.push(body);if(options.providerStatus)return Response.json(options.providerError??{error:{message:'Synthetic provider failure'}},{status:options.providerStatus,headers:options.providerHeaders});return Response.json({choices:[{message:provider(body,requests.length)}]})}});
+ },{Date:options.clock??Date,AbortSignal:options.abortSignal??AbortSignal,console:{warn:(...args:unknown[])=>diagnostics.push(args)},fetch:async(url:string,init:RequestInit)=>{assert.equal(url,'https://api.meta.ai/v1/chat/completions');assert.equal((init.headers as Obj).Authorization,'Bearer synthetic-test-key');const body=JSON.parse(String(init.body));requests.push(body);if(options.providerStatus)return Response.json(options.providerError??{error:{message:'Synthetic provider failure'}},{status:options.providerStatus,headers:options.providerHeaders});return Response.json({choices:[{message:await provider(body,requests.length)}]})}});
  return{POST:exports.POST as (request:Request)=>Promise<TestResponse>,GET:exports.GET as (request?:Request)=>Promise<TestResponse>,requests,queries,sodaCalls,contextCalls,energyCalls,planningCalls,imageryCalls,reviewCalls,conceptCalls,visualCalls,temporalCalls,groundCalls,diagnostics};
 }
 function request(overrides:Obj={}){return new Request('https://test.invalid/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Find candidates using official records.',selectedIds:[],query:{borough:'MN'},preferences:{size:1,truck:0,heat:0},...overrides})})}
+
+test('anonymous chat status offers sign-in and anonymous POST cannot call a provider or a source',async()=>{
+ const h=harness(()=>{throw Error('Anonymous requests must never reach Meta')},{auth:false});
+ const status=await h.GET(),body=await status.json();
+ assert.equal(body.configured,true);assert.equal(body.approved,true);assert.equal(body.canRun,false);assert.equal(body.requiresSignIn,true);
+ assert.equal(body.signInUrl,'/signin-with-chatgpt?return_to=%2F');assert.equal(status.headers.get('cache-control'),'no-store');
+ const denied=await h.POST(request());assert.equal(denied.status,401);assert.equal((await denied.json()).code,'AUTH_REQUIRED');
+ assert.equal(h.requests.length,0);assert.equal(h.sodaCalls.length,0);assert.equal(h.contextCalls.length,0);
+ const ready=await(await harness(()=>({content:'Hello.'})).GET()).json();assert.equal(ready.canRun,true);assert.equal(ready.requiresSignIn,false);
+});
+test('chat rejects cross-origin and cross-site writes before consuming the authenticated allowance',async()=>{
+ const h=harness(()=>({content:'A source-grounded question can start here.'}));
+ for(const headers of [{Origin:'https://outside.invalid'},{Origin:'https://test.invalid','Sec-Fetch-Site':'cross-site'}]){
+  for(let i=0;i<9;i++){const req=request();for(const[k,v]of Object.entries(headers))req.headers.set(k,v);const denied=await h.POST(req);assert.equal(denied.status,403);assert.equal((await denied.json()).code,'ORIGIN_REJECTED');}
+ }
+ assert.equal(h.requests.length,0);const accepted=request();accepted.headers.set('Origin','https://test.invalid');accepted.headers.set('Sec-Fetch-Site','same-origin');assert.equal((await h.POST(accepted)).status,200);assert.equal(h.requests.length,1);
+});
+test('chat blocks a simultaneous request and releases the slot after a provider failure',async()=>{
+ let failFirst!:(error:Error)=>void;
+ const h=harness(async(_,n)=>{if(n===1)await new Promise<void>((_resolve,reject)=>{failFirst=reject});return{content:'A later request can proceed.'}});
+ const first=h.POST(request());for(let i=0;i<30&&!failFirst;i++)await new Promise(resolve=>setImmediate(resolve));assert.ok(failFirst);
+ assert.equal((await h.POST(request())).status,429);assert.equal(h.requests.length,1);
+ failFirst(Error('Synthetic connection failure'));assert.equal((await first).status,502);
+ assert.equal((await h.POST(request())).status,200);assert.equal(h.requests.length,2);
+});
+test('chat allows at most four active accounts in one isolate and releases every completed slot',async()=>{
+ let release!:()=>void;const gate=new Promise<void>(resolve=>{release=resolve});const options:Obj={userId:'first'};
+ const h=harness(async()=>{await gate;return{content:'The bounded request completed.'}},options),pending:Promise<TestResponse>[]=[];
+ for(let i=0;i<4;i++){options.userId='account-'+i;pending.push(h.POST(request()));for(let tick=0;tick<30&&h.requests.length<i+1;tick++)await new Promise(resolve=>setImmediate(resolve));assert.equal(h.requests.length,i+1);}
+ options.userId='fifth';assert.equal((await h.POST(request())).status,429);assert.equal(h.requests.length,4);
+ release();for(const response of await Promise.all(pending))assert.equal(response.status,200);
+ assert.equal((await h.POST(request())).status,200);assert.equal(h.requests.length,5);
+});
+test('chat daily account allowance survives minute windows and resets on the next UTC day',async()=>{
+ let now=Date.parse('2026-11-01T01:00:00Z');class Clock extends Date{static now(){return now}}
+ const h=harness(()=>({content:'A bounded response.'}),{clock:Clock});
+ for(let i=0;i<30;i++){assert.equal((await h.POST(request())).status,200);now+=60_001;}
+ const denied=await h.POST(request());assert.equal(denied.status,429);assert.equal((await denied.json()).code,'DAILY_LIMIT_REACHED');assert.equal(h.requests.length,30);
+ now+=86_400_000;assert.equal((await h.POST(request())).status,200);assert.equal(h.requests.length,31);
+});
+test('chat shared daily allowance caps distinct accounts within the same isolate',async()=>{
+ const options:Obj={userId:'account-0'},h=harness(()=>({content:'A bounded response.'}),options);
+ for(let i=0;i<200;i++){options.userId='account-'+i;assert.equal((await h.POST(request())).status,200);}
+ options.userId='account-201';const denied=await h.POST(request());assert.equal(denied.status,429);assert.equal((await denied.json()).code,'DAILY_LIMIT_REACHED');assert.equal(h.requests.length,200);
+});
+test('chat upload deadline cancels a stalled body before Meta and releases its active slot',async()=>{
+ const deadlines:{milliseconds:number;controller:AbortController}[]=[];
+ const signals={any:AbortSignal.any.bind(AbortSignal),timeout:(milliseconds:number)=>{const controller=new AbortController();deadlines.push({milliseconds,controller});return controller.signal}};
+ const h=harness(()=>({content:'The next complete message works.'}),{abortSignal:signals});let canceled=false;
+ const stalled=new Request('https://test.invalid/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:new ReadableStream({cancel(){canceled=true}}),duplex:'half'} as RequestInit);
+ const pending=h.POST(stalled);for(let i=0;i<30&&!deadlines.length;i++)await new Promise(resolve=>setImmediate(resolve));assert.equal(deadlines[0]?.milliseconds,10_000);
+ deadlines[0].controller.abort();const denied=await pending;assert.equal(denied.status,400);assert.equal((await denied.json()).code,'INVALID_INPUT');assert.equal(canceled,true);assert.equal(h.requests.length,0);
+ assert.equal((await h.POST(request())).status,200);assert.equal(h.requests.length,1);
+});
 
 test('surrounding-ground tool resolves native sources freshly, retains horizon and attaches scoped citations',async()=>{
  const h=harness((_,n)=>n===1?tool('inspect_surrounding_ground',{ids:['101','102']}):{content:'Survey the entrance and equipment locations against the mapped surrounding ground.'});

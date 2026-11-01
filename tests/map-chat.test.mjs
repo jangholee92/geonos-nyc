@@ -30,13 +30,14 @@ const clarification=(answer='Which measurement do you mean?')=>({kind:'clarifica
 const conversation=(answer='Tell me what matters to your project.')=>({kind:'conversation',answer,grounded:false,responseOrigin:'model-synthesis',citations:[],toolCalls:[],evidence:[],model:'mock-test',groundingNote:'Model interpretation; source references apply only to the cited facts.'});
 const resilienceBrief=()=>({kind:'resilience_brief',focus:'comparison',responseOrigin:'source-based-rules',modelGenerated:false,answer:'Usable space and entrance protection need documentation before the retrofit comparison can be resolved.',places:[{id:'123',address:'Fixture A'},{id:'456',address:'Fixture B'}],observations:[],conditionalTradeoffs:[],nextChecks:[{id:'entrances',title:'Check entrances',action:'Request surveyed entrance elevations.',whyItMatters:'Point tests do not establish entrance flooding.',whatCouldChange:'Entrance protection could change the adaptation scope.',buildingIds:['123','456'],evidenceIds:[]},{id:'power',title:'Check electrical service',action:'Request documented available capacity.',whyItMatters:'Floor area does not establish available power.',whatCouldChange:'A required service upgrade could change the retrofit scope.',buildingIds:['123','456'],evidenceIds:[]}],planningContext:null,limitations:['No investment return is calculated.'],citations:[],groundingNote:'Application rules preserve public-data scope.',providerStatus:{status:'content_filtered',code:'MODEL_CONTENT_FILTERED',message:'Meta could not answer this request.',model:'mock-test'},toolCalls:[],evidence:[],model:'mock-test'});
 const planPayload=()=>({kind:'decision',answer:'No operational requirement has been established.',planNeedsReview:true,grounded:true,plan:{intent:'understand',purpose:'general',userQuestion:'Understand this place.',requirements:[]},decision:{valid:true,candidates:[{id:'123',label:'Lombardy',status:'not_assessed',requirements:[]}]},evidence:[{id:'123',building:{id:'123',entity_type:'building'}}],model:'mock-test',toolCalls:[]});
-function harness(initial={}){
+function harness(initial={},browser={}){
+ const storage=browser.storage??new Map();
  const slots=[];let index=0,dirty=true,tree,props={selected:[building()],query:{},onApplyReviewed:async()=>{},onOpenSearch:async()=>{},...initial};const layout=[],effects=[],calls=[],timers=new Map();let timer=0;
  const same=(a,b)=>a&&b&&a.length===b.length&&a.every((x,i)=>Object.is(x,b[i]));
  const refObject={scrollTop:0,scrollHeight:2000,clientHeight:200,scrollTo({top}){this.scrollTop=top;},focus(){}};
  const hooks={useState(value){const i=index++;if(!slots[i])slots[i]={value:typeof value==='function'?value():value};return[slots[i].value,next=>{const v=typeof next==='function'?next(slots[i].value):next;if(!Object.is(v,slots[i].value)){slots[i].value=v;dirty=true;}}];},useRef(value){const i=index++;return(slots[i]??={current:value});},useId(){return'id-'+index++;},useMemo(fn,deps){const i=index++;if(!slots[i]||!same(slots[i].deps,deps))slots[i]={value:fn(),deps};return slots[i].value;},useCallback(fn,deps){return hooks.useMemo(()=>fn,deps);},useLayoutEffect(fn,deps){effect(layout,fn,deps);},useEffect(fn,deps){effect(effects,fn,deps);}};
  function effect(queue,fn,deps){const i=index++;if(!slots[i]||!same(slots[i].deps,deps)){const old=slots[i];slots[i]={deps,cleanup:old?.cleanup};queue.push(()=>{slots[i].cleanup?.();slots[i].cleanup=fn();});}}
- const component=compile('components/map-chat.tsx',{...imports,react:hooks},{window:{setTimeout(fn){const id=++timer;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);}},fetch(url,init){return new Promise((resolve,reject)=>calls.push({url,init,resolve:payload=>resolve({ok:payload.ok??true,json:async()=>payload.body??payload}),reject}));}});
+ const component=compile('components/map-chat.tsx',{...imports,react:hooks},{window:{get sessionStorage(){if(browser.storageUnavailable)throw Error('Storage unavailable');return{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};},setTimeout(fn){const id=++timer;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);}},fetch(url,init){return new Promise((resolve,reject)=>calls.push({url,init,resolve:payload=>resolve({ok:payload.ok??true,json:async()=>payload.body??payload}),reject}));}});
  function nodes(element){if(element===null||element===undefined||typeof element==='boolean')return[];if(Array.isArray(element))return element.flatMap(nodes);if(typeof element!=='object')return[];return[element,...nodes(element.props?.children)];}
  function flush(){let loops=0;while(dirty||layout.length||effects.length){if(++loops>50)throw Error('Render loop');if(dirty){dirty=false;index=0;tree=component.default(props);for(const n of nodes(tree))if(n.props?.ref&&typeof n.props.ref==='object')n.props.ref.current=refObject;}while(layout.length)layout.shift()();while(effects.length)effects.shift()();}return tree;}
  const find=(predicate)=>nodes(tree).find(predicate);
@@ -45,11 +46,41 @@ function harness(initial={}){
  function draft(value){find(n=>n.type==='textarea').props.onChange({target:{value}});flush();}
  function send(){const p=find(n=>n.type==='form').props.onSubmit({preventDefault(){}});flush();return p;}
  function change(next){props={...props,...next};dirty=true;flush();}
- flush();return{calls,flush,tick,find,draft,send,change,getText,refObject,resolveStatus:async(value=ready)=>{calls[0].resolve(value);await tick();},tree:()=>tree};
+ flush();return{calls,storage,flush,tick,find,draft,send,change,getText,refObject,resolveStatus:async(value=ready)=>{calls[0].resolve(value);await tick();},tree:()=>tree};
 }
 test('unknown, malformed and contradictory provider status fails closed',()=>{
  for(const value of [null,{}, {...ready,canRun:'true'}, {...ready,status:'live'}, {...ready,approved:false}, {...pending,canRun:true},{...ready,configured:false}])assert.equal(plain.readMapChatStatus(value).canRun,false);
  assert.equal(plain.readMapChatStatus(pending).state,'approval_pending');assert.equal(plain.readMapChatStatus(ready).canRun,true);
+});
+const anonymous={...ready,canRun:false,requiresSignIn:true,signInUrl:'/signin-with-chatgpt?return_to=%2F'};
+test('anonymous readiness shows only the fixed top-level sign-in route and keeps drafting without requests',async()=>{
+ for(const canRun of [true,false])assert.equal(plain.readMapChatStatus({...anonymous,canRun}).state,'sign_in_required');
+ for(const signInUrl of ['https://example.test/signin','//example.test/','javascript:alert(1)','/signin-with-chatgpt?return_to=https%3A%2F%2Fexample.test'])assert.equal(plain.readMapChatStatus({...anonymous,signInUrl}).state,'unavailable');
+ assert.equal(plain.readMapChatStatus({...ready,requiresSignIn:'true'}).canRun,false);
+ assert.equal(plain.readMapChatStatus({...pending,requiresSignIn:true,signInUrl:anonymous.signInUrl}).state,'approval_pending');
+ const h=harness();await h.resolveStatus(anonymous);h.draft('Compare these two buildings.');await h.send();
+ const link=h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link');assert.equal(link.props.href,anonymous.signInUrl);assert.equal(link.props.target,'_top');assert.match(h.getText(),/Explore the map and public data/);assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.equal(h.calls.length,1);assert.equal(h.storage.size,0);
+});
+test('a deliberate sign-in preserves only one bounded draft, consumes it once and never auto-sends',async()=>{
+ const h=harness();await h.resolveStatus(anonymous);h.draft('Unsent building question');h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link').props.onClick();
+ assert.equal(h.storage.size,1);const value=JSON.parse(h.storage.get(plain.SIGN_IN_DRAFT_KEY));assert.deepEqual(Object.keys(value).sort(),['savedAt','text','version']);assert.equal(value.text,'Unsent building question');
+ const resumed=harness({}, {storage:h.storage});await resumed.resolveStatus();assert.equal(resumed.find(n=>n.type==='textarea').props.value,value.text);assert.match(resumed.getText(),/Review your selected buildings before sending/);assert.equal(resumed.calls.length,1);assert.equal(resumed.storage.size,0);
+ const later=harness({}, {storage:h.storage});assert.equal(later.find(n=>n.type==='textarea').props.value,'');
+ h.draft('x'.repeat(5000));h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link').props.onClick();assert.equal(JSON.parse(h.storage.get(plain.SIGN_IN_DRAFT_KEY)).text.length,4000);
+});
+test('sign-in draft rejects stale, oversized and extra-data records; storage failure does not block the normal link',async()=>{
+ const now=Date.now(),valid={version:1,text:'Question',savedAt:now};assert.equal(plain.readSignInDraft(JSON.stringify(valid),now),'Question');
+ for(const value of ['{',JSON.stringify({...valid,savedAt:now-30*60*1000-1}),JSON.stringify({...valid,savedAt:now+1}),JSON.stringify({...valid,text:'x'.repeat(4001)}),JSON.stringify({...valid,history:[{content:'Private history'}]}),JSON.stringify({...valid,notes:'Local notes'})])assert.equal(plain.readSignInDraft(value,now),null);
+ const h=harness({}, {storageUnavailable:true});await h.resolveStatus(anonymous);h.draft('Still editable');const link=h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link');assert.doesNotThrow(()=>link.props.onClick());assert.equal(link.props.target,'_top');assert.equal(h.calls.length,1);
+});
+test('expired chat authentication keeps the question and replaces retry with sign-in without another POST',async()=>{
+ const h=harness();await h.resolveStatus();h.draft('Check the selected building.');const p=h.send();h.calls.at(-1).resolve({ok:false,body:{code:'AUTH_REQUIRED',error:'Authentication required'}});await p;await h.tick();
+ assert.equal(h.find(n=>n.type==='textarea').props.value,'Check the selected building.');assert.ok(h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link'));assert.doesNotMatch(h.getText(),/Edit and retry/);await h.send();assert.equal(h.calls.length,2);
+ h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link').props.onClick();assert.equal(JSON.parse(h.storage.get(plain.SIGN_IN_DRAFT_KEY)).text,'Check the selected building.');
+});
+test('expired Voice authentication transitions the parent to sign-in and invalidates the audio child context',async()=>{
+ const h=harness();await h.resolveStatus();h.draft('Existing draft');const voice=h.find(n=>n.type===VoiceStub),oldKey=voice.props.contextKey;voice.props.onAuthRequired();h.flush();
+ assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.notEqual(h.find(n=>n.type===VoiceStub).props.contextKey,oldKey);assert.equal(h.find(n=>n.type==='textarea').props.value,'Existing draft');assert.ok(h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link'));assert.equal(h.calls.length,1);assert.equal(h.storage.size,0);
 });
 test('returned searches reject unsupported fields and unsafe type coercion',()=>{
  for(const q of [{url:'https://example.com'},{geometry:{}},{bbox:['-74',40.7,-73.9,40.8]},{minArea:'20000'},{q:{toString(){return'address';}}},{bbox:[-180,0,180,90]}])assert.equal(plain.readMapChatQuery(q),null);

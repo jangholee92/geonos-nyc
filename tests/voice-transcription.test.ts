@@ -34,14 +34,55 @@ function harness(reply: (url: string, init: RequestInit) => Response | Promise<R
   const timers = options.fakeTimers ? { setTimeout: (fn: () => void) => { deadlines.add(fn); return fn; }, clearTimeout: (fn: () => void) => deadlines.delete(fn) } : {};
   const api = compile('../lib/voice-transcription.ts', id => { throw Error(id); }, { ...timers, fetch: async (url: string, init: RequestInit) => { calls.push({ url, init }); return reply(url, init); } });
   const route = compile('../app/api/transcribe/route.ts', id => {
-    if (id === '../../chatgpt-auth') return { getChatGPTUser: async () => options.user === false ? null : { userId: 'authenticated-test-user' } };
+    if (id === '../../chatgpt-auth') return { getChatGPTUser: async () => options.user === false ? null : { userId: options.userId ?? 'authenticated-test-user' } };
     if (id === '../../../lib/voice-transcription') return api;
     if (id === 'cloudflare:workers') throw Error('No worker binding in test');
     throw Error(id);
-  }, { ...timers, process: { env: { ...(options.key === false ? {} : { MODEL_API_KEY: 'synthetic-voice-key' }), META_API_APPROVED: options.approved === false ? 'false' : 'true' } } });
+  }, { ...timers, Date: options.clock ?? Date, process: { env: { ...(options.key === false ? {} : { MODEL_API_KEY: 'synthetic-voice-key' }), META_API_APPROVED: options.approved === false ? 'false' : 'true' } } });
   return { ...api, ...route, calls, deadlines };
 }
 const code = (expected: string) => (error: Obj) => error.code === expected;
+
+test('anonymous voice status offers sign-in and cannot advertise a runnable paid upload', async () => {
+  const h = harness(undefined, { user: false }), response = await h.GET(), status = await response.json();
+  assert.equal(status.configured, true); assert.equal(status.approved, true); assert.equal(status.canRun, false); assert.equal(status.requiresSignIn, true);
+  assert.equal(status.signInUrl, '/signin-with-chatgpt?return_to=%2F'); assert.equal(response.headers.get('cache-control'), 'no-store');
+  const denied = await h.POST(upload()); assert.equal(denied.status, 401); assert.equal((await denied.json()).code, 'AUTH_REQUIRED'); assert.equal(h.calls.length, 0);
+  const ready = await (await harness().GET()).json(); assert.equal(ready.canRun, true); assert.equal(ready.requiresSignIn, false);
+});
+test('cross-site voice writes do not consume an authenticated account allowance', async () => {
+  const h = harness();
+  for (let i = 0; i < 13; i++) {
+    const denied = await h.POST(upload(wav(), { init: { headers: { Origin: 'https://example.test', 'Sec-Fetch-Site': 'cross-site' } } }));
+    assert.equal(denied.status, 403); assert.equal((await denied.json()).code, 'VOICE_ORIGIN_REJECTED');
+  }
+  assert.equal(h.calls.length, 0); assert.equal((await h.POST(upload())).status, 200); assert.equal(h.calls.length, 1);
+});
+test('voice shared concurrency is capped at four accounts and failure releases the occupied slot', async () => {
+  let release!: () => void, started = 0; const gate = new Promise<void>(resolve => { release = resolve; }), options: Obj = { userId: 'first' };
+  const h = harness(async () => { const number = ++started; if (number <= 4) await gate; return number === 1 ? Response.json({ error: { code: 'internal' } }, { status: 500 }) : success(); }, options);
+  const pending: Promise<Response>[] = [];
+  for (let i = 0; i < 4; i++) {
+    options.userId = 'account-' + i; pending.push(h.POST(upload()));
+    for (let tick = 0; tick < 60 && h.calls.length < i + 1; tick++) await new Promise(resolve => setImmediate(resolve));
+    assert.equal(h.calls.length, i + 1);
+  }
+  options.userId = 'fifth'; assert.equal((await h.POST(upload())).status, 429); assert.equal(h.calls.length, 4);
+  release(); const results = await Promise.all(pending); assert.equal(results[0].status, 502); for (const response of results.slice(1)) assert.equal(response.status, 200);
+  options.userId = 'account-0'; assert.equal((await h.POST(upload())).status, 200); assert.equal(h.calls.length, 5);
+});
+test('voice daily account allowance spans minute windows and resets on the next UTC day', async () => {
+  let now = Date.parse('2026-11-01T01:00:00Z'); class Clock extends Date { static now() { return now; } }
+  const h = harness(undefined, { clock: Clock });
+  for (let i = 0; i < 12; i++) { assert.equal((await h.POST(upload())).status, 200); now += 60_001; }
+  const denied = await h.POST(upload()); assert.equal(denied.status, 429); assert.equal((await denied.json()).code, 'DAILY_LIMIT_REACHED'); assert.equal(h.calls.length, 12);
+  now += 86_400_000; assert.equal((await h.POST(upload())).status, 200); assert.equal(h.calls.length, 13);
+});
+test('voice shared daily allowance caps eighty uploads across accounts in one isolate', async () => {
+  const options: Obj = { userId: 'first' }, h = harness(undefined, options);
+  for (let i = 0; i < 80; i++) { options.userId = 'account-' + i; assert.equal((await h.POST(upload())).status, 200); }
+  options.userId = 'account-81'; const denied = await h.POST(upload()); assert.equal(denied.status, 429); assert.equal((await denied.json()).code, 'DAILY_LIMIT_REACHED'); assert.equal(h.calls.length, 80);
+});
 
 test('supported PCM rates are validated by bytes and preserved exactly in canonical WAV', () => {
   const h = harness();
@@ -125,4 +166,5 @@ test('route deadline also bounds a stalled incoming upload, with no provider cal
   const request = new Request('https://example.test/api/transcribe', { method: 'POST', headers: { 'Content-Type': 'multipart/form-data; boundary=stall' }, body: new ReadableStream({ cancel() { stopped = true; } }), duplex: 'half' } as RequestInit);
   const pending = h.POST(request); while (h.deadlines.size === 0) await new Promise(resolve => setTimeout(resolve, 0)); [...h.deadlines][0]();
   const response = await pending; assert.equal(response.status, 504); assert.equal((await response.json()).code, 'VOICE_TIMEOUT'); assert.equal(stopped, true); assert.equal(h.calls.length, 0); assert.equal(h.deadlines.size, 0);
+  assert.equal((await h.POST(upload())).status, 200); assert.equal(h.calls.length, 1); assert.equal(h.deadlines.size, 0);
 });

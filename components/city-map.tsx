@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect,useId,useMemo,useRef,useState} from 'react';
-import type {Map as LibreMap,GeoJSONSource} from 'maplibre-gl';
+import type {Map as LibreMap,GeoJSONSource,FilterSpecification} from 'maplibre-gl';
 import {ArrowUpRight,Box,Compass,Expand,Layers3,LocateFixed,Minus,Plus,RotateCcw,Shrink} from 'lucide-react';
 import type {CityBuilding} from '@/lib/city';
 import {BOROUGHS} from '@/lib/city';
@@ -58,6 +58,17 @@ function layerScope(id:string):string|null{
 }
 export function buildingColor(b:CityBuilding,selected:boolean,active:boolean,floodLayer:boolean){
  return active?COLORS.active:selected?COLORS.selected:floodLayer&&(b.flood_2007===1||b.flood_2015===1)?'#efaa83':COLORS.result;
+}
+/** Draw each known-height native building once. The full-record overlay replaces
+ * its quantized atlas extrusion; point-only or unknown-height records do not. */
+export function citywideExtrusionFilter(polygons:{features?:any[]}):FilterSpecification{
+ const ids=[...new Set((polygons.features||[]).filter(f=>{
+  const g=f.geometry,p=f.properties;
+  const rings=g?.type==='Polygon'?[g.coordinates]:g?.type==='MultiPolygon'?g.coordinates:[];
+  return Array.isArray(rings)&&rings.some((polygon:any)=>Array.isArray(polygon?.[0])&&polygon[0].length>=4)&&typeof p?.height_m==='number'&&Number.isFinite(p.height_m)&&p.height_m>0&&/^[1-9]\d{0,9}$/.test(String(p.id));
+ }).map(f=>String(f.properties.id)))];
+ const height:FilterSpecification=['>', ['coalesce',['get','height_m'],0],0];
+ return ids.length?['all',height,['!', ['in',['get','id'],['literal',ids]]]]:height;
 }
 function boundsFor(borough:string){return BOROUGHS[borough]?.bounds||CITY;}
 function niceName(id:string){return labels[id]||id.replace(/\.overview$/,'').replaceAll('_',' ');}
@@ -134,7 +145,7 @@ export default function CityMap(props:CityMapProps){
      const atlasLayer={source:CITY_ATLAS.sourceId,'source-layer':CITY_ATLAS.sourceLayer,minzoom:CITY_ATLAS.minZoom};
      m.addLayer({...atlasLayer,id:'geo-citywide-fill',type:'fill',paint:{'fill-color':'#7eafa3','fill-opacity':.36}});
      m.addLayer({...atlasLayer,id:'geo-citywide-outline',type:'line',paint:{'line-color':'#83b8ad','line-width':['interpolate',['linear'],['zoom'],14,.35,17,.85],'line-opacity':.75}});
-     m.addLayer({...atlasLayer,id:'geo-citywide-3d',type:'fill-extrusion',filter:['>', ['coalesce',['get','height_m'],0],0],layout:{visibility:d.threeD?'visible':'none'},paint:{'fill-extrusion-color':'#70a79a','fill-extrusion-height':['get','height_m'],'fill-extrusion-base':0,'fill-extrusion-opacity':.86,'fill-extrusion-vertical-gradient':true}});
+     m.addLayer({...atlasLayer,id:'geo-citywide-3d',type:'fill-extrusion',filter:citywideExtrusionFilter(d.buildingData.polygons),layout:{visibility:d.threeD?'visible':'none'},paint:{'fill-extrusion-color':'#70a79a','fill-extrusion-height':['get','height_m'],'fill-extrusion-base':0,'fill-extrusion-opacity':1,'fill-extrusion-vertical-gradient':true}});
      m.addSource('geo-overlay',{type:'geojson',data:d.overlay});
      m.addLayer({id:'geo-overlay-fill',type:'fill',source:'geo-overlay',filter:['==',['geometry-type'],'Polygon'],paint:{'fill-color':['get','_geo_color'],'fill-opacity':.38,'fill-outline-color':['get','_geo_color']}});
      m.addLayer({id:'geo-overlay-line',type:'line',source:'geo-overlay',filter:['==',['geometry-type'],'LineString'],paint:{'line-color':['get','_geo_color'],'line-width':['interpolate',['linear'],['zoom'],9,1.2,15,3.5],'line-opacity':.9}});
@@ -144,7 +155,7 @@ export default function CityMap(props:CityMapProps){
      const color=['case',['get','active'],COLORS.active,['get','selected'],COLORS.selected,...(latest.current.layerId==='flood'?[['get','flood'],'#efaa83']:[]),COLORS.result] as any;
      m.addLayer({id:'geo-building-fill',type:'fill',source:'geo-buildings',minzoom:12.8,paint:{'fill-color':color,'fill-opacity':.45}});
      m.addLayer({id:'geo-building-outline',type:'line',source:'geo-buildings',minzoom:12.8,paint:{'line-color':color,'line-width':['case',['get','active'],2.2,['get','selected'],1.7,.8],'line-opacity':.95}});
-     m.addLayer({id:'geo-building-3d',type:'fill-extrusion',source:'geo-buildings',minzoom:14,filter:['>', ['coalesce',['get','height_m'],0],0],layout:{visibility:d.threeD?'visible':'none'},paint:{'fill-extrusion-color':color,'fill-extrusion-height':['get','height_m'],'fill-extrusion-base':0,'fill-extrusion-opacity':.88,'fill-extrusion-vertical-gradient':true}});
+     m.addLayer({id:'geo-building-3d',type:'fill-extrusion',source:'geo-buildings',minzoom:14,filter:['>', ['coalesce',['get','height_m'],0],0],layout:{visibility:d.threeD?'visible':'none'},paint:{'fill-extrusion-color':color,'fill-extrusion-height':['get','height_m'],'fill-extrusion-base':0,'fill-extrusion-opacity':1,'fill-extrusion-vertical-gradient':true}});
      m.addLayer({id:'geo-point-halo',type:'circle',source:'geo-points',filter:['any',['get','selected'],['get','active']],paint:{'circle-color':COLORS.selected,'circle-radius':['interpolate',['linear'],['zoom'],9,11,14,15,17,10],'circle-opacity':.10,'circle-stroke-width':1,'circle-stroke-color':'rgba(245,199,123,.35)'}});
      m.addLayer({id:'geo-point',type:'circle',source:'geo-points',paint:{'circle-color':color,'circle-radius':['interpolate',['linear'],['zoom'],9,['case',['get','active'],5.5,['get','selected'],4.7,3],13,['case',['get','active'],6,['get','selected'],5,3.5],16,['case',['get','active'],4,['get','selected'],3.5,2]],'circle-opacity':['interpolate',['linear'],['zoom'],13,1,16,.7],'circle-stroke-color':'#12282c','circle-stroke-width':1.4}});
      // Screen-facing symbols stay legible over overlays and extrusions. Draw
@@ -192,6 +203,7 @@ export default function CityMap(props:CityMapProps){
   const m=map.current;if(!ready||!m)return;
   const put=(id:string,value:any)=>(m.getSource(id) as GeoJSONSource|undefined)?.setData(value);
   put('geo-buildings',buildingData.polygons);put('geo-points',buildingData.points);put('geo-overlay',overlay);put('geo-density',densityData);put('geo-boroughs',props.boundary||EMPTY);
+  m.setFilter('geo-citywide-3d',citywideExtrusionFilter(buildingData.polygons));
   const color=['case',['get','active'],COLORS.active,['get','selected'],COLORS.selected,...(props.layerId==='flood'?[['get','flood'],'#efaa83']:[]),COLORS.result];
   m.setPaintProperty('geo-building-fill','fill-color',color);m.setPaintProperty('geo-building-outline','line-color',color);m.setPaintProperty('geo-building-3d','fill-extrusion-color',color);m.setPaintProperty('geo-point','circle-color',color);
  },[ready,buildingData,overlay,densityData,props.boundary,props.layerId]);

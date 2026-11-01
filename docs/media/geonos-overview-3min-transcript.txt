@@ -1,30 +1,19 @@
-GEONOS — overview-3min
+Heat and flooding shape cold storage decisions. This is GEONOS. Compare two buildings, inspect the evidence, and plan your next site visit.
 
-Edited actual product captures and recorded interaction sequences, with local Qwen3-TTS Ryan AI narration.
+Speak a building question; Muse Voice turns it into an editable message. Select two New York buildings and ask which checks matter for a climate-resilient retrofit.
 
-[00:00:00,000 – 00:00:14,125] Muse Voice · Ask a building question
-This is GEONOS. Speak a building question; Muse Voice turns it into an editable message. Select two New York buildings and ask which checks matter for a climate-resilient retrofit.
-
-[00:00:14,125 – 00:00:32,417] Muse Spark · Follow the question into mapped ground
 Spark retrieves official records and follows your question into climate evidence. These scenarios use the same rainfall. In the 2050 map, the deep-water class touches 572 Smith’s outline; it is about forty-seven meters from 592.
 
-[00:00:32,417 – 00:00:52,083] Turn the contrast into a site check
 That contrast directs the next visit: locate entrances, loading access, and essential equipment, then check their elevations. Your requirements stay explicit. A twenty-thousand-square-foot footprint condition supports one candidate and conflicts with the other.
 
-[00:00:52,083 – 00:01:08,000] SAM 3.1 + Muse Wonder · From image regions to survey questions
 SAM 3.1 marks roof and tree regions on actual 2024 aerial images. Wonder reviews the structured detections with public records and recommends the next survey. Open the evidence to see where each question came from.
 
-[00:01:08,000 – 00:01:20,458] DINOv2 · Inspect two dates locally
 DINOv2 runs locally, comparing 2020 and 2024 visual features. Drag across the original photographs to inspect the highlighted locations.
 
-[00:01:20,458 – 00:01:38,667] Muse Glimmer · Turn a planning requirement into the next inspection
 Bring a planning note into Muse Glimmer, running on this computer. It connects your requirement to quoted records, proposes the first owner request, and explains which measured finding could change the next inspection. Notes stay local.
 
-[00:01:38,667 – 00:01:54,333] Muse Image · Generated concept · Oct 30 · 572 Smith / 611 Court
 Muse Image turns written checks into an illustrated inspection plan. This earlier example connects each action to the decision it could change. Open its written checks alongside the generated concept.
 
-[00:01:54,333 – 00:02:09,208] Hackathon-built connections at city scale
 Built during this hackathon, GEONOS connects over a million valid mapped footprints, existing public datasets, and pretrained Meta models through one focused map and conversation.
 
-[00:02:09,208 – 00:02:26,292] Seven model roles · One better-informed next step
 Station weather, regional projections, energy reports, and citywide geometry give each question a source and scale. Seven Meta model roles connect a spoken question to evidence, an inspection, and a better-informed building decision.

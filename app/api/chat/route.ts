@@ -26,6 +26,11 @@ const MAX_ANSWER_CHARS = 12_000;
 const MAX_ROUNDS = 4;
 const MAX_TOOL_CALLS = 6;
 const rateWindows = new Map<string, { start: number; count: number }>();
+// Best-effort burst protection in this Worker isolate. These are request
+// allowances, not a durable or monetary spending ceiling.
+const dailyWindows = new Map<string, { day: number; count: number }>();
+const activeUsers = new Set<string>();
+let sharedDay = -1, sharedDayCount = 0;
 type RecordValue = Record<string, unknown>;
 type ToolCall = { id: string; type: "function"; function: { name: string; arguments: string } };
 type ChatMessage = { role: string; content: string | null; tool_calls?: ToolCall[]; tool_call_id?: string };
@@ -72,22 +77,28 @@ async function config() {
 }
 export async function GET(request?: Request) {
   const { key, model, approved } = await config();
+  const user = await getChatGPTUser();
   const localReview = await getLocalReviewAvailability(request);
-  return Response.json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved, status: !approved ? "approval_pending" : !key ? "credential_missing" : "ready_for_verification", liveVerified: false, model, tools: TOOL_NAMES, localReview, explanation: !approved ? "Meta API approval is pending. Public-data decision tools remain available; no AI request will run." : !key ? "A server-side Meta credential is required." : "Configured for authorized requests. This status does not verify authentication, model access or a successful live tool loop." }, { headers: { "Cache-Control": "no-store" } });
+  return Response.json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: !user, signInUrl: "/signin-with-chatgpt?return_to=%2F", status: !approved ? "approval_pending" : !key ? "credential_missing" : "ready_for_verification", liveVerified: false, model, tools: TOOL_NAMES, localReview, explanation: !approved ? "Meta API approval is pending. Public-data decision tools remain available; no AI request will run." : !key ? "A server-side Meta credential is required." : !user ? "Explore the public map and sign in to chat with Meta." : "Configured for authorized requests. This status does not verify authentication, model access or a successful live tool loop." }, { headers: { "Cache-Control": "no-store" } });
 }
 async function boundedJson(request: Request): Promise<unknown> {
   if (Number(request.headers.get("content-length") || "0") > MAX_BYTES) throw new InputError("The request must not exceed 60 KB.");
   if (!request.body) throw new InputError("The request body is missing.");
   const reader = request.body.getReader(), chunks: Uint8Array[] = [];
+  const signal = AbortSignal.any([request.signal, AbortSignal.timeout(10_000)]);
+  const cancel = () => { void reader.cancel().catch(() => {}); };
+  signal.addEventListener("abort", cancel, { once: true });
   let total = 0;
   try {
     while (true) {
+      if (signal.aborted) throw new InputError("The message upload timed out or was cancelled.");
       const { value, done } = await reader.read(); if (done) break;
       total += value.byteLength;
       if (total > MAX_BYTES) { await reader.cancel(); throw new InputError("The request must not exceed 60 KB."); }
       chunks.push(value);
     }
-  } finally { reader.releaseLock(); }
+    if (signal.aborted) throw new InputError("The message upload timed out or was cancelled.");
+  } finally { signal.removeEventListener("abort", cancel); reader.releaseLock(); }
   const bytes = new Uint8Array(total); let offset = 0;
   for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
   try { return JSON.parse(new TextDecoder().decode(bytes)); }
@@ -151,11 +162,19 @@ export async function POST(request: Request) {
   if (!key) return fail("Meta is not connected yet. Public-data search and comparison remain available.", "MODEL_NOT_CONFIGURED", 503);
   const user = await getChatGPTUser();
   if (!user) return fail("Sign in to use AI analysis.", "AUTH_REQUIRED", 401);
+  const origin = request.headers.get("origin");
+  if (request.headers.get("sec-fetch-site") === "cross-site" || (origin && origin !== new URL(request.url).origin)) return fail("Send questions from the GEONOS app.", "ORIGIN_REJECTED", 403);
   const now = Date.now();
+  const day = Math.floor(now / 86_400_000);
+  if (sharedDay !== day) { sharedDay = day; sharedDayCount = 0; dailyWindows.clear(); }
   for (const [id, value] of rateWindows) if (now - value.start > 60_000) rateWindows.delete(id);
   const window = rateWindows.get(user.userId) ?? { start: now, count: 0 };
-  if (window.count >= 8) return fail("Please try again shortly.", "RATE_LIMITED", 429);
+  const daily = dailyWindows.get(user.userId) ?? { day, count: 0 };
+  if (activeUsers.has(user.userId) || activeUsers.size >= 4) return fail("An analysis is already running. Please try again shortly.", "RATE_LIMITED", 429);
+  if (window.count >= 8 || (!dailyWindows.has(user.userId) && dailyWindows.size >= 2048)) return fail("Please try again shortly.", "RATE_LIMITED", 429);
+  if (daily.count >= 30 || sharedDayCount >= 200) return fail("The demo's daily AI allowance has been reached. The map, public records and comparisons remain available.", "DAILY_LIMIT_REACHED", 429);
   window.count++; rateWindows.set(user.userId, window);
+  daily.count++; dailyWindows.set(user.userId, daily); sharedDayCount++; activeUsers.add(user.userId);
   try {
     const body = await boundedJson(request);
     if (!object(body)) throw new InputError("The request must be an object.");
@@ -507,5 +526,5 @@ SCOPE AND BUDGET: Respect current query constraints unless the user asks to chan
   } catch (error) {
     if (error instanceof InputError) return fail(error.message, "INVALID_INPUT", 400);
     return fail("AI analysis could not be completed.", "ANALYSIS_FAILED", 500);
-  }
+  } finally { activeUsers.delete(user.userId); }
 }

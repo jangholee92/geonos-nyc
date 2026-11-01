@@ -5,7 +5,7 @@ import {prepareVoiceAudio,VOICE_FILE_BYTES,VOICE_SECONDS} from '../lib/voice-aud
 import './voice-note-composer.css';
 
 type Recording={blob:Blob;label:string;duration?:number};
-export default function VoiceNoteComposer({disabled,contextKey,remainingCharacters,onTranscript,onBusyChange}:{disabled:boolean;contextKey:string;remainingCharacters:number;onTranscript:(text:string)=>void;onBusyChange:(busy:boolean)=>void}){
+export default function VoiceNoteComposer({disabled,contextKey,remainingCharacters,onTranscript,onBusyChange,onAuthRequired}:{disabled:boolean;contextKey:string;remainingCharacters:number;onTranscript:(text:string)=>void;onBusyChange:(busy:boolean)=>void;onAuthRequired?:()=>void}){
  const [open,setOpen]=useState(false),[phase,setPhase]=useState<'idle'|'requesting'|'recording'|'transcribing'>('idle'),[seconds,setSeconds]=useState(0),[recording,setRecording]=useState<Recording|null>(null),[preview,setPreview]=useState(''),[result,setResult]=useState(''),[error,setError]=useState('');
  const fileInput=useRef<HTMLInputElement>(null),recorder=useRef<MediaRecorder|null>(null),stream=useRef<MediaStream|null>(null),request=useRef<AbortController|null>(null),timer=useRef<ReturnType<typeof setInterval>|null>(null),sequence=useRef(0),mounted=useRef(true),started=useRef(0);
  const busy=phase!=='idle';
@@ -40,7 +40,7 @@ export default function VoiceNoteComposer({disabled,contextKey,remainingCharacte
    const response=await fetch('/api/transcribe',{method:'POST',body,signal:controller.signal,headers:{Accept:'application/json'}});const raw:unknown=await response.json();const payload=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw as Record<string,unknown>:null;
    if(!mounted.current||turn!==sequence.current)return;
    if(controller.signal.aborted)throw Error('Transcription stopped.');
-   if(!response.ok)throw Error(typeof payload?.error==='string'?payload.error:'Transcription could not be completed.');
+   if(!response.ok){if(payload?.code==='AUTH_REQUIRED'){onAuthRequired?.();throw Error('Sign in to use Meta voice.');}throw Error(typeof payload?.error==='string'?payload.error:'Transcription could not be completed.');}
    if(payload?.kind!=='voice_transcript'||payload.model!=='muse-voice-transcribe-1.0'||payload.editable!==true||payload.autoSend!==false||payload.isEvidence!==false||typeof payload.transcript!=='string'||!payload.transcript.trim()||payload.transcript.length>4000)throw Error('No complete transcript was returned.');
    setResult(payload.transcript);
   }catch(e){if(mounted.current&&turn===sequence.current)setError(controller.signal.aborted?'Transcription stopped. Nothing was added to the conversation.':e instanceof Error?e.message:'Transcription could not be completed.');}

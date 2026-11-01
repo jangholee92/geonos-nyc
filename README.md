@@ -2,13 +2,17 @@
 
 Explore New York City buildings, select two to compare, and plan the next step toward a climate-resilient retrofit. GEONOS connects official building and tax-lot records, climate context, dated aerial imagery and seven Meta model roles across the hosted workflow and an optional local inspection-review mode. Follow the evidence to the owner document, equipment check or site inspection that could change your choice.
 
-This is a sanitized public source snapshot of the hackathon application, based on the demonstrated v15 application (`fd667567f782f37df64358d4c90554ee99a35c84`) with subsequent source hardening and the optional local Glimmer extension. The current source sync is based on private working commit `afb7f21f3dae18d66f418dccf5f9edda39c5078b`. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
+This is a sanitized public source snapshot of the hackathon application, based on the demonstrated v15 application (`fd667567f782f37df64358d4c90554ee99a35c84`) with subsequent source hardening and the optional local Glimmer extension. The current source sync includes the public-service release and 3D building-display correction from private working commit `921e8af36e9d3e4eeb4ad6f4dd6050be3dca2d7b`. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
+
+## Open GEONOS
+
+[Open the live application](https://geonos-nyc-explorer-jh-1027.jholee.chatgpt.site/). Explore the map and public building records without signing in. Hosted AI tools require ChatGPT sign-in. The optional local Glimmer review is available through the local setup below.
 
 ## Recorded demo
 
-Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role recording edition, prepared on 31 October 2026. The page contains a 2:26 overview and an 8:20 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role recording edition, prepared on 31 October 2026. The page contains a 2:37 overview and an 8:30 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
 
-The videos show edited actual product states with synthetic English narration. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
+The videos show edited actual product states with synthetic English narration. 1080p delivery combines a recorded 3D opening, fresh full-page captures and archival product shots. Native source dimensions are retained in the production record. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
 
 ## What it does
 
@@ -52,7 +56,7 @@ The original hosted app uses Sites to inject authenticated identity. **This publ
 
 `TRUST_SITES_PROXY_IDENTITY=true` is only for a trusted Sites edge that strips incoming identity headers and injects its own authenticated identity. Do not enable it on a generic public host. A different host must implement and verify its own authentication before paid API routes are enabled. The environment flag is not itself an authentication service.
 
-The neutral `.openai/hosting.json` is required by the retained Vinext/Sites build adapter but contains no project identity or storage binding. A new hosted deployment needs its own configuration and secrets. The local mock is restricted by host and socket to loopback and is not a production login mechanism. The original private demo's access policy is not changed by publishing this source.
+The neutral `.openai/hosting.json` is required by the retained Vinext/Sites build adapter but contains no project identity or storage binding. A new hosted deployment needs its own configuration and secrets. The local mock is restricted by host and socket to loopback and is not a production login mechanism. The original hosted application is publicly accessible for map exploration; its hosted AI routes require ChatGPT sign-in. Publishing this source does not provision authentication or provider credentials for another deployment.
 
 ## Seven model roles
 

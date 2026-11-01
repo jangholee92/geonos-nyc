@@ -29,6 +29,12 @@ function harness(){
 }
 const result=text=>({ok:true,json:async()=>({kind:'voice_transcript',model:'muse-voice-transcribe-1.0',transcript:text,editable:true,autoSend:false,isEvidence:false})});
 
+test('expired authentication asks the parent for sign-in and never accepts or retries a transcript',async()=>{
+ const h=harness();let requested=0;h.change({onAuthRequired:()=>{requested++;}});h.upload();h.click('Transcribe with Meta');await h.tick();
+ h.calls[0].resolve({ok:false,json:async()=>({code:'AUTH_REQUIRED',error:'Authentication required'})});await h.tick();
+ assert.equal(requested,1);assert.match(h.text(),/Sign in to use Meta voice/);assert.equal(h.calls.length,1);assert.equal(h.added.length,0);assert.equal(h.busy.at(-1),false);h.unmount();
+});
+
 test('a permission rejection from an abandoned recording cannot stop the newer microphone stream',async()=>{
  const h=harness();h.click('Record');h.click('Waiting for microphone… Cancel');h.click('Record');const current=trackSet();h.permission[1].resolve(current);await h.tick();
  h.permission[0].reject(Error('old permission rejection'));await h.tick();assert.equal(current.track.stops,0);assert.equal(h.recorders[0].state,'recording');assert.match(h.text(),/Stop ·/);h.unmount();assert.equal(current.track.stops,1);

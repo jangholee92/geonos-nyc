@@ -4,13 +4,13 @@ GEONOS helps you compare two NYC buildings for a climate-sensitive use and ident
 
 ## Watch the recorded demo
 
-Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role recording edition, prepared on 31 October 2026. It includes the 2:26 overview and 8:20 full walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watch directly in your browser with captions and transcripts.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role recording edition, prepared on 31 October 2026. It includes the 2:37 overview and 8:30 full walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watch directly in your browser with captions and transcripts.
 
-The recordings use edited actual product states and synthetic English narration. The Muse Image sequence presents an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026.
+The recordings use edited actual product states and synthetic English narration. 1080p delivery combines a recorded 3D opening, fresh full-page captures and archival product shots. Native source dimensions are retained in the production record. The Muse Image sequence presents an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026.
 
 ## Access and verified release
 
-The [hosted application](https://geonos-nyc-explorer-jh-1027.jholee.chatgpt.site) **requires access**: its last verified audience was owner-private. Arrange application access with the owner, or use the independent local setup below.
+[Open GEONOS](https://geonos-nyc-explorer-jh-1027.jholee.chatgpt.site/). Explore the map and public building records without signing in. Sign in with ChatGPT to use the hosted AI tools. The optional Glimmer inspection-note review uses the separate local setup below. The public service launched on 1 November 2026 at 04:37 UTC from source `bd3115414acc502df89c5421c53ad86dda31f4cf`; anonymous data access, ChatGPT sign-in and a live two-building Meta follow-up were checked. The current deployed source is `921e8af36e9d3e4eeb4ad6f4dd6050be3dca2d7b`, adding the 3D display correction so a selected building is rendered once at its recorded height.
 
 The v16 application was deployed on **1 November 2026 at 01:38 UTC** (31 October in New York), from source `afb7f21f3dae18d66f418dccf5f9edda39c5078b`. Actual production Spark checks retrieved both buildings’ surrounding-ground records and continued into owner questions. Earlier six-role production checks were recorded on 31 October UTC. Production browser checks covered editable synthetic-English transcription, paired SAM/Wonder analysis for 572 and 592 Smith Street, and local DINOv2 inference on the official 2020/2024 image pair. This repository adds the authentication hardening documented in [PUBLIC_EXPORT.md](PUBLIC_EXPORT.md).
 

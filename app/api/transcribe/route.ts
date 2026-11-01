@@ -5,6 +5,8 @@ type Binding = Record<string, unknown>;
 // Request-budget metadata only; no audio, filenames or transcript retention.
 const windows = new Map<string, { start: number; count: number }>();
 const active = new Set<string>();
+const dailyWindows = new Map<string, number>();
+let sharedDay = -1, sharedDayCount = 0;
 const json = (value: unknown, status = 200) => Response.json(value, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
 const fail = (error: string, code: string, status: number) => json({ error, code }, status);
 async function config() {
@@ -16,7 +18,8 @@ async function config() {
 }
 export async function GET() {
   const { key, approved } = await config();
-  return json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved, model: VOICE_MODEL, maxDurationMs: VOICE_MAX_DURATION_MS, maxUploadBytes: VOICE_MAX_UPLOAD_BYTES,
+  const user = await getChatGPTUser();
+  return json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: !user, signInUrl: '/signin-with-chatgpt?return_to=%2F', model: VOICE_MODEL, maxDurationMs: VOICE_MAX_DURATION_MS, maxUploadBytes: VOICE_MAX_UPLOAD_BYTES,
     format: 'RIFF/WAVE, mono 16-bit integer PCM, 16000 or 24000 Hz', languages: ['English', 'Korean'], editable: true, autoSend: false, liveVerified: false });
 }
 export async function POST(request: Request) {
@@ -28,10 +31,15 @@ export async function POST(request: Request) {
   const origin = request.headers.get('origin');
   if (request.headers.get('sec-fetch-site') === 'cross-site' || (origin && origin !== new URL(request.url).origin)) return fail('Submit recordings from this application.', 'VOICE_ORIGIN_REJECTED', 403);
   const now = Date.now();
+  const day = Math.floor(now / 86_400_000);
+  if (sharedDay !== day) { sharedDay = day; sharedDayCount = 0; dailyWindows.clear(); }
   for (const [id, value] of windows) if (now - value.start >= 60_000) windows.delete(id);
   const window = windows.get(user.userId) ?? { start: now, count: 0 };
-  if (window.count >= 6 || active.has(user.userId) || (!windows.has(user.userId) && windows.size >= 2048)) return fail('Finish the current recording request or try again shortly.', 'RATE_LIMITED', 429);
+  if (window.count >= 6 || active.has(user.userId) || active.size >= 4 || (!dailyWindows.has(user.userId) && dailyWindows.size >= 2048)) return fail('Finish the current recording request or try again shortly.', 'RATE_LIMITED', 429);
+  const daily = dailyWindows.get(user.userId) ?? 0;
+  if (daily >= 12 || sharedDayCount >= 80) return fail('The daily voice allowance has been reached. You can still type a question.', 'DAILY_LIMIT_REACHED', 429);
   window.count++; windows.set(user.userId, window); active.add(user.userId);
+  dailyWindows.set(user.userId, daily + 1); sharedDayCount++;
   const controller = new AbortController(); let timedOut = false;
   const parentAbort = () => controller.abort();
   request.signal.addEventListener('abort', parentAbort, { once: true });

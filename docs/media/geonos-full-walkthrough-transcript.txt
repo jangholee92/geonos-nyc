@@ -1,45 +1,29 @@
-GEONOS — full-walkthrough
+Heat and flooding shape cold storage decisions. This is GEONOS. Compare two buildings, inspect the evidence, and plan your next site visit.
 
-Edited actual product captures and recorded interaction sequences, with local Qwen3-TTS Ryan AI narration.
+Select two buildings and speak the question you would take to a project meeting. Muse Voice turns that speech into an editable draft. Read it, refine the wording, and add it to your message. Here, the question is practical: which checks matter when comparing these places for a climate-resilient retrofit? Send it with the selected buildings still in view.
 
-[00:00:00,000 – 00:00:33,208] Begin with a spoken building question
-This is GEONOS. Select two buildings and speak the question you would take to a project meeting. Muse Voice turns that speech into an editable draft. Read it, refine the wording, and add it to your message. Here, the question is practical: which checks matter when comparing these places for a climate-resilient retrofit? Send it with the selected buildings still in view.
-
-[00:00:33,208 – 00:01:12,417] Spark connects the question to the surrounding ground
 Muse Spark retrieves the selected official records and chooses the relevant evidence tools. The surrounding-ground tool follows each full building outline into the archived stormwater scenarios. Open Sources to inspect its results: the current sea-level scenario and the 2050 scenario, the distances to mapped water classes, and the areas in outside bands. The answer brings that geographic contrast back to your entrance, drainage, and equipment questions. Ask what to request from the owner, and the follow-up keeps both places in view.
 
-[00:01:12,417 – 00:01:50,750] Make the scenario contrast inspectable
 Both mapped scenarios use two point one three inches of rainfall in one hour. The published 2050 scenario adds thirty inches of sea level. At 572 Smith, the deep-water map class reaches the outline; at 592, it lies about forty-seven meters away. Inspect the same geographic extent, change the investigation band, and follow the recorded source date. That leads to a specific next visit: survey entrance thresholds, loading access, drainage paths, and equipment elevations.
 
-[00:01:50,750 – 00:02:26,375] Explore citywide records without losing the comparison
 Zoom out to New York City. More than a million valid mapped footprints cover all five boroughs. Density gives way to individual outlines as you move closer. Choose a layer, read its legend, and explore recorded roof heights in three dimensions. Search an address, building identifier, or tax-lot number; use filters or search the current view. Your selected A and B stay available while you explore other records.
 
-[00:02:26,375 – 00:03:09,917] Read each measurement at its own scope
 The left panel changes automatically from one building to a two-building comparison. These Smith Street outlines share one physical scale. Their mapped footprints are twenty-seven thousand one hundred ninety-three, and nineteen thousand two hundred fifty-nine square feet. Recorded roof height, construction year, and zoning have their own fields. Whole-tax-lot floor area carries a separate label, so you can follow each measurement back to the right official record and source revision.
 
-[00:03:09,917 – 00:03:51,208] Make the project condition explicit
 Choose the measurement that answers your immediate question. For this demonstration, require a mapped footprint of twenty thousand square feet. One candidate supports that condition; the other conflicts with it. Change the threshold and the comparison updates. Then choose the next operating fact to obtain: usable interior space, electrical capacity, or another explicit project requirement. Dated owner reports can sit alongside the public evidence, keeping the source of each answer visible.
 
-[00:03:51,208 – 00:04:25,292] SAM 3.1 turns dated imagery into inspectable regions
 Ask for the visual comparison. GEONOS retrieves official Spring 2024 aerial crops at both buildings, and SAM 3.1 marks roof and tree image regions within those crops. Switch between A and B, inspect the overlays, and open each original image. Compare with map relates the detected roof regions to the recorded footprint. The surrounding band adds approximate context from those tree regions, giving the project team specific locations to examine in a roof, vegetation, and equipment survey.
 
-[00:04:25,292 – 00:04:57,458] Wonder turns structured observations into survey targets
 Muse Wonder reviews structured summaries from the completed image analyses alongside the public building records. Its review follows three lines of inquiry: roofs and equipment, tree context, and the relationship between the dated map and image. Open the source references behind each suggested survey. A separate second review can examine the current public-data comparison, name an assumption to investigate, and recommend the inspection that could change the decision.
 
-[00:04:57,458 – 00:05:27,333] Use local features to inspect the site through time
 Now compare official 2020 and 2024 imagery at matching geographic bounds. DINOv2 runs locally in the browser and compares visual features in a sixteen-by-sixteen grid. Move the divider between dates, toggle the highlighted windows, and inspect the original photographs. This gives you another route to a focused question: which part of the site deserves a closer look, and which dated plan or field photograph would help explain it?
 
-[00:05:27,333 – 00:05:59,417] Muse Glimmer · Turn a planning requirement into the next inspection
 Bring a planning requirement into local review with Muse Glimmer. Here, the team needs twenty thousand square feet of usable space. Glimmer quotes fresh public records, proposes the first owner request, and states a conditional next step: if measured usable area falls below that requirement, inspect the second site first. The review connects your own notes, a documented requirement, and the evidence behind each proposed action. Keep the notes and this review together on the computer.
 
-[00:05:59,417 – 00:06:35,208] Frame the operating period with weather and climate
 Climate evidence adds two useful scales. NOAA station history shows observed years, months, and metrics; published NPCC regional projections show future periods and their baselines. In the paired-weather view, temperature and dew point remain tied to the same observation and timestamp. Explore a hot period, inspect source coverage, and bring those paired conditions to the equipment discussion. Each view helps you specify the operating questions and measurements for the project horizon.
 
-[00:06:35,208 – 00:07:11,375] Follow the reporting boundary before discussing performance
 For energy, open the separate example at 211 Lombardy Street. Trace the parent report, its linked buildings, and the child reports. Follow the floor area used in each energy-intensity calculation and inspect the source rows. That creates a concrete owner request: the meter-to-building schedule, the spaces served by each meter, and the operating uses covered by each report. The reporting boundary becomes part of the investigation.
 
-[00:07:11,375 – 00:07:39,958] Muse Image · Generated concept · Oct 30 · 572 Smith / 611 Court
 Muse Image turns the written checks into a conceptual inspection diagram. This earlier October thirtieth example uses 572 Smith and 611 Court. It connects what is known, the action to take, and the finding that could change the comparison. Enlarge the illustrated action rows and discuss the sequence with the owner or project team. The original written checks and their source references travel alongside the concept.
 
-[00:07:39,958 – 00:08:20,375] Seven connected model roles and a practical handoff
 The citywide workspace, evidence pipeline, and model integrations were built during this hackathon using official public datasets, existing pretrained models, and software libraries. Export the selected records and project conditions, then take the specific requests to the owner: roof plans, meter schedules, usable-space information, and electrical records. Seven Meta model roles connect a spoken question, dated public evidence, visual inspection, and local field notes into a better-informed next site visit.

@@ -1,111 +1,119 @@
 1
-00:00:00,280 --> 00:00:01,770
-This is GEONOS.
+00:00:00,280 --> 00:00:03,050
+Heat and flooding shape cold storage decisions.
 
 2
-00:00:01,800 --> 00:00:07,020
-Speak a building question; Muse Voice turns it into an editable message.
+00:00:03,080 --> 00:00:05,050
+This is GEONOS.
 
 3
-00:00:07,080 --> 00:00:12,940
-Select two New York buildings and ask which checks matter for a climate-resilient retrofit.
+00:00:05,080 --> 00:00:11,100
+Compare two buildings, inspect the evidence, and plan your next site visit.
 
 4
-00:00:14,405 --> 00:00:19,335
-Spark retrieves official records and follows your question into climate evidence.
+00:00:12,550 --> 00:00:17,770
+Speak a building question; Muse Voice turns it into an editable message.
 
 5
-00:00:19,365 --> 00:00:22,105
-These scenarios use the same rainfall.
+00:00:17,830 --> 00:00:23,690
+Select two New York buildings and ask which checks matter for a climate-resilient retrofit.
 
 6
-00:00:22,165 --> 00:00:31,225
-In the 2050 map, the deep-water class touches 572 Smith’s outline; it is about forty-seven meters from 592.
+00:00:25,155 --> 00:00:30,085
+Spark retrieves official records and follows your question into climate evidence.
 
 7
-00:00:32,697 --> 00:00:40,427
-That contrast directs the next visit: locate entrances, loading access, and essential equipment, then check
+00:00:30,115 --> 00:00:32,855
+These scenarios use the same rainfall.
 
 8
-00:00:40,457 --> 00:00:41,947
-their elevations.
+00:00:32,915 --> 00:00:41,975
+In the 2050 map, the deep-water class touches 572 Smith’s outline; it is about forty-seven meters from 592.
 
 9
-00:00:41,977 --> 00:00:44,477
-Your requirements stay explicit.
+00:00:43,447 --> 00:00:51,177
+That contrast directs the next visit: locate entrances, loading access, and essential equipment, then check
 
 10
-00:00:44,617 --> 00:00:50,877
-A twenty-thousand-square-foot footprint condition supports one candidate and conflicts with the other.
+00:00:51,207 --> 00:00:52,697
+their elevations.
 
 11
-00:00:52,363 --> 00:00:58,223
-SAM 3.1 marks roof and tree regions on actual 2024 aerial images.
+00:00:52,727 --> 00:00:55,227
+Your requirements stay explicit.
 
 12
-00:00:58,283 --> 00:01:03,533
-Wonder reviews the structured detections with public records and recommends the next survey.
+00:00:55,367 --> 00:01:01,627
+A twenty-thousand-square-foot footprint condition supports one candidate and conflicts with the other.
 
 13
-00:01:03,563 --> 00:01:06,783
-Open the evidence to see where each question came from.
+00:01:03,113 --> 00:01:08,973
+SAM 3.1 marks roof and tree regions on actual 2024 aerial images.
 
 14
-00:01:08,280 --> 00:01:14,570
-DINOv2 runs locally, comparing 2020 and 2024 visual features.
+00:01:09,033 --> 00:01:14,283
+Wonder reviews the structured detections with public records and recommends the next survey.
 
 15
-00:01:14,600 --> 00:01:19,260
-Drag across the original photographs to inspect the highlighted locations.
+00:01:14,313 --> 00:01:17,533
+Open the evidence to see where each question came from.
 
 16
-00:01:20,738 --> 00:01:25,028
-Bring a planning note into Muse Glimmer, running on this computer.
+00:01:19,030 --> 00:01:25,320
+DINOv2 runs locally, comparing 2020 and 2024 visual features.
 
 17
-00:01:25,058 --> 00:01:32,388
-It connects your requirement to quoted records, proposes the first owner request, and explains which measured
+00:01:25,350 --> 00:01:30,010
+Drag across the original photographs to inspect the highlighted locations.
 
 18
-00:01:32,418 --> 00:01:35,268
-finding could change the next inspection.
+00:01:31,488 --> 00:01:35,778
+Bring a planning note into Muse Glimmer, running on this computer.
 
 19
-00:01:35,298 --> 00:01:37,478
-Notes stay local.
+00:01:35,808 --> 00:01:43,138
+It connects your requirement to quoted records, proposes the first owner request, and explains which measured
 
 20
-00:01:38,947 --> 00:01:43,447
-Muse Image turns written checks into an illustrated inspection plan.
+00:01:43,168 --> 00:01:46,018
+finding could change the next inspection.
 
 21
-00:01:44,067 --> 00:01:48,967
-This earlier example connects each action to the decision it could change.
+00:01:46,048 --> 00:01:48,228
+Notes stay local.
 
 22
-00:01:49,267 --> 00:01:53,127
-Open its written checks alongside the generated concept.
+00:01:49,697 --> 00:01:54,197
+Muse Image turns written checks into an illustrated inspection plan.
 
 23
-00:01:54,613 --> 00:02:02,663
-Built during this hackathon, GEONOS connects over a million valid mapped footprints, existing public datasets,
+00:01:54,817 --> 00:01:59,717
+This earlier example connects each action to the decision it could change.
 
 24
-00:02:02,693 --> 00:02:07,993
-and pretrained Meta models through one focused map and conversation.
+00:02:00,017 --> 00:02:03,877
+Open its written checks alongside the generated concept.
 
 25
-00:02:09,488 --> 00:02:16,658
-Station weather, regional projections, energy reports, and citywide geometry give each question a source and
+00:02:05,363 --> 00:02:13,413
+Built during this hackathon, GEONOS connects over a million valid mapped footprints, existing public datasets,
 
 26
-00:02:16,688 --> 00:02:17,668
-scale.
+00:02:13,443 --> 00:02:18,743
+and pretrained Meta models through one focused map and conversation.
 
 27
-00:02:17,888 --> 00:02:24,098
-Seven Meta model roles connect a spoken question to evidence, an inspection, and a better-informed building
+00:02:20,238 --> 00:02:27,408
+Station weather, regional projections, energy reports, and citywide geometry give each question a source and
 
 28
-00:02:24,128 --> 00:02:25,108
+00:02:27,438 --> 00:02:28,418
+scale.
+
+29
+00:02:28,638 --> 00:02:34,848
+Seven Meta model roles connect a spoken question to evidence, an inspection, and a better-informed building
+
+30
+00:02:34,878 --> 00:02:35,858
 decision.

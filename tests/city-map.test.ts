@@ -3,6 +3,7 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
+import {featureFilter} from '@maplibre/maplibre-gl-style-spec';
 import type {CityBuilding} from '../lib/city';
 const source=ts.transpileModule(readFileSync(new URL('../components/city-map.tsx',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText;
 const module={exports:{}};new vm.Script(source).runInNewContext({module,exports:module.exports,require:()=>({})});
@@ -43,4 +44,29 @@ test('current rainfall legend never invents a high-tide category, and future hig
  assert.equal(current.length,2);assert.equal(current.some(([,label])=>/tide/i.test(label)),false);
  assert.equal(future.length,3);assert.match(future[2][1],/separate category/);
  assert.ok(api.layerLegend('air_quality_2024_cd').some(([,label])=>label==='Unknown'));
+});
+
+test('atlas extrusion excludes only native polygons actually replaced by a positive-height overlay',()=>{
+ const ring=[[-74,40.7],[-73.99,40.7],[-73.99,40.71],[-74,40.7]];
+ const polygon={type:'Polygon',coordinates:[ring]};
+ const f=(id:string,height_m:unknown,geometry:any=polygon)=>({type:'Feature',geometry,properties:{id,height_m}});
+ const filter=featureFilter(api.citywideExtrusionFilter({features:[
+  f('778052',377.58329171836806),f('109855',9),f('109855',9),
+  f('201',null),f('202',0),f('203',-2),f('204',NaN),f('205',Infinity),f('206','12'),
+  f('207',12,{type:'Point',coordinates:[-74,40.7]}),f('208',12,{type:'Polygon',coordinates:[]}),
+  f('209',12,{type:'MultiPolygon',coordinates:[[ring]]}),f('p:1000010001',12),
+ ]}));
+ const drawn=(id:string,height_m?:number)=>filter.filter({zoom:16},{type:3,properties:{id,...(height_m===undefined?{}:{height_m})}});
+ for(const id of ['778052','109855','209'])assert.equal(drawn(id,20),false,id+' must have only its full-record extrusion');
+ for(const id of ['201','202','203','204','205','206','207','208','999'])assert.equal(drawn(id,20),true,id+' must keep its atlas extrusion');
+ for(const height of [undefined,0,-1])assert.equal(drawn('999',height),false,'unknown/nonpositive atlas height is not extruded');
+});
+
+test('changing or clearing rendered records restores atlas coverage without hiding unrelated buildings',()=>{
+ const polygon={type:'Polygon',coordinates:[[[-74,40.7],[-73.99,40.7],[-73.99,40.71],[-74,40.7]]]};
+ const filters=[['101'],['102'],[]].map(ids=>featureFilter(api.citywideExtrusionFilter({features:ids.map(id=>({geometry:polygon,properties:{id,height_m:10}}))})));
+ const draws=(i:number,id:string)=>filters[i].filter({zoom:16},{type:3,properties:{id,height_m:25}});
+ assert.equal(draws(0,'101'),false);assert.equal(draws(0,'102'),true);
+ assert.equal(draws(1,'101'),true);assert.equal(draws(1,'102'),false);
+ for(const id of ['101','102','999'])assert.equal(draws(2,id),true);
 });

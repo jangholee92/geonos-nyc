@@ -1,6 +1,6 @@
 # Public export boundary
 
-Original source application: private working commit `fd667567f782f37df64358d4c90554ee99a35c84` (30 October 2026, America/New_York). This directory is a sanitized snapshot, not a clone of the private repository history. No historic public commits have been reconstructed. The current seven-role extension and lossless packaging sync are based on private working commit `afb7f21f3dae18d66f418dccf5f9edda39c5078b`; the deliberate public authentication differences below remain.
+Original source application: private working commit `fd667567f782f37df64358d4c90554ee99a35c84` (30 October 2026, America/New_York). This directory is a sanitized snapshot, not a clone of the private repository history. No historic public commits have been reconstructed. The earlier seven-role extension and lossless packaging sync used private working commit `afb7f21f3dae18d66f418dccf5f9edda39c5078b`. The current sync includes the public-service release and 3D display correction from `921e8af36e9d3e4eeb4ad6f4dd6050be3dca2d7b`; the deliberate public authentication differences below remain.
 
 ## Deliberate differences from the hosted application
 
