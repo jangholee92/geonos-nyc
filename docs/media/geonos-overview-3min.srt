@@ -1,115 +1,111 @@
 1
-00:00:00,280 --> 00:00:03,050
-Heat and flooding shape cold storage decisions.
-
-2
-00:00:03,080 --> 00:00:05,050
+00:00:00,280 --> 00:00:01,770
 This is GEONOS.
 
+2
+00:00:01,800 --> 00:00:07,020
+Speak a building question; Muse Voice turns it into an editable message.
+
 3
-00:00:05,080 --> 00:00:11,100
-Compare two buildings, inspect the evidence, and plan your next site visit.
+00:00:07,080 --> 00:00:12,940
+Select two New York buildings and ask which checks matter for a climate-resilient retrofit.
 
 4
-00:00:12,572 --> 00:00:20,112
-Built during the hackathon, this NYC workspace brings six Meta models together with official public data.
+00:00:14,405 --> 00:00:19,335
+Spark retrieves official records and follows your question into climate evidence.
 
 5
-00:00:21,572 --> 00:00:25,542
-Search over a million outlines across five boroughs.
+00:00:19,365 --> 00:00:22,105
+These scenarios use the same rainfall.
 
 6
-00:00:25,572 --> 00:00:30,872
-Select 572 Smith, then 592.
+00:00:22,165 --> 00:00:31,225
+In the 2050 map, the deep-water class touches 572 Smith’s outline; it is about forty-seven meters from 592.
 
 7
-00:00:30,932 --> 00:00:38,472
-Explore layers and 3D, with building and whole-lot measurements clearly organized.
+00:00:32,697 --> 00:00:40,427
+That contrast directs the next visit: locate entrances, loading access, and essential equipment, then check
 
 8
-00:00:39,863 --> 00:00:44,203
-Choose a measurement and test twenty thousand square feet.
+00:00:40,457 --> 00:00:41,947
+their elevations.
 
 9
-00:00:44,263 --> 00:00:49,163
-See each building’s result, then choose the next fact to verify.
+00:00:41,977 --> 00:00:44,477
+Your requirements stay explicit.
 
 10
-00:00:50,655 --> 00:00:54,995
-Explore modeled surface water around each building.
+00:00:44,617 --> 00:00:50,877
+A twenty-thousand-square-foot footprint condition supports one candidate and conflicts with the other.
 
 11
-00:00:55,295 --> 00:01:05,795
-Compare the current sea-level scenario with 2050, then focus on surrounding ground and drainage questions.
+00:00:52,363 --> 00:00:58,223
+SAM 3.1 marks roof and tree regions on actual 2024 aerial images.
 
 12
-00:01:07,280 --> 00:01:14,180
-Bring regional projections, station history and paired heat and moisture observations into the discussion.
+00:00:58,283 --> 00:01:03,533
+Wonder reviews the structured detections with public records and recommends the next survey.
 
 13
-00:01:14,640 --> 00:01:17,860
-Use them to shape equipment and operating questions.
+00:01:03,563 --> 00:01:06,783
+Open the evidence to see where each question came from.
 
 14
-00:01:19,322 --> 00:01:23,052
-Follow Lombardy’s parent and child energy reports.
+00:01:08,280 --> 00:01:14,570
+DINOv2 runs locally, comparing 2020 and 2024 visual features.
 
 15
-00:01:23,082 --> 00:01:29,822
-Trace each reported area and ask which meters and operating uses each report covers.
+00:01:14,600 --> 00:01:19,260
+Drag across the original photographs to inspect the highlighted locations.
 
 16
-00:01:31,238 --> 00:01:35,258
-Muse Voice turns spoken questions into editable text.
+00:01:20,738 --> 00:01:25,028
+Bring a planning note into Muse Glimmer, running on this computer.
 
 17
-00:01:35,398 --> 00:01:41,578
-Muse Spark connects your conversation to official records, tools and their source references.
+00:01:25,058 --> 00:01:32,388
+It connects your requirement to quoted records, proposes the first owner request, and explains which measured
 
 18
-00:01:42,988 --> 00:01:47,838
-SAM 3.1 locates roof and tree image regions in dated aerials.
+00:01:32,418 --> 00:01:35,268
+finding could change the next inspection.
 
 19
-00:01:47,868 --> 00:01:54,048
-Switch between sites, inspect overlays, and open the original images.
+00:01:35,298 --> 00:01:37,478
+Notes stay local.
 
 20
-00:01:55,530 --> 00:02:01,740
-Muse Wonder reviews structured summaries from both sites and suggests checks covering roofs, equipment, tree
+00:01:38,947 --> 00:01:43,447
+Muse Image turns written checks into an illustrated inspection plan.
 
 21
-00:02:01,770 --> 00:02:04,590
-context and the map and image.
+00:01:44,067 --> 00:01:48,967
+This earlier example connects each action to the decision it could change.
 
 22
-00:02:06,072 --> 00:02:10,252
-DINOv2 highlights imagery windows for closer inspection.
+00:01:49,267 --> 00:01:53,127
+Open its written checks alongside the generated concept.
 
 23
-00:02:10,472 --> 00:02:17,212
-Compare the 2020 and 2024 aerials in your browser and prepare a site-visit question.
+00:01:54,613 --> 00:02:02,663
+Built during this hackathon, GEONOS connects over a million valid mapped footprints, existing public datasets,
 
 24
-00:02:18,697 --> 00:02:26,957
-Muse Image illustrates the inspection plan: what we know, what to verify, and what could change.
+00:02:02,693 --> 00:02:07,993
+and pretrained Meta models through one focused map and conversation.
 
 25
-00:02:28,363 --> 00:02:31,103
-Open sources and record dates.
+00:02:09,488 --> 00:02:16,658
+Station weather, regional projections, energy reports, and citywide geometry give each question a source and
 
 26
-00:02:31,483 --> 00:02:39,103
-Export the comparison and your conditions, ready for a conversation with the owner or project team.
+00:02:16,688 --> 00:02:17,668
+scale.
 
 27
-00:02:40,572 --> 00:02:42,862
-Request roof plans and meter schedules.
+00:02:17,888 --> 00:02:24,098
+Seven Meta model roles connect a spoken question to evidence, an inspection, and a better-informed building
 
 28
-00:02:42,892 --> 00:02:45,792
-Verify usable space and power.
-
-29
-00:02:45,932 --> 00:02:51,072
-Then visit the site to inspect entrances, drainage and equipment elevations.
+00:02:24,128 --> 00:02:25,108
+decision.

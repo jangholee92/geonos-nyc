@@ -1,0 +1,20 @@
+{
+  "schema": "geonos.borough-boundary-transport.v1",
+  "asset": "/data/boroughs.geojson.gzip",
+  "source_url": "https://data.cityofnewyork.us/d/gthc-hcne",
+  "publisher": "NYC Department of City Planning",
+  "source_version": "26b",
+  "source_retrieved_on": "2026-10-27",
+  "feature_count": 5,
+  "decoded_bytes": 3167656,
+  "decoded_sha256": "d69abc7e31b8099c03529ae95390903abd97378e9a5f7d5d89f89ae1598cb1ac",
+  "compressed_bytes": 1151801,
+  "compressed_sha256": "8e41e61588107b3aa78468539f009d791e4ff9a1354c02b10546607e9f4d6778",
+  "compression": {
+    "format": "gzip",
+    "level": 9,
+    "mtime": 0,
+    "filename": ""
+  },
+  "geometry": "Unmodified source GeoJSON; every decoded byte matches the original archive."
+}

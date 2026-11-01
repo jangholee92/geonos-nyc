@@ -10,6 +10,7 @@ import VoiceNoteComposer from './voice-note-composer';
 import ChatAnalysisMenu from './chat-analysis-menu';
 import VisualComparisonResult from './visual-comparison-result';
 import TemporalImageryResult from './temporal-imagery-result';
+import LocalReviewPanel from './local-review-panel';
 import './map-chat.css';
 
 export type MapChatProps={
@@ -133,6 +134,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
  const inputId=useId(),headingId=useId();
  const [connection,setConnection]=useState<Connection>({state:'checking',canRun:false});
  const [draft,setDraft]=useState('');
+ const [localAvailable,setLocalAvailable]=useState(false),[localOpen,setLocalOpen]=useState(false);
  const [exchanges,setExchanges]=useState<Exchange[]>([]);
  const [busy,setBusy]=useState(false);
  const [voiceBusy,setVoiceBusy]=useState(false),[voiceReset,setVoiceReset]=useState(0);
@@ -162,7 +164,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
  useLayoutEffect(()=>{
   if(activeContext.current===context)return;
   const hadConversation=exchanges.length>0||history.current.length>0||request.current!==null;
-  activeContext.current=context;setContextGeneration(++generation.current);++actionSequence.current;
+  setLocalOpen(false);activeContext.current=context;setContextGeneration(++generation.current);++actionSequence.current;
   stopRequest('The selected places or search scope changed. This reply was cancelled.');
   setActionBusy(null);setActionError('');setNotice(hadConversation?'Conversation kept. Your next question will use the current places and search scope.':'');
  },[context,stopRequest,exchanges.length]);
@@ -178,7 +180,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
   const timer=window.setTimeout(()=>controller.abort(),12_000);
   fetch('/api/chat',{method:'GET',cache:'no-store',signal:controller.signal,headers:{Accept:'application/json'}})
    .then(async response=>{if(!response.ok)throw Error('Status unavailable');return response.json() as Promise<unknown>;})
-   .then(data=>{if(active&&mounted.current&&sequence===statusSequence.current)setConnection(readMapChatStatus(data));})
+   .then(data=>{if(active&&mounted.current&&sequence===statusSequence.current){setConnection(readMapChatStatus(data));setLocalAvailable(object(object(data)?.localReview)?.available===true);}})
    .catch(()=>{if(active&&mounted.current&&sequence===statusSequence.current)setConnection({state:'unavailable',canRun:false});})
    .finally(()=>window.clearTimeout(timer));
   return()=>{active=false;controller.abort();window.clearTimeout(timer);};
@@ -194,7 +196,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
  function fillDraft(value:string){setDraft(value.slice(0,4000));setActionError('');composer.current?.focus();}
  function reset(){
   if(actionBusy!==null)return;
-  setVoiceReset(value=>value+1);stopRequest('Conversation reset.');++actionSequence.current;history.current=[];setExchanges([]);setDraft('');setNewContent(false);setActionError('');setNotice('');stickToBottom.current=true;composer.current?.focus();
+  setLocalOpen(false);setVoiceReset(value=>value+1);stopRequest('Conversation reset.');++actionSequence.current;history.current=[];setExchanges([]);setDraft('');setNewContent(false);setActionError('');setNotice('');stickToBottom.current=true;composer.current?.focus();
  }
  async function send(event?:FormEvent){
   event?.preventDefault();
@@ -244,6 +246,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
   }catch(error){if(mounted.current&&sequence===actionSequence.current&&activeContext.current===contextAtStart)setActionError(error instanceof Error?error.message:'The action could not be completed. Your current places remain available.');}
   finally{if(mounted.current&&sequence===actionSequence.current)setActionBusy(null);}
  }
+ if(localOpen&&localAvailable)return <aside className="map-chat" aria-label="Meta local review"><LocalReviewPanel key={context} selected={selected} onClose={()=>setLocalOpen(false)}/></aside>;
  return <aside className="map-chat" aria-labelledby={headingId}>
   <header className="map-chat-header"><h2 id={headingId}>Meta</h2><button type="button" className="map-chat-icon" onClick={reset} disabled={actionBusy!==null} title="Reset conversation" aria-label="Reset conversation"><RotateCcw size={16} aria-hidden="true"/></button></header>
   <div ref={transcript} className="map-chat-transcript" role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions text" tabIndex={0} onScroll={()=>{const el=transcript.current;if(el){stickToBottom.current=el.scrollHeight-el.scrollTop-el.clientHeight<60;setNewContent(!stickToBottom.current);}}}>
@@ -266,7 +269,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
        {!payload?.visualComparison&&!payload?.temporalImagery&&Array.isArray(payload?.visualEvidence)&&payload.visualEvidence.length===1&&<SiteImageryEvidence value={payload.visualEvidence[0]}/>}
        {(view.kind!=='conversation'||hasMetaSources(view.payload))&&<details className="map-chat-evidence"><summary>Sources<ChevronDown size={13} aria-hidden="true"/></summary>
         {row.places.length>0&&<p className="map-chat-source-context">{row.places.join(' · ')}</p>}
-        <MetaInvestigationResult payload={row.payload} onClarificationChoice={!stale&&!busy&&actionBusy===null?fillDraft:undefined}/>
+        <MetaInvestigationResult sourcesOnly payload={row.payload} onClarificationChoice={!stale&&!busy&&actionBusy===null?fillDraft:undefined}/>
         {stale?<p className="map-chat-stale-note">This answer belongs to an earlier selection or search. Ask again to use the current context.</p>:<div className="map-chat-result-actions">
         {review?.ok&&review.descriptor.ids.length<=2&&<button type="button" className="map-chat-action" disabled={busy||actionBusy!==null} onClick={()=>act(row,'apply')}>{actionBusy===row.id?<LoaderCircle size={14}/>:<Check size={14}/>}Use these reviewed conditions</button>}
         {review?.ok&&review.descriptor.ids.length>2&&<p className="map-chat-review-note">This result includes more than two places. Ask for a comparison of two before applying it.</p>}
@@ -287,7 +290,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
    {!selectionValid&&<p className="map-chat-context-warning" role="alert">Choose no more than two distinct places before sending.</p>}
    {!validQuery&&<p className="map-chat-context-warning" role="alert">The current search scope is invalid. Update the map search before sending.</p>}
    <label className="map-chat-sr-only" htmlFor={inputId}>Your question for Meta</label>
-   <div className="map-chat-input-wrap"><textarea ref={composer} id={inputId} value={draft} onChange={event=>setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Message Meta…" aria-describedby={!connection.canRun?`${inputId}-status`:undefined} onKeyDown={event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.nativeEvent.isComposing&&connection.canRun){event.preventDefault();void send();}}}/><div className="map-chat-input-footer"><div className="map-chat-input-tools"><ChatAnalysisMenu count={selected.length} disabled={busy||voiceBusy||actionBusy!==null} context={`${context}:${voiceReset}`} onChoose={fillDraft}/><VoiceNoteComposer disabled={!connection.canRun||busy||actionBusy!==null} contextKey={`${context}:${voiceReset}`} remainingCharacters={4000-draft.trim().length-(draft.trim()?1:0)} onTranscript={value=>{setDraft(current=>[current.trim(),value].filter(Boolean).join('\n').slice(0,4000));composer.current?.focus();}} onBusyChange={setVoiceBusy}/><span>{draft.length>=3600?`${draft.length.toLocaleString()} / 4,000`:''}</span></div>{busy?<button type="button" className="map-chat-send map-chat-stop" onClick={()=>stopRequest('Stopped waiting. No new answer was accepted.')} aria-label="Stop waiting for the response"><Square size={14} aria-hidden="true"/></button>:<button type="submit" className="map-chat-send" disabled={!canSend} aria-label={connection.canRun?'Send question to Meta':'Send unavailable until Meta is connected'} title="Send message"><ArrowUp size={18} aria-hidden="true"/></button>}</div></div>
+   <div className="map-chat-input-wrap"><textarea ref={composer} id={inputId} value={draft} onChange={event=>setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Message Meta…" aria-describedby={!connection.canRun?`${inputId}-status`:undefined} onKeyDown={event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.nativeEvent.isComposing&&connection.canRun){event.preventDefault();void send();}}}/><div className="map-chat-input-footer"><div className="map-chat-input-tools"><ChatAnalysisMenu count={selected.length} disabled={busy||voiceBusy||actionBusy!==null} context={`${context}:${voiceReset}`} onChoose={fillDraft} onLocalReview={localAvailable&&selected.length===2&&selected.every(b=>!b.id.startsWith('p:'))?()=>setLocalOpen(true):undefined}/><VoiceNoteComposer disabled={!connection.canRun||busy||actionBusy!==null} contextKey={`${context}:${voiceReset}`} remainingCharacters={4000-draft.trim().length-(draft.trim()?1:0)} onTranscript={value=>{setDraft(current=>[current.trim(),value].filter(Boolean).join('\n').slice(0,4000));composer.current?.focus();}} onBusyChange={setVoiceBusy}/><span>{draft.length>=3600?`${draft.length.toLocaleString()} / 4,000`:''}</span></div>{busy?<button type="button" className="map-chat-send map-chat-stop" onClick={()=>stopRequest('Stopped waiting. No new answer was accepted.')} aria-label="Stop waiting for the response"><Square size={14} aria-hidden="true"/></button>:<button type="submit" className="map-chat-send" disabled={!canSend} aria-label={connection.canRun?'Send question to Meta':'Send unavailable until Meta is connected'} title="Send message"><ArrowUp size={18} aria-hidden="true"/></button>}</div></div>
   </form>
  </aside>;
 }

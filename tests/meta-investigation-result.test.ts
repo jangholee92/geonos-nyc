@@ -76,6 +76,22 @@ test('real LL84 estimated-energy qualification accompanies the unchanged native 
 });
 
 const conversation=(answer='A conversational explanation.')=>({kind:'conversation',answer,grounded:false,responseOrigin:'model-synthesis',citations:[] as Data[],toolCalls:[] as Data[],evidence:[] as Data[],model:'mock-test',groundingNote:'Model interpretation. References support only their cited facts.'});
+test('Spark attribution requires an available ground site and its attached source citation',()=>{
+ const citation={evidenceId:'109855:ground',source:{recordId:'109855'},measurement:'surrounding_ground_geometry',scope:'outside_building_outline'};
+ const ground={kind:'surrounding_ground',status:'available',sites:[{buildingId:'109855',status:'available',evidenceId:citation.evidenceId}],citations:[citation]};
+ const badge=(patch:Data={})=>{const view=component.parseMetaResult({...conversation(),model:'muse-spark-1.3',...patch});assert.ok(view);return renderToStaticMarkup(createElement(component.MetaModelAttribution,{view}));};
+ assert.match(badge(),/Research and conversation/);
+ for(const status of ['available','partial'])assert.match(badge({surroundingGround:{...ground,status},citations:[citation]}),/Building records \+ surrounding-ground evidence/);
+ for(const patch of [
+  {surroundingGround:{...ground,status:'unavailable'}},
+  {surroundingGround:{...ground,sites:[{...ground.sites[0],status:'stale'}]}},
+  {surroundingGround:{...ground,sites:[]}},
+  {surroundingGround:{...ground,citations:[]}},
+  {surroundingGround:ground,citations:[]},
+  {surroundingGround:ground,citations:[{...citation,evidenceId:'819422:ground'}]},
+  {surroundingGround:ground,citations:[{...citation,source:{recordId:'819422'}}]},
+ ]){const html=badge({citations:[citation],...patch});assert.match(html,/Ground lookup attempted/);assert.doesNotMatch(html,/surrounding-ground evidence/);}
+});
 test('conversation envelopes require the ungrounded synthesis contract and cannot smuggle review actions',()=>{
  assert.equal(component.parseMetaResult(conversation())?.kind,'conversation');
  for(const patch of [{grounded:true},{responseOrigin:'verified'},{citations:null},{toolCalls:[null]},{toolCalls:[{}]},{evidence:[null]},{plan:{}},{decision:{}},{planNeedsReview:true},{selectionNeedsReview:false},{citations:[{evidenceId:'x'}]}])assert.equal(component.parseMetaResult({...conversation(),...patch}),null);

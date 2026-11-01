@@ -19,8 +19,8 @@ const temporalImagery=compile('components/temporal-imagery-result.tsx',{'../lib/
 const result=compile('components/meta-investigation-result.tsx',{'./energy-source-qualifications':quality,'./visual-comparison-result':visualComparison,'./temporal-imagery-result':temporalImagery});
 // These child interactions are tested separately; keep their props visible to
 // the parent state harness without invoking microphones or browser runtimes.
-const VoiceStub=()=>null,MenuStub=()=>null,VisualStub=()=>null,TemporalStub=()=>null;
-const imports={'./site-imagery-evidence':imagery,'@/lib/city':city,'@/lib/reviewed-plan':reviewed,'./meta-investigation-result':result,'./voice-note-composer':{__esModule:true,default:VoiceStub},'./chat-analysis-menu':{__esModule:true,default:MenuStub},'./visual-comparison-result':{...visualComparison,__esModule:true,default:VisualStub},'./temporal-imagery-result':{...temporalImagery,__esModule:true,default:TemporalStub}};
+const VoiceStub=()=>null,MenuStub=()=>null,VisualStub=()=>null,TemporalStub=()=>null,LocalStub=()=>null;
+const imports={'./local-review-panel':{__esModule:true,default:LocalStub},'./site-imagery-evidence':imagery,'@/lib/city':city,'@/lib/reviewed-plan':reviewed,'./meta-investigation-result':result,'./voice-note-composer':{__esModule:true,default:VoiceStub},'./chat-analysis-menu':{__esModule:true,default:MenuStub},'./visual-comparison-result':{...visualComparison,__esModule:true,default:VisualStub},'./temporal-imagery-result':{...temporalImagery,__esModule:true,default:TemporalStub}};
 const plain=compile('components/map-chat.tsx',imports);
 const planning=compile('lib/planning-context.ts',{'./climate-evidence-index.json':JSON.parse(readFileSync(root+'/lib/climate-evidence-index.json','utf8'))});
 const ready={configured:true,approved:true,canRun:true,liveVerified:false,status:'ready_for_verification'};
@@ -220,4 +220,19 @@ test('the public-data fallback is inline, honestly attributed, and retained for 
 test('a late public-data fallback cannot override a changed selection or enter the retained conversation',async()=>{
  const h=harness({selected:[building('123'),building('456')]});await h.resolveStatus();h.draft('Compare these two.');let pending=h.send();const old=h.calls.at(-1);h.change({selected:[building('789')]});old.resolve(resilienceBrief());await pending;await h.tick();assert.doesNotMatch(h.getText(),/Public-data comparison|Check entrances/);
  h.draft('What about this building?');pending=h.send();const body=JSON.parse(h.calls.at(-1).init.body);assert.deepEqual(body.history,[]);assert.deepEqual(body.selectedIds,['789']);h.calls.at(-1).resolve(conversation());await pending;await h.tick();
+});
+
+
+test('local review is explicit, isolated from cloud history, and cleared on context changes',async()=>{
+ const h=harness({selected:[building('123'),building('456')]});await h.resolveStatus({...ready,localReview:{available:true}});
+ h.draft('Existing public question');let p=h.send();h.calls.at(-1).resolve(conversation('Existing sourced reply'));await p;await h.tick();
+ h.draft('Unsent public draft');h.find(n=>n.type===MenuStub).props.onLocalReview();h.flush();
+ const local=h.find(n=>n.type===LocalStub);assert.ok(local);assert.deepEqual(Object.keys(local.props).sort(),['onClose','selected']);assert.equal(h.find(n=>n.type==='form'),undefined);assert.equal(h.calls.length,2);
+ local.props.onClose();h.flush();assert.equal(h.find(n=>n.type==='textarea').props.value,'Unsent public draft');
+ p=h.send();const body=JSON.parse(h.calls.at(-1).init.body);assert.deepEqual(body.history.map(t=>t.content),['Existing public question','Existing sourced reply']);assert.equal(h.calls.at(-1).url,'/api/chat');h.calls.at(-1).resolve(conversation());await p;await h.tick();
+ h.find(n=>n.type===MenuStub).props.onLocalReview();h.flush();h.change({selected:[building('789'),building('456')]});assert.equal(h.find(n=>n.type===LocalStub),undefined);assert.ok(h.find(n=>n.type===MenuStub));
+});
+test('local inspection mode stays unavailable without its exact capability and two native buildings',async()=>{
+ for(const localReview of [undefined,{available:false},{available:'true'}]){const h=harness({selected:[building('123'),building('456')]});await h.resolveStatus({...ready,localReview});assert.equal(h.find(n=>n.type===MenuStub).props.onLocalReview,undefined);}
+ const h=harness({selected:[building('123'),building('p:3000000001')]});await h.resolveStatus({...ready,localReview:{available:true}});assert.equal(h.find(n=>n.type===MenuStub).props.onLocalReview,undefined);
 });

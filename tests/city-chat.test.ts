@@ -35,7 +35,7 @@ function context(id:string):SiteContext {
 function tool(name:string,args:Obj,id='call-1') {return{role:'assistant',content:null,tool_calls:[{id,type:'function',function:{name,arguments:JSON.stringify(args)}}]};}
 function finish(ids=['101','102'],intent='find',requirements:Obj[]=[],requirementOrigins:Obj[]=[]) {return tool('evaluate_decision',{plan:{intent,requirements},ids,requirementOrigins},'finish')}
 function harness(provider:(body:Obj,n:number)=>Obj, options:Obj={}) {
- const requests:Obj[]=[],queries:CityQuery[]=[],sodaCalls:Obj[]=[],contextCalls:string[]=[],energyCalls:string[]=[],planningCalls:string[][]=[],imageryCalls:Obj[]=[],reviewCalls:Obj[]=[],conceptCalls:Obj[]=[],visualCalls:Obj[]=[],temporalCalls:Obj[]=[],diagnostics:unknown[][]=[];
+ const requests:Obj[]=[],queries:CityQuery[]=[],sodaCalls:Obj[]=[],contextCalls:string[]=[],energyCalls:string[]=[],planningCalls:string[][]=[],imageryCalls:Obj[]=[],reviewCalls:Obj[]=[],conceptCalls:Obj[]=[],visualCalls:Obj[]=[],temporalCalls:Obj[]=[],groundCalls:Obj[]=[],diagnostics:unknown[][]=[];
  const records=(options.records??[building(),building('102')]) as CityBuilding[];
  const investigation=compile('../lib/investigation-tools.ts',(s)=>{
   if(s==='./energy-evidence')return energy;
@@ -55,6 +55,14 @@ function harness(provider:(body:Obj,n:number)=>Obj, options:Obj={}) {
   if(s==='../../../lib/decision-plan')return planner;
   if(s==='../../../lib/building-description')return descriptions;
   if(s==='../../../lib/resilience-brief')return resilience;
+  if(s==='../../../lib/local-review-config')return{getLocalReviewAvailability:async()=>({available:false,model:'muse-glimmer',mode:'local',privateNotesStayLocal:true})};
+  if(s==='../../../lib/site-static-assets')return{fetchGroundAsset:()=>{throw Error('Use the bounded ground-tool mock');}};
+  if(s==='../../../lib/surroundings-tool')return{surroundingGroundTool:{type:'function',function:{name:'inspect_surrounding_ground',parameters:{type:'object',properties:{ids:{type:'array',items:{type:'string'},minItems:1,maxItems:2}},required:['ids'],additionalProperties:false}}},inspectSurroundingGround:async(buildings:CityBuilding[],config:Obj)=>{
+   assert.equal(typeof config.fetchAsset,'function');assert.ok(config.signal instanceof AbortSignal);groundCalls.push({buildings,planningContext:config.planningContext});
+   if(options.groundFailure)throw Error('Private asset diagnostic');
+   const sites=buildings.map((b,i)=>({buildingId:b.id,status:options.groundPartial&&i===1?'unavailable':'available',evidenceId:options.groundPartial&&i===1?null:b.id+':ground',...(options.groundPartial&&i===1?{}:{nearestM:{future_deep:i===0?0:47.299}})}));
+   return{kind:'surrounding_ground',status:options.groundPartial?'partial':'available',sites,planningWindow:config.planningContext?.planningWindow??null,scenarios:[{id:'current_moderate',rainfallInches:2.13,rainfallDurationHours:1,seaLevelRiseInches:0},{id:'2050_moderate',rainfallInches:2.13,rainfallDurationHours:1,seaLevelRiseInches:30}],citations:sites.filter(s=>s.evidenceId).map(s=>({evidenceId:s.evidenceId,source:{label:'Pinned ground archive',url:'https://data.cityofnewyork.us/d/9i7c-xyvv'},measurement:'surrounding_ground_geometry',scope:'outside_building_outline',unit:'m and m²',value:s})),nextChecks:[]};
+  }};
   if(s==='../../../lib/comparison-review')return reviewer;
   if(s==='../../../lib/adaptation-concept')return{...concept,generateAdaptationConcept:async(brief:Obj,key:string,signal:AbortSignal)=>{assert.equal(key,'synthetic-test-key');assert.ok(signal instanceof AbortSignal);conceptCalls.push({ids:brief.places.map((p:Obj)=>p.id),checks:brief.nextChecks});if(options.conceptFailure)throw new concept.AdaptationConceptError('CONCEPT_CONTENT_FILTERED','Muse Image declined the concept. No retry was made.');return{kind:'adaptation_concept',id:'adaptation-test',model:'muse-image-1.0',createdAt:'2026-10-30T12:00:00Z',image:{dataUrl:'data:image/png;base64,CONCEPT_PIXELS',mimeType:'image/png',width:1536,height:1024,byteLength:10,sha256:'a'.repeat(64)},places:brief.places,checkIds:brief.nextChecks.map((c:Obj)=>c.id),sourceRef:{kind:'resilience_brief',evidenceIds:brief.citations.map((c:Obj)=>c.evidenceId)},notToScale:true,isEvidence:false,disclaimer:'AI-generated concept diagram, not site evidence or engineering design.',alt:'Illustrative inspection checks.'};}};
   if(s==='../../../lib/visual-comparison')return{...visualApi,compareSiteImagery:async(buildings:CityBuilding[],brief:Obj,key:string,signal:AbortSignal)=>{
@@ -74,9 +82,34 @@ function harness(provider:(body:Obj,n:number)=>Obj, options:Obj={}) {
   if(s==='../../../lib/city')return{...city,queryCity:async(q:CityQuery)=>{queries.push(q);if(options.queryFailure||queries.length===options.queryFailureAt)throw Error('test source unavailable');return{buildings:q.unit==='parcel'?records.filter(b=>b.id==='p:'+q.q):records,next_cursor:102,next_page:null,has_more:true,mode:'building-search',query:q,fetched_at:'2026-10-27T00:00:00Z',warnings:['Bounded page'],source_url:'https://data.cityofnewyork.us/d/5zhs-2jue'}},soda:async(dataset:string,p:Obj,ttl:number)=>{sodaCalls.push({dataset,...p,ttl});if(options.sodaFailure)throw Error('Public source unavailable');if(dataset==='5zhs-2jue'){const id=String(p.$where).split('=')[1];return records.filter(b=>b.id===id).map(b=>({doitt_id:b.id,bin:b.bin,mappluto_bbl:b.bbl,base_bbl:b.bbl,the_geom:b.geometry}))}return[{bbl:'1000010001',address:'Official source address',bldgarea:'50000',lotarea:'25000'}]}};
   throw Error('Unexpected module '+s);
  },{console:{warn:(...args:unknown[])=>diagnostics.push(args)},fetch:async(url:string,init:RequestInit)=>{assert.equal(url,'https://api.meta.ai/v1/chat/completions');assert.equal((init.headers as Obj).Authorization,'Bearer synthetic-test-key');const body=JSON.parse(String(init.body));requests.push(body);if(options.providerStatus)return Response.json(options.providerError??{error:{message:'Synthetic provider failure'}},{status:options.providerStatus,headers:options.providerHeaders});return Response.json({choices:[{message:provider(body,requests.length)}]})}});
- return{POST:exports.POST as (request:Request)=>Promise<TestResponse>,GET:exports.GET as ()=>Promise<TestResponse>,requests,queries,sodaCalls,contextCalls,energyCalls,planningCalls,imageryCalls,reviewCalls,conceptCalls,visualCalls,temporalCalls,diagnostics};
+ return{POST:exports.POST as (request:Request)=>Promise<TestResponse>,GET:exports.GET as (request?:Request)=>Promise<TestResponse>,requests,queries,sodaCalls,contextCalls,energyCalls,planningCalls,imageryCalls,reviewCalls,conceptCalls,visualCalls,temporalCalls,groundCalls,diagnostics};
 }
 function request(overrides:Obj={}){return new Request('https://test.invalid/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Find candidates using official records.',selectedIds:[],query:{borough:'MN'},preferences:{size:1,truck:0,heat:0},...overrides})})}
+
+test('surrounding-ground tool resolves native sources freshly, retains horizon and attaches scoped citations',async()=>{
+ const h=harness((_,n)=>n===1?tool('inspect_surrounding_ground',{ids:['101','102']}):{content:'Survey the entrance and equipment locations against the mapped surrounding ground.'});
+ const response=await h.POST(request({message:'Compare these buildings over the next 10 years.',selectedIds:['101','102']})),out=await response.json();
+ assert.equal(response.status,200);assert.equal(h.groundCalls.length,1);assert.ok(h.sodaCalls.every(q=>q.ttl===0));assert.deepEqual(JSON.parse(JSON.stringify(h.groundCalls[0].buildings.map((b:CityBuilding)=>b.id))),['101','102']);
+ assert.equal(out.surroundingGround.planningWindow.requestedEndYear,2036);assert.equal(out.surroundingGround.scenarios[1].id,'2050_moderate');assert.equal(out.evidence.length,2);
+ for(const id of ['101:ground','102:ground'])assert.ok(out.citations.some((c:Obj)=>c.evidenceId===id&&c.scope==='outside_building_outline'));
+ assert.equal(h.requests[1].messages.at(-1).role,'tool');assert.match(h.requests[0].messages[0].content,/whole-metre distances/);
+});
+test('ground tool rejects unselected native IDs, parcel IDs and injected URL fields before retrieval',async()=>{
+ for(const args of [{ids:['999']},{ids:['p:1000010001']},{ids:['101'],url:'https://attacker.example'}]){
+  const h=harness((_,n)=>n===1?tool('inspect_surrounding_ground',args):{content:'Please select the intended native building.'});const out=await(await h.POST(request({selectedIds:['101']}))).json();
+  assert.equal(h.groundCalls.length,0);assert.equal(h.sodaCalls.length,0);assert.ok(out.toolCalls[0].result.error);
+ }
+});
+test('one ground lookup is reused within a turn and a different lookup cannot exceed the budget',async()=>{
+ const reused=harness((_,n)=>n<3?tool('inspect_surrounding_ground',{ids:['101','102']},'ground-'+n):{content:'The same returned ground evidence remains in scope.'});
+ await reused.POST(request({selectedIds:['101','102']}));assert.equal(reused.groundCalls.length,1);assert.equal(reused.sodaCalls.length,4);
+ const changed=harness((_,n)=>n<3?tool('inspect_surrounding_ground',{ids:[n===1?'101':'102']},'ground-'+n):{content:'I can continue with the first ground lookup.'});
+ const out=await(await changed.POST(request({selectedIds:['101','102']}))).json();assert.equal(changed.groundCalls.length,1);assert.equal(changed.sodaCalls.length,2);assert.ok(out.toolCalls[1].result.error);
+});
+test('partial ground sources retain unknowns and emit no citation or zero distance for the missing site',async()=>{
+ const h=harness((_,n)=>n===1?tool('inspect_surrounding_ground',{ids:['101','102']}):{content:'One archived source was available; the second needs a fresh check.'},{groundPartial:true});
+ const out=await(await h.POST(request({selectedIds:['101','102']}))).json();assert.equal(out.surroundingGround.status,'partial');assert.equal(out.surroundingGround.sites[1].nearestM,undefined);assert.ok(out.citations.some((c:Obj)=>c.evidenceId==='101:ground'));assert.ok(!out.citations.some((c:Obj)=>c.evidenceId==='102:ground'));
+});
 
 test('unconfigured and unauthenticated requests make no model or city calls',async()=>{
  for(const options of[{configured:false},{auth:false}]){const h=harness(()=>{throw Error('no request')},options);const res=await h.POST(request());assert.equal(res.status,options.configured===false?503:401);assert.equal(h.requests.length,0);assert.equal(h.queries.length,0)}
@@ -265,7 +298,7 @@ test('paired-hourly terminal tool returns same-time source evidence without live
  const h=harness(()=>tool('inspect_climate_evidence',{mode:'hourly',metric:'hottest_pair',stationId:'USW00094789',year:2025,selectionQuote:question}));
  const out=await(await h.POST(request({message:question}))).json();
  assert.equal(out.kind,'investigation');assert.equal(out.investigationType,'climate_hourly');assert.equal(out.data.pair.temperature_c,38.9);assert.equal(out.data.pair.dew_point_c,21.7);assert.equal(out.data.coverage.longestUnrepresentedRun.hour_bins,121);assert.equal(out.citations[0].value.timestampUtc,out.data.pair.timestamp_utc);assert.equal(out.toolCalls.length,1);assert.equal(h.requests.length,1);assert.equal(h.queries.length,0);assert.equal(h.sodaCalls.length,0);assert.equal(h.energyCalls.length,0);assert.equal(out.selectionOrigin.quote,question);assert.equal(out.data.source.retrievalMode,'compiled-source-snapshot');
- const ready=await(await h.GET()).json();assert.equal(ready.tools.length,14);assert.equal(new Set(ready.tools).size,14);for(const name of ['compare_resilience','compare_site_imagery','inspect_imagery_history'])assert.ok(ready.tools.includes(name));assert.equal(ready.liveVerified,false);
+ const ready=await(await h.GET()).json();assert.equal(ready.tools.length,15);assert.equal(new Set(ready.tools).size,15);for(const name of ['compare_resilience','compare_site_imagery','inspect_imagery_history','inspect_surrounding_ground'])assert.ok(ready.tools.includes(name));assert.equal(ready.liveVerified,false);
 });
 
 

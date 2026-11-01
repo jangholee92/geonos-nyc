@@ -39,6 +39,7 @@ function workspace(){
   if(name==='@/lib/address-search')return{addressQuery:(entry:Any)=>entry.match?.bin||(/^\d{7}$|^\d{10}$/.test(entry.text)?entry.text:null)};
   if(name==='@/lib/city')return{BOROUGHS:{},validateQuery:(params:URLSearchParams)=>Object.fromEntries([...params].map(([key,value])=>[key,key==='bbox'?value.split(',').map(Number):['limit','cursor','page','minArea'].includes(key)?Number(value):value])),queryCity:(query:CityQuery)=>{const request=deferred();queries.push({query:plain(query),request});return request.promise;}};
   if(name==='@/lib/site-context')return{fetchSiteContext:(id:string)=>{contextIds.push(id);return new Promise(()=>{});}};
+  if(name==='@/lib/borough-boundary')return{fetchBoroughBoundary:async()=>{assets.push('/data/boroughs.geojson.gzip');return{};}};
   if(name==='@/lib/map-selection')return{pickBuildingAtPoint:(rows:CityBuilding[],point:[number,number])=>rows.find(b=>b.longitude===point[0]&&b.latitude===point[1])};
   if(name==='@/lib/reviewed-plan')return{inspectReviewedPlan:(descriptor:Any)=>({ok:true,descriptor}),resolveReviewedPlan:(descriptor:Any)=>{const request=deferred();resolutions.push({descriptor:plain(descriptor),request});return request.promise;}};
   if(name==='@/lib/investigation-evidence')return{retainPlaceEvidence:(previous:Any)=>previous,selectedPlaceEvidence:()=>({})};
@@ -58,7 +59,7 @@ function workspace(){
 
 test('startup opens all NYC with no automatic sample query, demo focus or selected record',async()=>{
  const h=workspace();await h.settle();
- assert.deepEqual(h.assets.sort(),['/data/boroughs.geojson','/data/catalog.json','/data/citywide/overview_grid.json']);
+ assert.deepEqual(h.assets.sort(),['/data/boroughs.geojson.gzip','/data/catalog.json','/data/citywide/overview_grid.json']);
  assert.equal(h.queries.length,0);assert.equal(h.resolutions.length,0);
  assert.equal(h.component('city-map').focusBorough,'all');assert.equal(h.component('city-map').focusBuilding,null);
  assert.equal(h.component('city-map').buildings.length,0);assert.equal(h.component('map-inspector').buildings.length,0);

@@ -19,6 +19,8 @@ next-env.d.ts
 
 # Test output
 /coverage/
+__pycache__/
+*.py[cod]
 
 # Package-manager logs
 npm-debug.log*

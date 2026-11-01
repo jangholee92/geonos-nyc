@@ -2,44 +2,29 @@ GEONOS — overview-3min
 
 Edited actual product captures and recorded interaction sequences, with local Qwen3-TTS Ryan AI narration.
 
-[00:00:00,000 – 00:00:12,292] Climate evidence for building decisions
-Heat and flooding shape cold storage decisions. This is GEONOS. Compare two buildings, inspect the evidence, and plan your next site visit.
+[00:00:00,000 – 00:00:14,125] Muse Voice · Ask a building question
+This is GEONOS. Speak a building question; Muse Voice turns it into an editable message. Select two New York buildings and ask which checks matter for a climate-resilient retrofit.
 
-[00:00:12,292 – 00:00:21,292] Built October 27–31 · Official public data and six Meta models
-Built during the hackathon, this NYC workspace brings six Meta models together with official public data.
+[00:00:14,125 – 00:00:32,417] Muse Spark · Follow the question into mapped ground
+Spark retrieves official records and follows your question into climate evidence. These scenarios use the same rainfall. In the 2050 map, the deep-water class touches 572 Smith’s outline; it is about forty-seven meters from 592.
 
-[00:00:21,292 – 00:00:39,583] Find buildings across New York City and compare their records
-Search over a million outlines across five boroughs. Select 572 Smith, then 592. Explore layers and 3D, with building and whole-lot measurements clearly organized.
+[00:00:32,417 – 00:00:52,083] Turn the contrast into a site check
+That contrast directs the next visit: locate entrances, loading access, and essential equipment, then check their elevations. Your requirements stay explicit. A twenty-thousand-square-foot footprint condition supports one candidate and conflicts with the other.
 
-[00:00:39,583 – 00:00:50,375] Set your conditions and compare mapped measurements
-Choose a measurement and test twenty thousand square feet. See each building’s result, then choose the next fact to verify.
+[00:00:52,083 – 00:01:08,000] SAM 3.1 + Muse Wonder · From image regions to survey questions
+SAM 3.1 marks roof and tree regions on actual 2024 aerial images. Wonder reviews the structured detections with public records and recommends the next survey. Open the evidence to see where each question came from.
 
-[00:00:50,375 – 00:01:07,000] Explore the modeled ground around each building
-Explore modeled surface water around each building. Compare the current sea-level scenario with 2050, then focus on surrounding ground and drainage questions.
+[00:01:08,000 – 00:01:20,458] DINOv2 · Inspect two dates locally
+DINOv2 runs locally, comparing 2020 and 2024 visual features. Drag across the original photographs to inspect the highlighted locations.
 
-[00:01:07,000 – 00:01:19,042] Connect station history, regional projections and paired weather
-Bring regional projections, station history and paired heat and moisture observations into the discussion. Use them to shape equipment and operating questions.
+[00:01:20,458 – 00:01:38,667] Muse Glimmer · Turn a planning requirement into the next inspection
+Bring a planning note into Muse Glimmer, running on this computer. It connects your requirement to quoted records, proposes the first owner request, and explains which measured finding could change the next inspection. Notes stay local.
 
-[00:01:19,042 – 00:01:30,958] Lombardy energy records · Connect reported totals and floor areas
-Follow Lombardy’s parent and child energy reports. Trace each reported area and ask which meters and operating uses each report covers.
+[00:01:38,667 – 00:01:54,333] Muse Image · Generated concept · Oct 30 · 572 Smith / 611 Court
+Muse Image turns written checks into an illustrated inspection plan. This earlier example connects each action to the decision it could change. Open its written checks alongside the generated concept.
 
-[00:01:30,958 – 00:01:42,708] Muse Voice and Spark · From an editable question to sourced records
-Muse Voice turns spoken questions into editable text. Muse Spark connects your conversation to official records, tools and their source references.
+[00:01:54,333 – 00:02:09,208] Hackathon-built connections at city scale
+Built during this hackathon, GEONOS connects over a million valid mapped footprints, existing public datasets, and pretrained Meta models through one focused map and conversation.
 
-[00:01:42,708 – 00:01:55,250] SAM 3.1 · Explore roof and tree regions in 2024 aerial images
-SAM 3.1 locates roof and tree image regions in dated aerials. Switch between sites, inspect overlays, and open the original images.
-
-[00:01:55,250 – 00:02:05,792] Muse Wonder · Turn evidence summaries into survey targets
-Muse Wonder reviews structured summaries from both sites and suggests checks covering roofs, equipment, tree context and the map and image.
-
-[00:02:05,792 – 00:02:18,417] Meta DINOv2 · Inspect visual features across 2020 and 2024 aerials
-DINOv2 highlights imagery windows for closer inspection. Compare the 2020 and 2024 aerials in your browser and prepare a site-visit question.
-
-[00:02:18,417 – 00:02:28,083] Muse Image · Generated concept · Oct 30 · 572 Smith / 611 Court
-Muse Image illustrates the inspection plan: what we know, what to verify, and what could change.
-
-[00:02:28,083 – 00:02:40,292] Export dated evidence and prepare the next site visit
-Open sources and record dates. Export the comparison and your conditions, ready for a conversation with the owner or project team.
-
-[00:02:40,292 – 00:02:52,208] Move from the map to a focused site investigation
-Request roof plans and meter schedules. Verify usable space and power. Then visit the site to inspect entrances, drainage and equipment elevations.
+[00:02:09,208 – 00:02:26,292] Seven model roles · One better-informed next step
+Station weather, regional projections, energy reports, and citywide geometry give each question a source and scale. Seven Meta model roles connect a spoken question to evidence, an inspection, and a better-informed building decision.

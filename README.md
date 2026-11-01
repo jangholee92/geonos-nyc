@@ -1,12 +1,12 @@
 # GEONOS — NYC building evidence, in one workspace
 
-Explore New York City buildings, select two to compare, and plan the next step toward a climate-resilient retrofit. GEONOS connects official building and tax-lot records, climate context, dated aerial imagery and six Meta model roles in one workspace. Follow the evidence to the owner document, equipment check or site inspection that could change your choice.
+Explore New York City buildings, select two to compare, and plan the next step toward a climate-resilient retrofit. GEONOS connects official building and tax-lot records, climate context, dated aerial imagery and seven Meta model roles across the hosted workflow and an optional local inspection-review mode. Follow the evidence to the owner document, equipment check or site inspection that could change your choice.
 
-This is a sanitized public source snapshot of the hackathon application, based on private working commit `fd667567f782f37df64358d4c90554ee99a35c84`. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
+This is a sanitized public source snapshot of the hackathon application, based on the demonstrated v15 application (`fd667567f782f37df64358d4c90554ee99a35c84`) with subsequent source hardening and the optional local Glimmer extension. The current source sync is based on private working commit `afb7f21f3dae18d66f418dccf5f9edda39c5078b`. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
 
 ## Recorded demo
 
-Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — access and overview playback verified on 31 October 2026. The page contains a 2:52 overview and an 8:17 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role recording edition, prepared on 31 October 2026. The page contains a 2:26 overview and an 8:20 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
 
 The videos show edited actual product states with synthetic English narration. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
 
@@ -17,6 +17,7 @@ The videos show edited actual product states with synthetic English narration. T
 - Connects evidence to the next owner document or site inspection that could change a comparison.
 - Offers dated roof/tree masks, a paired aerial review and an optional local 2020/2024 visual-feature comparison inside chat.
 - Turns voice recordings and analysis-menu choices into editable drafts, with the user choosing when to send.
+- In local mode, reviews two refreshed building records with an inspection note and returns source-linked next actions and a conditional follow-up.
 
 ## Run locally
 
@@ -53,7 +54,7 @@ The original hosted app uses Sites to inject authenticated identity. **This publ
 
 The neutral `.openai/hosting.json` is required by the retained Vinext/Sites build adapter but contains no project identity or storage binding. A new hosted deployment needs its own configuration and secrets. The local mock is restricted by host and socket to loopback and is not a production login mechanism. The original private demo's access policy is not changed by publishing this source.
 
-## Six model roles
+## Seven model roles
 
 | Model | Role | Evidence and output |
 |---|---|---|
@@ -63,12 +64,15 @@ The neutral `.openai/hosting.json` is required by the retained Vinext/Sites buil
 | `muse-image-1.0` | Inspection concept derived from written checks | Labelled illustration of what to verify and what could change the comparison |
 | `muse-voice-transcribe-1.0` | Recording to an editable draft | Review, edit, add to the message and send |
 | Meta DINOv2 `dinov2_vits14_reg` | Optional local comparison of 2020/2024 image features | Highlighted windows guide closer inspection of dated photographs |
+| Muse Glimmer 30B, official Q4_K_M open weights | Optional local inspection-note review | Two source-linked action cards and a conditional next check for the selected buildings |
 
 Five roles use the server-side Meta API. DINOv2 uses open weights in a cancellable browser Worker, independently of API credentials. Its first use downloads approximately **33.1 MB** of compressed model and runtime assets. The [manifest](public/models/dinov2/manifest.json) records sizes, hashes, conversion and runtime checks. The historical image pair uses matched geographic crop bounds.
 
+Glimmer runs in an authenticated, loopback-only llama.cpp server on the same computer as the local app. Its note and model request stay local; official building-record refreshes still contact NYC’s public service. The tested setup uses an Apple M2 Ultra with 128 GiB unified memory and the official 16.76 GB text checkpoint. Weights and credentials are downloaded or generated outside the repository. Follow the pinned [Glimmer setup and verification guide](scripts/glimmer/README.md). The hosted app uses five Meta API roles plus browser DINOv2. The optional local app adds Glimmer; both execution modes appear in the seven-role videos.
+
 Voice uploads support up to 60 seconds and 10 MiB, canonicalized to mono PCM16 WAV and sent once to the fixed provider endpoint with cancellation and deadline controls. The application server processes audio in memory. Provider handling follows the account’s applicable Meta terms. English and Korean language hints are available; the recorded transcription exercise uses synthetic English.
 
-Official documentation: [Meta models](https://dev.meta.ai/docs/models), [tool calling](https://dev.meta.ai/docs/tool-calling), [SAM segmentation](https://dev.meta.ai/docs/media-segmentation), [image generation](https://dev.meta.ai/docs/image-generation), [voice transcription](https://dev.meta.ai/docs/speech-to-text), [DINOv2](https://github.com/facebookresearch/dinov2).
+Official documentation: [Meta models](https://dev.meta.ai/docs/models), [tool calling](https://dev.meta.ai/docs/tool-calling), [SAM segmentation](https://dev.meta.ai/docs/media-segmentation), [image generation](https://dev.meta.ai/docs/image-generation), [voice transcription](https://dev.meta.ai/docs/speech-to-text), [DINOv2](https://github.com/facebookresearch/dinov2), [Muse Glimmer](https://dev.meta.ai/docs/muse-glimmer).
 
 ## Data and reproducibility
 
@@ -86,9 +90,19 @@ Normal startup uses the bundled products; it does not rerun data acquisition or 
 
 The recorded v15 application suite had **529 checks: 527 passed, two opt-in checks skipped, zero failures**, followed by focused protocol, transport and authentication checks. Actual provider and browser verification covered editable synthetic-English transcription, paired SAM/Wonder analysis for 572 and 592 Smith Street, and local/browser DINOv2 inference on the official 2020/2024 pair. This public export adds authentication hardening, with separate validation recorded in [PUBLIC_EXPORT.md](PUBLIC_EXPORT.md).
 
+The Glimmer extension completed a separate actual browser review in **35 seconds** for fresh 572/592 Smith records, displaying two inspection cards and a conditional check using the authored 20,000-square-foot requirement. A 39.82-second direct local response also passed the current exact-quote, building-ID and user-quantity validator. The pinned setup recipe compiled successfully. These local checks are separate from the hosted production checks above.
+
+The refreshed public candidate passed **606 checks: 604 passed, two opt-in checks skipped**, plus 15 focused authentication/local-route checks and built-Worker forged-header checks. Following the final lossless borough-boundary packaging change, all 18 focused boundary/workspace checks, TypeScript and the production build passed. See [PUBLIC_EXPORT.md](PUBLIC_EXPORT.md) for the exact validation stages and cleanup.
+
 Chat keeps provider status visible and identifies the origin of each response. Supported two-building requests can also display an application-written public-data brief with source references and prioritized next checks.
 
 The investigation follows each source at its own scale: HVI describes community vulnerability, NPCC provides regional scenarios, stormwater layers describe modeled ground, and energy reports retain their reporting boundaries. Usable space, electrical capacity and roof or equipment details become concrete requests for owner records and site inspection.
+
+## Hackathon fit
+
+The selected problem statement is **Build for Your World**. The [official participant guide](https://cerebralvalley.ai/e/meta-ai-developer-hackathon/details) assigns **30% Impact, 25% Use of Meta AI Tooling, 20% Technical Depth & Execution and 25% Demo**. The intended demonstration is one connected investigation: compare buildings, inspect the evidence, add a local planning note and identify the next consequential check.
+
+The guide names **Muse Glimmer or Muse Spark Open** for the Best Open-Weight bonus. The actually executed Glimmer role meets that model-use aspect; this is a category alignment, not an eligibility decision or award claim. DINOv2 remains a separate, useful open-weight visual role.
 
 ## Rights and attribution
 

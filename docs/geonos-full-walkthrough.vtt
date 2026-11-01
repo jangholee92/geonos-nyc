@@ -1,280 +1,262 @@
 WEBVTT
 
-00:00:00.280 --> 00:00:03.370
-Heat and flooding shape cold storage decisions.
-
-00:00:03.400 --> 00:00:08.380
-Before choosing a building, bring the records together and decide what to inspect.
-
-00:00:08.440 --> 00:00:10.060
+00:00:00.280 --> 00:00:02.540
 This is GEONOS.
 
-00:00:10.120 --> 00:00:16.300
-It connects a citywide map, public evidence and six Meta model roles in one investigation.
+00:00:02.760 --> 00:00:08.220
+Select two buildings and speak the question you would take to a project meeting.
 
-00:00:16.360 --> 00:00:23.370
-The NYC workspace, evidence pipeline and model integrations were built during the hackathon, using existing
+00:00:08.440 --> 00:00:13.180
+Muse Voice turns that speech into an editable draft.
 
-00:00:23.400 --> 00:00:26.380
-public datasets and pretrained models.
+00:00:13.400 --> 00:00:18.220
+Read it, refine the wording, and add it to your message.
 
-00:00:26.520 --> 00:00:31.340
-Let’s follow two Smith Street buildings from their records to a practical site-visit plan.
+00:00:18.840 --> 00:00:26.090
+Here, the question is practical: which checks matter when comparing these places for a climate-resilient
 
-00:00:33.405 --> 00:00:35.455
-Start with the whole city.
+00:00:26.120 --> 00:00:27.420
+retrofit?
 
-00:00:35.485 --> 00:00:40.225
-More than a million valid building outlines cover all five boroughs.
+00:00:27.800 --> 00:00:31.420
+Send it with the selected buildings still in view.
 
-00:00:40.365 --> 00:00:44.305
-At this scale, density makes the pattern readable.
+00:00:33.488 --> 00:00:39.298
+Muse Spark retrieves the selected official records and chooses the relevant evidence tools.
 
-00:00:44.605 --> 00:00:48.465
-Zoom closer and individual outlines appear.
+00:00:39.328 --> 00:00:45.908
+The surrounding-ground tool follows each full building outline into the archived stormwater scenarios.
 
-00:00:48.765 --> 00:00:54.225
-Focus a borough, choose a contextual layer and read its legend.
+00:00:46.048 --> 00:00:53.698
+Open Sources to inspect its results: the current sea-level scenario and the 2050 scenario, the distances to
 
-00:00:54.765 --> 00:00:59.025
-Switch to 3D to explore recorded roof heights.
+00:00:53.728 --> 00:00:58.258
+mapped water classes, and the areas in outside bands.
 
-00:01:01.113 --> 00:01:06.443
-Search an address, building identification number or tax-lot number.
+00:00:58.288 --> 00:01:05.218
+The answer brings that geographic contrast back to your entrance, drainage, and equipment questions.
 
-00:01:06.473 --> 00:01:09.933
-The result identifies which record you’re opening.
+00:01:05.248 --> 00:01:10.628
+Ask what to request from the owner, and the follow-up keeps both places in view.
 
-00:01:10.233 --> 00:01:17.133
-A tax lot can link to several buildings, so those identifiers help you follow the relationship.
+00:01:12.697 --> 00:01:18.187
+Both mapped scenarios use two point one three inches of rainfall in one hour.
 
-00:01:17.193 --> 00:01:23.933
-Use filters to narrow the records, or Search this view to work with the area on screen.
+00:01:18.217 --> 00:01:22.747
+The published 2050 scenario adds thirty inches of sea level.
 
-00:01:24.153 --> 00:01:32.123
-Move through the result pages, select a candidate, and keep your chosen places available as you continue
+00:01:22.777 --> 00:01:32.587
+At 572 Smith, the deep-water map class reaches the outline; at 592, it lies about forty-seven meters away.
 
-00:01:32.153 --> 00:01:33.453
-exploring.
+00:01:32.617 --> 00:01:39.787
+Inspect the same geographic extent, change the investigation band, and follow the recorded source date.
 
-00:01:35.447 --> 00:01:38.857
-Select one building to open its details on the left.
+00:01:39.817 --> 00:01:47.547
+That leads to a specific next visit: survey entrance thresholds, loading access, drainage paths, and equipment
 
-00:01:38.887 --> 00:01:43.737
-Select a second and the panel becomes a comparison, with A and B on the map.
+00:01:47.577 --> 00:01:48.957
+elevations.
 
-00:01:43.767 --> 00:01:48.057
-Here, we have 572 and 592 Smith Street.
+00:01:51.030 --> 00:01:53.770
+Zoom out to New York City.
 
-00:01:48.087 --> 00:01:54.617
-Compare their mapped footprints at the same physical scale, then inspect recorded roof height, construction
+00:01:53.830 --> 00:01:59.530
+More than a million valid mapped footprints cover all five boroughs.
 
-00:01:54.647 --> 00:01:56.187
-year and zoning.
+00:01:59.670 --> 00:02:04.040
+Density gives way to individual outlines as you move closer.
 
-00:01:56.247 --> 00:01:59.497
-Whole-tax-lot floor area has its own label.
+00:02:04.070 --> 00:02:10.600
+Choose a layer, read its legend, and explore recorded roof heights in three dimensions.
 
-00:01:59.527 --> 00:02:03.707
-Open the source references to follow each measurement back to its record.
+00:02:10.630 --> 00:02:19.400
+Search an address, building identifier, or tax-lot number; use filters or search the current view.
 
-00:02:05.780 --> 00:02:08.550
-Choose the measurement that matters to your project.
+00:02:19.430 --> 00:02:24.650
+Your selected A and B stay available while you explore other records.
 
-00:02:08.580 --> 00:02:13.320
-For this demonstration, set a condition of twenty thousand square feet.
+00:02:26.655 --> 00:02:33.475
+The left panel changes automatically from one building to a two-building comparison.
 
-00:02:13.540 --> 00:02:19.960
-You can investigate usable space, then check the condition against mapped footprint area.
+00:02:33.855 --> 00:02:38.515
+These Smith Street outlines share one physical scale.
 
-00:02:20.180 --> 00:02:25.720
-The comparison shows each result and identifies a useful next fact to obtain.
+00:02:38.735 --> 00:02:48.245
+Their mapped footprints are twenty-seven thousand one hundred ninety-three, and nineteen thousand two hundred
 
-00:02:26.020 --> 00:02:33.160
-Add project requirements, follow their evidence and prepare questions about electrical capacity.
+00:02:48.275 --> 00:02:49.875
+fifty-nine square feet.
 
-00:02:33.300 --> 00:02:38.840
-An owner report can carry its source and date alongside the public records.
+00:02:50.175 --> 00:02:56.115
+Recorded roof height, construction year, and zoning have their own fields.
 
-00:02:40.905 --> 00:02:46.285
-Open the stormwater story to explore modeled surface water around the two buildings.
+00:02:56.335 --> 00:03:04.705
+Whole-tax-lot floor area carries a separate label, so you can follow each measurement back to the right
 
-00:02:46.345 --> 00:02:52.605
-Start with the reference points, move to the surrounding ground, then change the sea-level scenario.
+00:03:04.735 --> 00:03:08.115
+official record and source revision.
 
-00:02:52.825 --> 00:03:00.635
-In the published 2050 view, the deep-water map class reaches 572’s outline and lies about forty-seven meters
+00:03:10.197 --> 00:03:13.977
+Choose the measurement that answers your immediate question.
 
-00:03:00.665 --> 00:03:02.525
-from 592.
+00:03:14.437 --> 00:03:20.057
+For this demonstration, require a mapped footprint of twenty thousand square feet.
 
-00:03:02.985 --> 00:03:05.245
-Both views share the same extent.
+00:03:20.517 --> 00:03:25.897
+One candidate supports that condition; the other conflicts with it.
 
-00:03:05.305 --> 00:03:11.275
-Adjust the investigation band, inspect the scenario assumptions and read the source dates.
+00:03:26.677 --> 00:03:30.137
+Change the threshold and the comparison updates.
 
-00:03:11.305 --> 00:03:17.725
-Use that geographic context to plan entrance, drainage and equipment-elevation checks.
+00:03:30.357 --> 00:03:40.647
+Then choose the next operating fact to obtain: usable interior space, electrical capacity, or another explicit
 
-00:03:19.822 --> 00:03:22.832
-Climate history adds the station perspective.
+00:03:40.677 --> 00:03:42.377
+project requirement.
 
-00:03:22.862 --> 00:03:29.202
-Explore NOAA observations by year, month and metric, with period labels beside the charts.
+00:03:42.677 --> 00:03:49.417
+Dated owner reports can sit alongside the public evidence, keeping the source of each answer visible.
 
-00:03:29.422 --> 00:03:35.472
-Then move to the regional future view, where published NPCC projections show their own time windows and
+00:03:51.488 --> 00:03:53.458
+Ask for the visual comparison.
 
-00:03:35.502 --> 00:03:36.592
-baseline.
+00:03:53.488 --> 00:04:01.778
+GEONOS retrieves official Spring 2024 aerial crops at both buildings, and SAM 3.1 marks roof and tree image
 
-00:03:36.622 --> 00:03:43.072
-Together, these views help you frame the operating horizon: what indoor conditions will the project need,
+00:04:01.808 --> 00:04:03.778
+regions within those crops.
 
-00:03:43.102 --> 00:03:49.442
-which equipment questions deserve attention, and what should the team investigate for the period ahead?
+00:04:03.808 --> 00:04:08.818
+Switch between A and B, inspect the overlays, and open each original image.
 
-00:03:51.530 --> 00:03:57.310
-The paired-weather view keeps air temperature and dew point from the same observation together.
+00:04:08.848 --> 00:04:13.298
+Compare with map relates the detected roof regions to the recorded footprint.
 
-00:03:57.370 --> 00:04:04.700
-At JFK, explore the hottest-air and highest-dew-point samples, with their dates and accompanying readings.
+00:04:13.328 --> 00:04:18.818
+The surrounding band adds approximate context from those tree regions, giving the project team specific
 
-00:04:04.730 --> 00:04:09.630
-Move through the observed hot period to see heat and moisture change together.
+00:04:18.848 --> 00:04:23.508
+locations to examine in a roof, vegetation, and equipment survey.
 
-00:04:09.850 --> 00:04:14.110
-The chart also provides source coverage and quality information.
+00:04:25.572 --> 00:04:31.062
+Muse Wonder reviews structured summaries from the completed image analyses alongside the public building
 
-00:04:14.490 --> 00:04:20.940
-Bring these paired observations into conversations about operating conditions, equipment performance and the
+00:04:31.092 --> 00:04:32.152
+records.
 
-00:04:20.970 --> 00:04:23.230
-measurements to collect at the building.
+00:04:32.212 --> 00:04:39.542
+Its review follows three lines of inquiry: roofs and equipment, tree context, and the relationship between the
 
-00:04:25.322 --> 00:04:29.372
-For energy, follow a separate example at 211 Lombardy Street.
+00:04:39.572 --> 00:04:41.592
+dated map and image.
 
-00:04:29.402 --> 00:04:33.852
-Open the parent report, trace its linked buildings and inspect the child reports.
+00:04:41.812 --> 00:04:45.462
+Open the source references behind each suggested survey.
 
-00:04:33.882 --> 00:04:39.692
-Compare the reported floor areas and follow how each area enters the energy-intensity calculation.
+00:04:45.492 --> 00:04:52.022
+A separate second review can examine the current public-data comparison, name an assumption to investigate,
 
-00:04:39.722 --> 00:04:45.372
-Prepare a request for the meter-to-building schedule, then ask the owner which meters, spaces and operating
+00:04:52.052 --> 00:04:55.672
+and recommend the inspection that could change the decision.
 
-00:04:45.402 --> 00:04:47.422
-uses each report covers.
+00:04:57.738 --> 00:05:03.628
+Now compare official 2020 and 2024 imagery at matching geographic bounds.
 
-00:04:49.488 --> 00:04:53.108
-Muse Voice turns a spoken question into editable text.
+00:05:03.658 --> 00:05:10.108
+DINOv2 runs locally in the browser and compares visual features in a sixteen-by-sixteen grid.
 
-00:04:53.168 --> 00:04:57.058
-Review the transcript, add it to your message and send when you’re ready.
+00:05:10.138 --> 00:05:15.948
+Move the divider between dates, toggle the highlighted windows, and inspect the original photographs.
 
-00:04:57.088 --> 00:05:03.618
-Muse Spark carries the conversation into the investigation, choosing tools for official records and evidence.
+00:05:15.978 --> 00:05:21.548
+This gives you another route to a focused question: which part of the site deserves a closer look,
 
-00:05:03.648 --> 00:05:08.738
-Expand Sources to inspect the retrieved information and follow the tool trace.
+00:05:21.578 --> 00:05:25.598
+and which dated plan or field photograph would help explain it?
 
-00:05:08.768 --> 00:05:14.498
-The chat stays alongside the map, so you can keep the selected buildings in view while refining the
+00:05:27.613 --> 00:05:31.583
+Bring a planning requirement into local review with Muse Glimmer.
 
-00:05:14.528 --> 00:05:15.908
-next question.
+00:05:31.613 --> 00:05:35.663
+Here, the team needs twenty thousand square feet of usable space.
 
-00:05:17.988 --> 00:05:25.318
-For the visual comparison, GEONOS retrieves official Spring 2024 aerial crops for both buildings.
+00:05:35.693 --> 00:05:42.143
+Glimmer quotes fresh public records, proposes the first owner request, and states a conditional next step: if
 
-00:05:25.348 --> 00:05:30.758
-SAM 3.1 locates roof and tree image regions in those same crops.
+00:05:42.173 --> 00:05:47.823
+measured usable area falls below that requirement, inspect the second site first.
 
-00:05:30.788 --> 00:05:36.488
-Switch between A and B, inspect the overlays, or enlarge the original image.
+00:05:47.853 --> 00:05:54.223
+The review connects your own notes, a documented requirement, and the evidence behind each proposed action.
 
-00:05:36.548 --> 00:05:40.648
-Compare with map relates the image regions to the mapped footprint.
+00:05:54.253 --> 00:05:57.633
+Keep the notes and this review together on the computer.
 
-00:05:41.028 --> 00:05:45.288
-The outside band adds approximate tree-mask context.
+00:05:59.697 --> 00:06:03.107
+Climate evidence adds two useful scales.
 
-00:05:45.348 --> 00:05:52.488
-These views give the project team specific places to examine during a roof, vegetation and equipment survey.
+00:06:03.137 --> 00:06:11.427
+NOAA station history shows observed years, months, and metrics; published NPCC regional projections show
 
-00:05:54.572 --> 00:06:00.462
-Muse Wonder reviews structured summaries from both completed image analyses alongside the public records.
+00:06:11.457 --> 00:06:14.277
+future periods and their baselines.
 
-00:06:00.492 --> 00:06:06.782
-Open its review to follow three lines of inquiry: roofs and equipment, tree context, and the relationship
+00:06:14.337 --> 00:06:20.597
+In the paired-weather view, temperature and dew point remain tied to the same observation and timestamp.
 
-00:06:06.812 --> 00:06:09.022
-between the dated map and image.
+00:06:20.737 --> 00:06:27.987
+Explore a hot period, inspect source coverage, and bring those paired conditions to the equipment discussion.
 
-00:06:09.052 --> 00:06:11.022
-Each leads to a suggested check.
+00:06:28.017 --> 00:06:33.477
+Each view helps you specify the operating questions and measurements for the project horizon.
 
-00:06:11.052 --> 00:06:14.862
-You can also request a second review of the public-data comparison.
+00:06:35.488 --> 00:06:40.708
+For energy, open the separate example at 211 Lombardy Street.
 
-00:06:14.892 --> 00:06:20.672
-The aim is a clear question for the owner, surveyor or project team to investigate next.
+00:06:40.848 --> 00:06:46.068
+Trace the parent report, its linked buildings, and the child reports.
 
-00:06:22.655 --> 00:06:32.915
-Explore the site through time with official 2020 and 2024 imagery at matching geographic bounds.
+00:06:46.128 --> 00:06:53.588
+Follow the floor area used in each energy-intensity calculation and inspect the source rows.
 
-00:06:34.975 --> 00:06:42.595
-Run DINOv2 locally in your browser to highlight imagery windows for closer inspection.
+00:06:53.648 --> 00:07:01.698
+That creates a concrete owner request: the meter-to-building schedule, the spaces served by each meter, and
 
-00:06:42.655 --> 00:06:48.595
-Its feature comparison produces a sixteen-by-sixteen grid.
+00:07:01.728 --> 00:07:05.378
+the operating uses covered by each report.
 
-00:06:49.215 --> 00:06:57.795
-Move the divider between dates, inspect the original photographs and toggle the grid as you look around.
+00:07:05.408 --> 00:07:09.668
+The reporting boundary becomes part of the investigation.
 
-00:06:58.255 --> 00:07:06.515
-Then prepare a site-visit question based on the areas you want to examine more closely.
+00:07:11.655 --> 00:07:15.995
+Muse Image turns the written checks into a conceptual inspection diagram.
 
-00:07:08.530 --> 00:07:11.860
-Muse Image illustrates the inspection plan.
+00:07:16.215 --> 00:07:22.155
+This earlier October thirtieth example uses 572 Smith and 611 Court.
 
-00:07:11.890 --> 00:07:19.220
-A request turns the written checks into a conceptual diagram: what we know, what to verify and what
+00:07:22.215 --> 00:07:28.025
+It connects what is known, the action to take, and the finding that could change the comparison.
 
-00:07:19.250 --> 00:07:20.420
-could change.
+00:07:28.055 --> 00:07:33.465
+Enlarge the illustrated action rows and discuss the sequence with the owner or project team.
 
-00:07:20.450 --> 00:07:24.260
-The displayed example carries its date and site references.
+00:07:33.495 --> 00:07:38.155
+The original written checks and their source references travel alongside the concept.
 
-00:07:24.290 --> 00:07:29.270
-Expand the diagram to discuss the sequence with an owner or project team.
+00:07:40.238 --> 00:07:47.008
+The citywide workspace, evidence pipeline, and model integrations were built during this hackathon using
 
-00:07:29.490 --> 00:07:35.300
-The written brief keeps its source links, giving the conversation a path from public evidence to the next
+00:07:47.038 --> 00:07:53.058
+official public datasets, existing pretrained models, and software libraries.
 
-00:07:35.330 --> 00:07:36.710
-investigation.
+00:07:53.198 --> 00:08:01.328
+Export the selected records and project conditions, then take the specific requests to the owner: roof plans,
 
-00:07:38.780 --> 00:07:43.760
-Export the selected records, comparison and project conditions.
+00:08:01.358 --> 00:08:07.058
+meter schedules, usable-space information, and electrical records.
 
-00:07:43.820 --> 00:07:48.400
-Open the methods and visual guide to revisit the sources behind them.
+00:08:07.198 --> 00:08:15.408
+Seven Meta model roles connect a spoken question, dated public evidence, visual inspection, and local field
 
-00:07:49.020 --> 00:07:57.070
-You now have a focused set of requests: roof plans, meter schedules, usable-space information and
-
-00:07:57.100 --> 00:07:59.600
-electrical-capacity records.
-
-00:07:59.660 --> 00:08:02.030
-Take those questions to the owner.
-
-00:08:02.060 --> 00:08:07.790
-On the site visit, inspect entrances, drainage and equipment elevations.
-
-00:08:07.820 --> 00:08:15.440
-GEONOS helps turn a pair of candidate buildings into an organized evidence trail and a practical next action.
+00:08:15.438 --> 00:08:18.578
+notes into a better-informed next site visit.
