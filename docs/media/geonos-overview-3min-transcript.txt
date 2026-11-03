@@ -1,25 +1,21 @@
-Choosing a building means planning for years of heat, heavy rain, and changing needs. But the evidence is scattered across maps, records, and photographs. This is GEONOS. We bring it together to help people make more climate-resilient building decisions.
+Choosing a building involves heat, heavy rain, and years of changing needs. This is GEONOS. It brings maps, records, and imagery into one workspace, so we can compare two places and decide what to check next.
 
-Here, we’re exploring a cold-storage retrofit in Brooklyn. Muse Voice turns a spoken question into an editable message, while the map keeps both buildings in view.
+Select 572 and 592 Smith Street. Their outlines share one scale. The toolbar keeps each analysis in this comparison. Native building IDs keep the selection stable as we move between tools.
 
-Across New York, search addresses, filter records, and explore mapped layers in 3D. A second selection opens a same-scale building comparison.
+Voice opens recording or upload. Muse Voice creates an editable transcript. We review it, then add it to the message. Sending stays a separate action.
 
-Muse Spark brings official records into the conversation. In this published 2050 rainfall scenario, mapped deep water reaches the ground at 572 Smith’s outline. At 592 Smith, the nearest deep-water class is about forty-seven meters away.
+Compare asks Muse Spark for official evidence. In the 2050 rainfall scenario, mapped water at least one foot deep touches 572. The matching class is about 47 metres from 592. Next, check entrance and equipment elevations. Sources identify the scenario and the returned records.
 
-That gives us a useful next step: compare entrance and equipment elevations. A separate footprint requirement helps us see which candidate fits the project’s initial size condition.
+Climate connects station observations with regional projections. Energy reports retain their boundaries: the same energy total produces different intensities across two reported floor areas. Units and dates travel with each figure.
 
-Climate Studio combines station history, paired temperature and dew point, and regional future pathways to frame the project’s operating conditions.
+Aerial imagery retrieves dated photographs. SAM 3.1 marks roofs and trees. The crosscheck compares returned roof regions with the official outline. Muse Wonder turns the structured findings into survey questions.
 
-Energy reports trace each reporting boundary’s buildings and floor area, guiding requests for meter schedules.
+Change detection retrieves 2020 and 2024 photographs. Run DINOv2 in the browser, inspect highlighted windows, then move the divider through the source images. The model highlights visual differences in these dated images.
 
-SAM 3.1 marks roof and tree regions in the dated aerials. Compare roof detections with the mapped outlines. Muse Wonder reviews those structured findings alongside building records, helping the team focus its next survey.
+Second review gives Muse Wonder the current public-data brief. Its tradeoff, assumption and decisive check help focus the next inspection.
 
-DINOv2 compares the 2020 and 2024 images locally in the browser. We can explore the highlighted locations in the original photographs.
+Inspection visual uses Muse Image to illustrate the written checks. The concept helps discuss drainage, equipment and access with the project team.
 
-Muse Glimmer runs on the local computer. It connects our planning note to building records and owner requests. The team needs twenty thousand square feet of usable space. Here, verifying usable space could change which building we inspect first.
+Private notes opens the local workflow. Muse Glimmer reviews a twenty-thousand-usable-square-foot requirement. It requests measured plans, clear height and loading dimensions, with a conditional next step based on the usable area.
 
-Muse Image turns the written checks into an illustrated inspection plan, making the next steps easier to share with the project team.
-
-Built during this hackathon, GEONOS brings more than a million mapped NYC building outlines into one focused workspace.
-
-We started with two buildings and a practical question. Now we have a sourced comparison, a focused inspection plan, and clear requests for the owner. Export the evidence and project conditions. Seven Meta model roles work together to help us make the next building decision with better evidence.
+Export preserves the source links and follow-up checks. Compare two buildings. Trace the evidence. Plan the next inspection. Building decisions, backed by evidence.

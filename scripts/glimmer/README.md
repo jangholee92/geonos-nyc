@@ -20,6 +20,8 @@ python3 scripts/glimmer/setup-local.py configure-app --app-dir .
 
 Restart the local GEONOS app after configuration. Its application server must also bind to `127.0.0.1`. The UI offers local review only when the local configuration, origin and authentication checks pass. The `configure-app` command updates only `GEONOS_LOCAL_REVIEW`, `GEONOS_GLIMMER_URL` and `GEONOS_GLIMMER_API_KEY` in the Git-ignored `.dev.vars`, preserves other settings, and sets permissions to `0600`. It never prints the token. Do not copy these local settings into a hosted deployment.
 
+Start the app with `npm run dev`. Before loading Miniflare, this launcher supplies the existing Node-trusted GlobalSign R46 root for NYC's public-record HTTPS connection, while retaining normal certificate verification and any explicit `NODE_EXTRA_CA_CERTS` setting. The generated public CA file stays under ignored `.geonos-runtime`; it is not a model credential or a hosted Worker binding. The pinned fingerprint is verified against the [GlobalSign root repository](https://support.globalsign.com/ca-certificates/globalsign-root-certificates).
+
 The default runtime directory is `~/Library/Caches/geonos-glimmer`, outside the repository. `--runtime-dir /absolute/path` selects another external directory. The script rejects a runtime directory inside the app checkout. To stop only the process started by this setup:
 
 ```sh

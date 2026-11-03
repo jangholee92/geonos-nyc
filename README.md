@@ -10,7 +10,7 @@ This is a sanitized public source snapshot of the hackathon application, based o
 
 ## Recorded demo
 
-Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role overview updated on 3 November 2026, with the retained full walkthrough. The page contains a 2:55 overview and an 8:30 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-toolbar-action overview updated on 3 November 2026, with the retained full walkthrough. The page contains a 2:55 overview and an 8:30 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
 
 The videos show edited actual product states with synthetic English narration. The 1080p overview combines the recorded 3D opening and current Meta toolbar views with large, source-linked evidence readouts. Original aerial photographs, masks and map shapes retain their recorded geometry; exact source quotations and values are typeset for readability. The full walkthrough retains its original captured views. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
 
@@ -33,6 +33,8 @@ npm run dev -- --host 127.0.0.1
 ```
 
 Open the printed localhost URL. The map, public-data tools and deterministic evidence checks run independently of the Meta API. Live source lookups require network access. Keep the preview bound to loopback.
+
+The development launcher also supplies Miniflare with the verified GlobalSign R46 root already trusted by Node, which NYC's current data-service certificate requires. The public CA file is generated under Git-ignored `.geonos-runtime`; TLS verification stays enabled. An existing `NODE_EXTRA_CA_CERTS` setting is preserved. If Node lacks that root, the launcher warns you to update Node or configure your trusted CA bundle. This setup is development-only and adds no certificate or setting to the hosted Worker.
 
 The local map and deterministic tools are available immediately. For the optional Glimmer mode, follow the pinned setup below. Its development-only loopback capability is separate from the deployed public-demo actor.
 
