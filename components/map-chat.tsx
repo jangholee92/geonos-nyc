@@ -21,26 +21,12 @@ export type MapChatProps={
 };
 type Obj=Record<string,unknown>;
 export type HistoryTurn={role:'user'|'assistant';content:string};
-type Connection={state:'checking'|'approval_pending'|'credential_missing'|'ready_for_verification'|'sign_in_required'|'unavailable';canRun:boolean};
+type Connection={state:'checking'|'approval_pending'|'credential_missing'|'ready_for_verification'|'demo_unavailable'|'unavailable';canRun:boolean};
 type Exchange={id:number;question:string;context:string;generation:number;places:string[];state:'pending'|'complete'|'error'|'cancelled';payload?:unknown;error?:string;authRequired?:boolean};
 const object=(v:unknown):Obj|null=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Obj:null;
 const text=(v:unknown,fallback='',limit=8000)=>typeof v==='string'?v.slice(0,limit):fallback;
 const nativeId=(v:unknown):v is string=>typeof v==='string'&&/^(?:[1-9]\d{0,9}|p:[1-5]\d{9})$/.test(v);
 const QUERY_KEYS=['unit','q','borough','bbox','cursor','page','limit','minArea','zoning','landUse'];
-const SIGN_IN_URL='/signin-with-chatgpt?return_to=%2F';
-export const SIGN_IN_DRAFT_KEY='geonos.chat.signin-draft.v1';
-const SIGN_IN_DRAFT_TTL=30*60*1000;
-
-/** One short-lived unsent question only; never conversation history or local notes. */
-export function readSignInDraft(raw:unknown,now=Date.now()):string|null{
- if(typeof raw!=='string'||raw.length>25_000)return null;
- try{
-  const value=object(JSON.parse(raw));
-  if(!value||Object.keys(value).some(key=>!['version','text','savedAt'].includes(key))||value.version!==1||typeof value.text!=='string'||!value.text.trim()||value.text.length>4000||typeof value.savedAt!=='number'||!Number.isFinite(value.savedAt)||value.savedAt>now||now-value.savedAt>SIGN_IN_DRAFT_TTL)return null;
-  return value.text;
- }catch{return null;}
-}
-
 /** Unknown or contradictory status envelopes never enable the composer. */
 export function readMapChatStatus(payload:unknown):Connection{
  const p=object(payload);
@@ -48,7 +34,7 @@ export function readMapChatStatus(payload:unknown):Connection{
  if(p.requiresSignIn!==undefined&&typeof p.requiresSignIn!=='boolean')return{state:'unavailable',canRun:false};
  if(p.status==='approval_pending'&&p.approved===false&&p.canRun===false)return{state:'approval_pending',canRun:false};
  if(p.status==='credential_missing'&&p.approved===true&&p.configured===false&&p.canRun===false)return{state:'credential_missing',canRun:false};
- if(p.requiresSignIn===true)return p.approved===true&&p.configured===true&&p.status==='ready_for_verification'&&p.signInUrl===SIGN_IN_URL?{state:'sign_in_required',canRun:false}:{state:'unavailable',canRun:false};
+ if(p.requiresSignIn===true)return{state:'unavailable',canRun:false};
  if(p.status==='ready_for_verification'&&p.approved===true&&p.configured===true&&p.canRun===true)return{state:'ready_for_verification',canRun:true};
  return{state:'unavailable',canRun:false};
 }
@@ -142,7 +128,7 @@ const statusCopy:Record<Connection['state'],string>={
  approval_pending:'Meta access is pending. You can keep drafting.',
  credential_missing:'Meta is not connected yet. You can keep drafting.',
  ready_for_verification:'Ready to send.',
- sign_in_required:'Explore the map and public data. Sign in to use Meta.',
+ demo_unavailable:'The public AI demo is temporarily unavailable. The map remains available.',
  unavailable:'Connection unavailable. Try again.',
 };
 
@@ -176,23 +162,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
   const current=request.current;request.current=null;current?.controller.abort();setBusy(false);
   if(current){setDraft(value=>value||current.question);setExchanges(rows=>rows.map(row=>row.id===current.id&&row.state==='pending'?{...row,state:'cancelled',error:reason}:row));}
  },[]);
- const requireSignIn=useCallback(()=>{setConnection({state:'sign_in_required',canRun:false});setVoiceReset(value=>value+1);},[]);
-
- useEffect(()=>{
-  try{
-   const raw=window.sessionStorage.getItem(SIGN_IN_DRAFT_KEY);
-   window.sessionStorage.removeItem(SIGN_IN_DRAFT_KEY);
-   const saved=readSignInDraft(raw);
-   if(saved){setDraft(value=>value||saved);setNotice('Draft restored. Review your selected buildings before sending.');}
-  }catch{/* Storage can be unavailable; map and chat remain usable. */}
- },[]);
- function preserveSignInDraft(){
-  try{
-   const value=clipHistoryText(draft,4000);
-   if(value.trim())window.sessionStorage.setItem(SIGN_IN_DRAFT_KEY,JSON.stringify({version:1,text:value,savedAt:Date.now()}));
-   else window.sessionStorage.removeItem(SIGN_IN_DRAFT_KEY);
-  }catch{/* Sign-in remains a normal top-level link when storage is unavailable. */}
- }
+ const setDemoUnavailable=useCallback(()=>{setConnection({state:'demo_unavailable',canRun:false});setVoiceReset(value=>value+1);},[]);
 
  useLayoutEffect(()=>{
   if(activeContext.current===context)return;
@@ -247,7 +217,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
    if(!current())return;
    if(!response.ok){
     const data=object(payload);
-    if(data?.code==='AUTH_REQUIRED'){authRequired=true;requireSignIn();throw Error('Sign in to continue. Your question is ready in the composer.');}
+    if(data?.code==='AUTH_REQUIRED'||data?.code==='DEMO_UNAVAILABLE'){authRequired=true;setDemoUnavailable();throw Error('The public demo is unavailable. Your question is ready in the composer.');}
     if(data?.code==='MODEL_APPROVAL_PENDING')setConnection({state:'approval_pending',canRun:false});
     else if(data?.code==='MODEL_NOT_CONFIGURED')setConnection({state:'credential_missing',canRun:false});
     throw Error(text(data?.error,'The request could not be completed. Your question is ready to retry.',900));
@@ -320,11 +290,11 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
   </div>
   {newContent&&exchanges.length>0&&<button type="button" className="map-chat-latest" onClick={scrollToLatest}><ArrowDown size={13}/>Latest reply</button>}
   <form className="map-chat-composer" onSubmit={send}>
-   {!connection.canRun&&<div className={'map-chat-connection'+(connection.state==='sign_in_required'?' map-chat-signin':'')} role="status"><span id={`${inputId}-status`}>{status}</span>{connection.state==='sign_in_required'?<a className="map-chat-signin-link" href={SIGN_IN_URL} target="_top" onClick={preserveSignInDraft}>Sign in to chat <ArrowUpRight size={15} aria-hidden="true"/></a>:connection.state!=='checking'&&<button type="button" className="map-chat-icon" onClick={()=>{setConnection({state:'checking',canRun:false});setStatusRefresh(value=>value+1);}} disabled={busy} aria-label="Recheck Meta connection" title="Recheck connection"><RefreshCw size={13} aria-hidden="true"/></button>}</div>}
+   {!connection.canRun&&<div className={'map-chat-connection'+(connection.state==='demo_unavailable'?' map-chat-signin':'')} role="status"><span id={`${inputId}-status`}>{status}</span>{connection.state!=='checking'&&<button type="button" className="map-chat-icon" onClick={()=>{setConnection({state:'checking',canRun:false});setStatusRefresh(value=>value+1);}} disabled={busy} aria-label="Recheck Meta connection" title="Recheck connection"><RefreshCw size={13} aria-hidden="true"/></button>}</div>}
    {!selectionValid&&<p className="map-chat-context-warning" role="alert">Choose no more than two distinct places before sending.</p>}
    {!validQuery&&<p className="map-chat-context-warning" role="alert">The current search scope is invalid. Update the map search before sending.</p>}
    <label className="map-chat-sr-only" htmlFor={inputId}>Your question for Meta</label>
-   <div className="map-chat-input-wrap"><textarea ref={composer} id={inputId} value={draft} onChange={event=>setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Message Meta…" aria-describedby={!connection.canRun?`${inputId}-status`:undefined} onKeyDown={event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.nativeEvent.isComposing&&connection.canRun){event.preventDefault();void send();}}}/><div className="map-chat-input-footer"><div className="map-chat-input-tools"><ChatAnalysisMenu count={selected.length} disabled={busy||voiceBusy||actionBusy!==null} context={`${context}:${voiceReset}`} onChoose={fillDraft} onLocalReview={localAvailable&&selected.length===2&&selected.every(b=>!b.id.startsWith('p:'))?()=>setLocalOpen(true):undefined}/><VoiceNoteComposer onAuthRequired={requireSignIn} disabled={!connection.canRun||busy||actionBusy!==null} contextKey={`${context}:${voiceReset}`} remainingCharacters={4000-draft.trim().length-(draft.trim()?1:0)} onTranscript={value=>{setDraft(current=>[current.trim(),value].filter(Boolean).join('\n').slice(0,4000));composer.current?.focus();}} onBusyChange={setVoiceBusy}/><span>{draft.length>=3600?`${draft.length.toLocaleString()} / 4,000`:''}</span></div>{busy?<button type="button" className="map-chat-send map-chat-stop" onClick={()=>stopRequest('Stopped waiting. No new answer was accepted.')} aria-label="Stop waiting for the response"><Square size={14} aria-hidden="true"/></button>:<button type="submit" className="map-chat-send" disabled={!canSend} aria-label={connection.canRun?'Send question to Meta':connection.state==='sign_in_required'?'Sign in before sending':'Send unavailable until Meta is connected'} title="Send message"><ArrowUp size={18} aria-hidden="true"/></button>}</div></div>
+   <div className="map-chat-input-wrap"><textarea ref={composer} id={inputId} value={draft} onChange={event=>setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Message Meta…" aria-describedby={!connection.canRun?`${inputId}-status`:undefined} onKeyDown={event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.nativeEvent.isComposing&&connection.canRun){event.preventDefault();void send();}}}/><div className="map-chat-input-footer"><div className="map-chat-input-tools"><ChatAnalysisMenu count={selected.length} disabled={busy||voiceBusy||actionBusy!==null} context={`${context}:${voiceReset}`} onChoose={fillDraft} onLocalReview={localAvailable&&selected.length===2&&selected.every(b=>!b.id.startsWith('p:'))?()=>setLocalOpen(true):undefined}/><VoiceNoteComposer onAuthRequired={setDemoUnavailable} disabled={!connection.canRun||busy||actionBusy!==null} contextKey={`${context}:${voiceReset}`} remainingCharacters={4000-draft.trim().length-(draft.trim()?1:0)} onTranscript={value=>{setDraft(current=>[current.trim(),value].filter(Boolean).join('\n').slice(0,4000));composer.current?.focus();}} onBusyChange={setVoiceBusy}/><span>{draft.length>=3600?`${draft.length.toLocaleString()} / 4,000`:''}</span></div>{busy?<button type="button" className="map-chat-send map-chat-stop" onClick={()=>stopRequest('Stopped waiting. No new answer was accepted.')} aria-label="Stop waiting for the response"><Square size={14} aria-hidden="true"/></button>:<button type="submit" className="map-chat-send" disabled={!canSend} aria-label={connection.canRun?'Send question to Meta':connection.state==='demo_unavailable'?'Demo temporarily unavailable':'Send unavailable until Meta is connected'} title="Send message"><ArrowUp size={18} aria-hidden="true"/></button>}</div></div>
   </form>
  </aside>;
 }

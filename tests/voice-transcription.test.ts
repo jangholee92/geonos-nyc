@@ -34,7 +34,7 @@ function harness(reply: (url: string, init: RequestInit) => Response | Promise<R
   const timers = options.fakeTimers ? { setTimeout: (fn: () => void) => { deadlines.add(fn); return fn; }, clearTimeout: (fn: () => void) => deadlines.delete(fn) } : {};
   const api = compile('../lib/voice-transcription.ts', id => { throw Error(id); }, { ...timers, fetch: async (url: string, init: RequestInit) => { calls.push({ url, init }); return reply(url, init); } });
   const route = compile('../app/api/transcribe/route.ts', id => {
-    if (id === '../../chatgpt-auth') return { getChatGPTUser: async () => options.user === false ? null : { userId: options.userId ?? 'authenticated-test-user' } };
+    if (id === '../../../lib/demo-access') return { getDemoActor: async () => options.user === false ? null : { userId: options.userId ?? 'authenticated-test-user' } };
     if (id === '../../../lib/voice-transcription') return api;
     if (id === 'cloudflare:workers') throw Error('No worker binding in test');
     throw Error(id);
@@ -43,11 +43,11 @@ function harness(reply: (url: string, init: RequestInit) => Response | Promise<R
 }
 const code = (expected: string) => (error: Obj) => error.code === expected;
 
-test('anonymous voice status offers sign-in and cannot advertise a runnable paid upload', async () => {
+test('missing demo context cannot advertise a runnable paid upload', async () => {
   const h = harness(undefined, { user: false }), response = await h.GET(), status = await response.json();
-  assert.equal(status.configured, true); assert.equal(status.approved, true); assert.equal(status.canRun, false); assert.equal(status.requiresSignIn, true);
-  assert.equal(status.signInUrl, '/signin-with-chatgpt?return_to=%2F'); assert.equal(response.headers.get('cache-control'), 'no-store');
-  const denied = await h.POST(upload()); assert.equal(denied.status, 401); assert.equal((await denied.json()).code, 'AUTH_REQUIRED'); assert.equal(h.calls.length, 0);
+  assert.equal(status.configured, true); assert.equal(status.approved, true); assert.equal(status.canRun, false); assert.equal(status.requiresSignIn, false);
+  assert.equal(status.signInUrl, undefined);assert.equal(status.accessMode,'anonymous-demo'); assert.equal(response.headers.get('cache-control'), 'no-store');
+  const denied = await h.POST(upload()); assert.equal(denied.status, 503); assert.equal((await denied.json()).code, 'DEMO_UNAVAILABLE'); assert.equal(h.calls.length, 0);
   const ready = await (await harness().GET()).json(); assert.equal(ready.canRun, true); assert.equal(ready.requiresSignIn, false);
 });
 test('cross-site voice writes do not consume an authenticated account allowance', async () => {
@@ -147,7 +147,7 @@ test('the provider deadline cancels once and timer metadata is cleaned after fai
   await assert.rejects(() => h.transcribeVoice(wav(), 'key'), code('VOICE_TIMEOUT')); assert.equal(h.calls.length, 1); assert.equal(h.deadlines.size, 0);
 });
 test('route gates authentication, approval, configuration and cross-site uploads before provider work', async () => {
-  for (const [options, expected, status] of [[{ user: false }, 'AUTH_REQUIRED', 401], [{ approved: false }, 'MODEL_APPROVAL_PENDING', 503], [{ key: false }, 'MODEL_NOT_CONFIGURED', 503]] as const) { const h = harness(undefined, options); const r = await h.POST(upload()); assert.equal(r.status, status); assert.equal((await r.json()).code, expected); assert.equal(h.calls.length, 0); }
+  for (const [options, expected, status] of [[{ user: false }, 'DEMO_UNAVAILABLE', 503], [{ approved: false }, 'MODEL_APPROVAL_PENDING', 503], [{ key: false }, 'MODEL_NOT_CONFIGURED', 503]] as const) { const h = harness(undefined, options); const r = await h.POST(upload()); assert.equal(r.status, status); assert.equal((await r.json()).code, expected); assert.equal(h.calls.length, 0); }
   const h = harness(); const rejected = await h.POST(upload(wav(), { init: { headers: { Origin: 'https://outside.invalid' } } })); assert.equal(rejected.status, 403); assert.equal(h.calls.length, 0);
 });
 test('route returns only the typed draft with no-store and discards malformed audio before provider work', async () => {

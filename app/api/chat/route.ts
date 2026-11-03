@@ -1,4 +1,4 @@
-import { getChatGPTUser } from "../../chatgpt-auth";
+import { getDemoActor } from "../../../lib/demo-access";
 import { queryCity, validateQuery, soda, combineBuilding, type CityBuilding, type CityQuery } from "../../../lib/city";
 import { fetchSiteContext, type SiteContext } from "../../../lib/site-context";
 import { type Preferences } from "../../../lib/city-screening";
@@ -77,9 +77,9 @@ async function config() {
 }
 export async function GET(request?: Request) {
   const { key, model, approved } = await config();
-  const user = await getChatGPTUser();
+  const user = await getDemoActor();
   const localReview = await getLocalReviewAvailability(request);
-  return Response.json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: !user, signInUrl: "/signin-with-chatgpt?return_to=%2F", status: !approved ? "approval_pending" : !key ? "credential_missing" : "ready_for_verification", liveVerified: false, model, tools: TOOL_NAMES, localReview, explanation: !approved ? "Meta API approval is pending. Public-data decision tools remain available; no AI request will run." : !key ? "A server-side Meta credential is required." : !user ? "Explore the public map and sign in to chat with Meta." : "Configured for authorized requests. This status does not verify authentication, model access or a successful live tool loop." }, { headers: { "Cache-Control": "no-store" } });
+  return Response.json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: false, accessMode: "anonymous-demo", status: !approved ? "approval_pending" : !key ? "credential_missing" : "ready_for_verification", liveVerified: false, model, tools: TOOL_NAMES, localReview, explanation: !approved ? "Meta API approval is pending. Public-data decision tools remain available; no AI request will run." : !key ? "A server-side Meta credential is required." : !user ? "The public AI demo is temporarily unavailable. Explore the map and records." : "Configured for authorized requests. This status does not verify authentication, model access or a successful live tool loop." }, { headers: { "Cache-Control": "no-store" } });
 }
 async function boundedJson(request: Request): Promise<unknown> {
   if (Number(request.headers.get("content-length") || "0") > MAX_BYTES) throw new InputError("The request must not exceed 60 KB.");
@@ -160,8 +160,8 @@ export async function POST(request: Request) {
   const { key, model, approved } = await config();
   if (!approved) return fail("Meta API approval is pending. Public-data search and decision tools remain available; no model request was made.", "MODEL_APPROVAL_PENDING", 503);
   if (!key) return fail("Meta is not connected yet. Public-data search and comparison remain available.", "MODEL_NOT_CONFIGURED", 503);
-  const user = await getChatGPTUser();
-  if (!user) return fail("Sign in to use AI analysis.", "AUTH_REQUIRED", 401);
+  const user = await getDemoActor();
+  if (!user) return fail("The public AI demo is temporarily unavailable.", "DEMO_UNAVAILABLE", 503);
   const origin = request.headers.get("origin");
   if (request.headers.get("sec-fetch-site") === "cross-site" || (origin && origin !== new URL(request.url).origin)) return fail("Send questions from the GEONOS app.", "ORIGIN_REJECTED", 403);
   const now = Date.now();

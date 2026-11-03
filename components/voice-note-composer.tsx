@@ -40,7 +40,7 @@ export default function VoiceNoteComposer({disabled,contextKey,remainingCharacte
    const response=await fetch('/api/transcribe',{method:'POST',body,signal:controller.signal,headers:{Accept:'application/json'}});const raw:unknown=await response.json();const payload=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw as Record<string,unknown>:null;
    if(!mounted.current||turn!==sequence.current)return;
    if(controller.signal.aborted)throw Error('Transcription stopped.');
-   if(!response.ok){if(payload?.code==='AUTH_REQUIRED'){onAuthRequired?.();throw Error('Sign in to use Meta voice.');}throw Error(typeof payload?.error==='string'?payload.error:'Transcription could not be completed.');}
+   if(!response.ok){if((payload?.code==='AUTH_REQUIRED'||payload?.code==='DEMO_UNAVAILABLE')){onAuthRequired?.();throw Error('The public voice demo is temporarily unavailable.');}throw Error(typeof payload?.error==='string'?payload.error:'Transcription could not be completed.');}
    if(payload?.kind!=='voice_transcript'||payload.model!=='muse-voice-transcribe-1.0'||payload.editable!==true||payload.autoSend!==false||payload.isEvidence!==false||typeof payload.transcript!=='string'||!payload.transcript.trim()||payload.transcript.length>4000)throw Error('No complete transcript was returned.');
    setResult(payload.transcript);
   }catch(e){if(mounted.current&&turn===sequence.current)setError(controller.signal.aborted?'Transcription stopped. Nothing was added to the conversation.':e instanceof Error?e.message:'Transcription could not be completed.');}

@@ -1,3 +1,5 @@
+import {gateDemo,type DemoEnv} from "../lib/demo-gate";
+export {DemoBudget} from "./demo-budget";
 import handler from "vinext/server/fetch-handler";
 import { runWithConnectorBinding } from "../lib/connector-context";
 import type { ConnectorBinding } from "../lib/connector-contract.mjs";
@@ -23,7 +25,7 @@ const worker = {
         },
       };
     }
-    return runWithConnectorBinding(binding, () => handler.fetch(request, env, ctx));
+    return gateDemo(request, env as unknown as DemoEnv, ctx, clean => runWithConnectorBinding(binding, () => handler.fetch(clean, env, ctx)));
   },
 };
 

@@ -52,35 +52,19 @@ test('unknown, malformed and contradictory provider status fails closed',()=>{
  for(const value of [null,{}, {...ready,canRun:'true'}, {...ready,status:'live'}, {...ready,approved:false}, {...pending,canRun:true},{...ready,configured:false}])assert.equal(plain.readMapChatStatus(value).canRun,false);
  assert.equal(plain.readMapChatStatus(pending).state,'approval_pending');assert.equal(plain.readMapChatStatus(ready).canRun,true);
 });
-const anonymous={...ready,canRun:false,requiresSignIn:true,signInUrl:'/signin-with-chatgpt?return_to=%2F'};
-test('anonymous readiness shows only the fixed top-level sign-in route and keeps drafting without requests',async()=>{
- for(const canRun of [true,false])assert.equal(plain.readMapChatStatus({...anonymous,canRun}).state,'sign_in_required');
- for(const signInUrl of ['https://example.test/signin','//example.test/','javascript:alert(1)','/signin-with-chatgpt?return_to=https%3A%2F%2Fexample.test'])assert.equal(plain.readMapChatStatus({...anonymous,signInUrl}).state,'unavailable');
- assert.equal(plain.readMapChatStatus({...ready,requiresSignIn:'true'}).canRun,false);
- assert.equal(plain.readMapChatStatus({...pending,requiresSignIn:true,signInUrl:anonymous.signInUrl}).state,'approval_pending');
- const h=harness();await h.resolveStatus(anonymous);h.draft('Compare these two buildings.');await h.send();
- const link=h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link');assert.equal(link.props.href,anonymous.signInUrl);assert.equal(link.props.target,'_top');assert.match(h.getText(),/Explore the map and public data/);assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.equal(h.calls.length,1);assert.equal(h.storage.size,0);
+test('standalone public demo is ready without a ChatGPT sign-in link',async()=>{
+ const h=harness();await h.resolveStatus({...ready,requiresSignIn:false,accessMode:'anonymous-demo'});h.draft('Compare these two buildings.');
+ assert.equal(plain.readMapChatStatus({...ready,requiresSignIn:false}).canRun,true);
+ assert.equal(h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link'),undefined);assert.doesNotMatch(h.getText(),/Sign in|ChatGPT/);
+ assert.equal(plain.readMapChatStatus({...ready,requiresSignIn:true,signInUrl:'/signin-with-chatgpt'}).canRun,false);
 });
-test('a deliberate sign-in preserves only one bounded draft, consumes it once and never auto-sends',async()=>{
- const h=harness();await h.resolveStatus(anonymous);h.draft('Unsent building question');h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link').props.onClick();
- assert.equal(h.storage.size,1);const value=JSON.parse(h.storage.get(plain.SIGN_IN_DRAFT_KEY));assert.deepEqual(Object.keys(value).sort(),['savedAt','text','version']);assert.equal(value.text,'Unsent building question');
- const resumed=harness({}, {storage:h.storage});await resumed.resolveStatus();assert.equal(resumed.find(n=>n.type==='textarea').props.value,value.text);assert.match(resumed.getText(),/Review your selected buildings before sending/);assert.equal(resumed.calls.length,1);assert.equal(resumed.storage.size,0);
- const later=harness({}, {storage:h.storage});assert.equal(later.find(n=>n.type==='textarea').props.value,'');
- h.draft('x'.repeat(5000));h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link').props.onClick();assert.equal(JSON.parse(h.storage.get(plain.SIGN_IN_DRAFT_KEY)).text.length,4000);
+test('demo outage preserves the draft and offers recheck without sign-in or automatic retry',async()=>{
+ const h=harness();await h.resolveStatus();h.draft('Check the selected building.');const p=h.send();h.calls.at(-1).resolve({ok:false,body:{code:'DEMO_UNAVAILABLE',error:'Demo unavailable'}});await p;await h.tick();
+ assert.equal(h.find(n=>n.type==='textarea').props.value,'Check the selected building.');assert.equal(h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link'),undefined);assert.doesNotMatch(h.getText(),/Sign in|ChatGPT/);await h.send();assert.equal(h.calls.length,2);
 });
-test('sign-in draft rejects stale, oversized and extra-data records; storage failure does not block the normal link',async()=>{
- const now=Date.now(),valid={version:1,text:'Question',savedAt:now};assert.equal(plain.readSignInDraft(JSON.stringify(valid),now),'Question');
- for(const value of ['{',JSON.stringify({...valid,savedAt:now-30*60*1000-1}),JSON.stringify({...valid,savedAt:now+1}),JSON.stringify({...valid,text:'x'.repeat(4001)}),JSON.stringify({...valid,history:[{content:'Private history'}]}),JSON.stringify({...valid,notes:'Local notes'})])assert.equal(plain.readSignInDraft(value,now),null);
- const h=harness({}, {storageUnavailable:true});await h.resolveStatus(anonymous);h.draft('Still editable');const link=h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link');assert.doesNotThrow(()=>link.props.onClick());assert.equal(link.props.target,'_top');assert.equal(h.calls.length,1);
-});
-test('expired chat authentication keeps the question and replaces retry with sign-in without another POST',async()=>{
- const h=harness();await h.resolveStatus();h.draft('Check the selected building.');const p=h.send();h.calls.at(-1).resolve({ok:false,body:{code:'AUTH_REQUIRED',error:'Authentication required'}});await p;await h.tick();
- assert.equal(h.find(n=>n.type==='textarea').props.value,'Check the selected building.');assert.ok(h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link'));assert.doesNotMatch(h.getText(),/Edit and retry/);await h.send();assert.equal(h.calls.length,2);
- h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link').props.onClick();assert.equal(JSON.parse(h.storage.get(plain.SIGN_IN_DRAFT_KEY)).text,'Check the selected building.');
-});
-test('expired Voice authentication transitions the parent to sign-in and invalidates the audio child context',async()=>{
+test('voice demo outage invalidates audio context and preserves the current question',async()=>{
  const h=harness();await h.resolveStatus();h.draft('Existing draft');const voice=h.find(n=>n.type===VoiceStub),oldKey=voice.props.contextKey;voice.props.onAuthRequired();h.flush();
- assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.notEqual(h.find(n=>n.type===VoiceStub).props.contextKey,oldKey);assert.equal(h.find(n=>n.type==='textarea').props.value,'Existing draft');assert.ok(h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link'));assert.equal(h.calls.length,1);assert.equal(h.storage.size,0);
+ assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.notEqual(h.find(n=>n.type===VoiceStub).props.contextKey,oldKey);assert.equal(h.find(n=>n.type==='textarea').props.value,'Existing draft');assert.doesNotMatch(h.getText(),/Sign in|ChatGPT/);assert.equal(h.calls.length,1);assert.equal(h.storage.size,0);
 });
 test('returned searches reject unsupported fields and unsafe type coercion',()=>{
  for(const q of [{url:'https://example.com'},{geometry:{}},{bbox:['-74',40.7,-73.9,40.8]},{minArea:'20000'},{q:{toString(){return'address';}}},{bbox:[-180,0,180,90]}])assert.equal(plain.readMapChatQuery(q),null);

@@ -1,4 +1,4 @@
-import { getChatGPTUser } from '../../chatgpt-auth';
+import { getDemoActor } from '../../../lib/demo-access';
 import { readVoiceUpload, transcribeVoice, VoiceTranscriptionError, VOICE_MODEL, VOICE_MAX_DURATION_MS, VOICE_MAX_UPLOAD_BYTES, VOICE_TIMEOUT_MS } from '../../../lib/voice-transcription';
 
 type Binding = Record<string, unknown>;
@@ -18,13 +18,13 @@ async function config() {
 }
 export async function GET() {
   const { key, approved } = await config();
-  const user = await getChatGPTUser();
-  return json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: !user, signInUrl: '/signin-with-chatgpt?return_to=%2F', model: VOICE_MODEL, maxDurationMs: VOICE_MAX_DURATION_MS, maxUploadBytes: VOICE_MAX_UPLOAD_BYTES,
+  const user = await getDemoActor();
+  return json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: false, accessMode: 'anonymous-demo', model: VOICE_MODEL, maxDurationMs: VOICE_MAX_DURATION_MS, maxUploadBytes: VOICE_MAX_UPLOAD_BYTES,
     format: 'RIFF/WAVE, mono 16-bit integer PCM, 16000 or 24000 Hz', languages: ['English', 'Korean'], editable: true, autoSend: false, liveVerified: false });
 }
 export async function POST(request: Request) {
-  const user = await getChatGPTUser();
-  if (!user) return fail('Sign in to transcribe a recording.', 'AUTH_REQUIRED', 401);
+  const user = await getDemoActor();
+  if (!user) return fail('The public voice demo is temporarily unavailable.', 'DEMO_UNAVAILABLE', 503);
   const { key, approved } = await config();
   if (!approved) return fail('Meta API approval is pending. No recording was sent.', 'MODEL_APPROVAL_PENDING', 503);
   if (!key) return fail('Voice transcription is not connected. No recording was sent.', 'MODEL_NOT_CONFIGURED', 503);

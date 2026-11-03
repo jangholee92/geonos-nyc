@@ -51,7 +51,7 @@ function harness(provider:(body:Obj,n:number)=>Obj|Promise<Obj>, options:Obj={})
  const temporalRequest=compile('../lib/temporal-request.ts',()=>{throw Error('Pure temporal request')});
  const exports=compile('../app/api/chat/route.ts',(s)=>{
   if(s==='cloudflare:workers')return{env:{MODEL_API_KEY:options.configured===false?'':'synthetic-test-key',META_API_APPROVED:options.approved===false?'false':options.approvalMissing?undefined:'true'}};
-  if(s==='../../chatgpt-auth')return{getChatGPTUser:async()=>options.auth===false?null:{userId:options.userId??'unit-test-user'}};
+  if(s==='../../../lib/demo-access')return{getDemoActor:async()=>options.auth===false?null:{userId:options.userId??'unit-test-user'}};
   if(s==='../../../lib/decision-plan')return planner;
   if(s==='../../../lib/building-description')return descriptions;
   if(s==='../../../lib/resilience-brief')return resilience;
@@ -86,12 +86,12 @@ function harness(provider:(body:Obj,n:number)=>Obj|Promise<Obj>, options:Obj={})
 }
 function request(overrides:Obj={}){return new Request('https://test.invalid/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Find candidates using official records.',selectedIds:[],query:{borough:'MN'},preferences:{size:1,truck:0,heat:0},...overrides})})}
 
-test('anonymous chat status offers sign-in and anonymous POST cannot call a provider or a source',async()=>{
+test('missing demo context disables chat and cannot call a provider or source',async()=>{
  const h=harness(()=>{throw Error('Anonymous requests must never reach Meta')},{auth:false});
  const status=await h.GET(),body=await status.json();
- assert.equal(body.configured,true);assert.equal(body.approved,true);assert.equal(body.canRun,false);assert.equal(body.requiresSignIn,true);
- assert.equal(body.signInUrl,'/signin-with-chatgpt?return_to=%2F');assert.equal(status.headers.get('cache-control'),'no-store');
- const denied=await h.POST(request());assert.equal(denied.status,401);assert.equal((await denied.json()).code,'AUTH_REQUIRED');
+ assert.equal(body.configured,true);assert.equal(body.approved,true);assert.equal(body.canRun,false);assert.equal(body.requiresSignIn,false);
+ assert.equal(body.signInUrl,undefined);assert.equal(body.accessMode,'anonymous-demo');assert.equal(status.headers.get('cache-control'),'no-store');
+ const denied=await h.POST(request());assert.equal(denied.status,503);assert.equal((await denied.json()).code,'DEMO_UNAVAILABLE');
  assert.equal(h.requests.length,0);assert.equal(h.sodaCalls.length,0);assert.equal(h.contextCalls.length,0);
  const ready=await(await harness(()=>({content:'Hello.'})).GET()).json();assert.equal(ready.canRun,true);assert.equal(ready.requiresSignIn,false);
 });
@@ -165,8 +165,8 @@ test('partial ground sources retain unknowns and emit no citation or zero distan
  const out=await(await h.POST(request({selectedIds:['101','102']}))).json();assert.equal(out.surroundingGround.status,'partial');assert.equal(out.surroundingGround.sites[1].nearestM,undefined);assert.ok(out.citations.some((c:Obj)=>c.evidenceId==='101:ground'));assert.ok(!out.citations.some((c:Obj)=>c.evidenceId==='102:ground'));
 });
 
-test('unconfigured and unauthenticated requests make no model or city calls',async()=>{
- for(const options of[{configured:false},{auth:false}]){const h=harness(()=>{throw Error('no request')},options);const res=await h.POST(request());assert.equal(res.status,options.configured===false?503:401);assert.equal(h.requests.length,0);assert.equal(h.queries.length,0)}
+test('unconfigured or missing demo-context requests make no model or city calls',async()=>{
+ for(const options of[{configured:false},{auth:false}]){const h=harness(()=>{throw Error('no request')},options);const res=await h.POST(request());assert.equal(res.status,503);assert.equal(h.requests.length,0);assert.equal(h.queries.length,0)}
  const h=harness(()=>({}),{configured:false});assert.equal((await(await h.GET()).json()).configured,false);
 });
 test('rejects browser facts, oversized body, malformed IDs and HVI scoring before any paid call',async()=>{

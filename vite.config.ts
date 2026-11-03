@@ -16,6 +16,11 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 const managedLinux = readExecutionProfile() === "managed-linux";
 
 const localBindingConfig = {
+  name: "geonos-nyc",
+  workers_dev: true,
+  durable_objects: { bindings: [{name: "DEMO_BUDGET", class_name: "DemoBudget"}] },
+  migrations: [{tag: "v1", new_sqlite_classes: ["DemoBudget"]}],
+  vars: { GEONOS_PUBLIC_DEMO: "true" },
   main: "./worker/index.ts",
   compatibility_flags: ["nodejs_compat"],
   assets: { binding: "ASSETS" },
