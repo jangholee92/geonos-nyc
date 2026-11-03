@@ -1,8 +1,12 @@
-# Local development only. Copy to .dev.vars; never commit the filled file.
+# Standalone Worker development only. Copy to .dev.vars; keep the filled file private.
 MODEL_API_KEY=
 MODEL_NAME=muse-spark-1.3
 META_API_APPROVED=false
+DEMO_IP_SALT=
 
-# Production only: enable solely behind a trusted Sites edge that strips client
-# identity headers and injects authenticated identity. Leave false elsewhere.
-TRUST_SITES_PROXY_IDENTITY=false
+# Use a newly generated random salt of at least 32 characters.
+# Build creates the required DEMO_BUDGET Durable Object binding and migration.
+# Hosted requests use Cloudflare edge metadata and the durable anonymous allowance.
+# Loopback /signin is not an authorization mechanism for this standalone deployment.
+# Never enable TRUST_SITES_PROXY_IDENTITY on this directly exposed Worker.
+# See STANDALONE_DEPLOYMENT.md for finite allowance settings and deployment checks.

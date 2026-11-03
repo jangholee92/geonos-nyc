@@ -251,3 +251,11 @@ test('local inspection mode stays unavailable without its exact capability and t
  for(const localReview of [undefined,{available:false},{available:'true'}]){const h=harness({selected:[building('123'),building('456')]});await h.resolveStatus({...ready,localReview});assert.equal(h.find(n=>n.type===MenuStub).props.onLocalReview,undefined);}
  const h=harness({selected:[building('123'),building('p:3000000001')]});await h.resolveStatus({...ready,localReview:{available:true}});assert.equal(h.find(n=>n.type===MenuStub).props.onLocalReview,undefined);
 });
+
+test('a single-site public brief keeps its identity and honest origin in natural follow-up history',async()=>{
+ const h=harness({selected:[building('123')]});await h.resolveStatus();h.draft('Explain this building for a cold-storage retrofit.');let pending=h.send();
+ const p=resilienceBrief();p.places=p.places.slice(0,1);p.nextChecks=p.nextChecks.map(c=>({...c,buildingIds:['123']}));p.answer='Fixture A: mapped footprint 27,193 ft². Request dated plans.';
+ h.calls.at(-1).resolve(p);await pending;await h.tick();assert.match(visibleText(h.tree()),/Public-data site brief/);assert.doesNotMatch(visibleText(h.tree()),/Public-data comparison/);
+ h.draft('What should I request from the owner?');pending=h.send();const body=JSON.parse(h.calls.at(-1).init.body);assert.deepEqual(body.selectedIds,['123']);assert.match(body.history[1].content,/Public-data site brief produced by application rules, not Meta/);assert.match(body.history[1].content,/Fixture A \(native ID 123\)/);assert.doesNotMatch(body.history[1].content,/Fixture B/);
+ h.calls.at(-1).resolve(conversation('Request a current plan.'));await pending;await h.tick();
+});

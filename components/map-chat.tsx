@@ -4,7 +4,7 @@ import {useCallback,useEffect,useId,useLayoutEffect,useRef,useState,type FormEve
 import {ArrowDown,ArrowUp,ArrowUpRight,Check,ChevronDown,CornerDownLeft,LoaderCircle,RefreshCw,RotateCcw,Square,TriangleAlert} from 'lucide-react';
 import {validateQuery,type CityBuilding,type CityQuery} from '@/lib/city';
 import {inspectReviewedPlan} from '@/lib/reviewed-plan';
-import MetaInvestigationResult,{hasMetaSources,MetaAnswerText,MetaModelAttribution,AdaptationConceptVisual,parseMetaResult,ResilienceBriefText,type MetaResultView} from './meta-investigation-result';
+import MetaInvestigationResult,{hasMetaSources,MetaAnswerText,MetaModelAttribution,AdaptationConceptVisual,parseMetaResult,ResilienceBriefText,publicBriefTitle,type MetaResultView} from './meta-investigation-result';
 import SiteImageryEvidence from './site-imagery-evidence';
 import VoiceNoteComposer from './voice-note-composer';
 import ChatAnalysisMenu from './chat-analysis-menu';
@@ -121,7 +121,7 @@ function historyAnswer(view:MetaResultView):string{
  const places=(view.data.places as Array<{id:string;address:string}>).map(place=>`${place.address} (native ID ${place.id})`).join(' / ');
  // Preserve identities even when a concise follow-up answer does not repeat
  // them. The server still treats all prior assistant text as untrusted context.
- return `Public-data comparison produced by application rules, not Meta. Places in this response: ${places}.\n${view.answer}`;
+ return `${publicBriefTitle(view)} produced by application rules, not Meta. Places in this response: ${places}.\n${view.answer}`;
 }
 const statusCopy:Record<Connection['state'],string>={
  checking:'Connecting…',
@@ -262,7 +262,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
     const actualSearch=Array.isArray(payload?.toolCalls)&&payload.toolCalls.some(call=>{const t=object(call);return t?.name==='search_city'&&object(t.result)&&!object(t.result)?.error;});
     return <article className={'map-chat-exchange'+(stale?' map-chat-earlier':'')} key={row.id}>
      <div className="map-chat-user" aria-label="You"><p>{row.question}</p></div>
-     <div className="map-chat-reply" aria-label={view?.kind==='resilience_brief'?'Public-data comparison':'Meta response'}>
+     <div className="map-chat-reply" aria-label={view?.kind==='resilience_brief'?publicBriefTitle(view):'Meta response'}>
       {stale&&<span className="map-chat-earlier-label">Earlier context</span>}
       {row.state==='pending'?<div className="map-chat-waiting" role="status"><LoaderCircle size={16} aria-hidden="true"/><p>Thinking…</p></div>:row.state==='error'||row.state==='cancelled'?<div className="map-chat-message-error" role="alert"><TriangleAlert size={16} aria-hidden="true"/><p>{row.error}</p>{!row.authRequired&&<button type="button" onClick={()=>fillDraft(row.question)} disabled={busy||actionBusy!==null}>Edit and retry <CornerDownLeft size={13} aria-hidden="true"/></button>}</div>:view&&<>
        <MetaModelAttribution view={view}/>

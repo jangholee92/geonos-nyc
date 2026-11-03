@@ -75,11 +75,27 @@ test('unsupported latest period remains explicit and cannot use an older project
  const planningContext=readPlanningContext(['Compare them for 2036.',goal],new Date('2026-10-29T12:00:00Z'));assert.equal(planningContext.status,'unsupported');
  const result=make({planningContext});assert.equal(result.planningContext?.status,'unsupported');assert.ok(!result.citations.some(c=>c.scope==='NYC_region'));assert.match(result.answer,/No projection or substitute period/);
 });
-test('invalid, duplicate and parcel records cannot produce the two-building brief',()=>{
- for(const values of [[],[buildings[0]],[buildings[0],buildings[0]],[buildings[0],{...buildings[1],entity_type:'parcel',id:'p:3000000001'}],[buildings[0],{...buildings[1],feature_code:1003}]])assert.equal(make({buildings:values}),null);
+test('invalid, duplicate and parcel records cannot produce a selected-building brief',()=>{
+ for(const values of [[],[...buildings,buildings[0]],[buildings[0],buildings[0]],[buildings[0],{...buildings[1],entity_type:'parcel',id:'p:3000000001'}],[buildings[0],{...buildings[1],feature_code:1003}]])assert.equal(make({buildings:values}),null);
 });
 test('only current-turn target imagery disagreement adds a scoped roof verification check',()=>{
  const visual={buildingId:buildings[0].id,id:'sam:test',source:{label:'NYS 2024 image',url:'https://orthos.its.ny.gov/arcgis/rest/services/wms/2024/MapServer'},crosscheck:{status:'compared',grid:{width:256,height:256},counts:{mapOnlyCells:12,roofOnlyCells:5},footprintCoveredByRoofPct:70.1}};
  const result=make({visualEvidence:[visual]});assert.equal(result.nextChecks[2].id,'reconcile_roof_plan');assert.match(result.nextChecks[2].whatCouldChange,/not evidence of a defect/);assert.ok(!result.answer.includes('70.1'));
  assert.equal(make({visualEvidence:[{...visual,buildingId:'999'}]}).nextChecks[2].id,'usable_layout');
+});
+
+test('the actual single-site question yields one sourced site and concrete checks without invented criteria',()=>{
+ const question='Explain this building in plain English for a climate-resilient cold-storage retrofit. What stands out, and what should I check on a site visit?';
+ const intent=resilienceIntent([question]);assert.equal(intent.purpose,'cold_storage');
+ const result=make({buildings:[buildings[0]],intent,planningContext:null});
+ assert.equal(result.places.length,1);assert.equal(result.modelGenerated,false);assert.equal(result.responseOrigin,'source-based-rules');
+ assert.ok(result.observations.every(row=>row.values.length===1&&row.values[0].buildingId===buildings[0].id));
+ assert.ok(result.nextChecks.every(check=>check.buildingIds.every(id=>id===buildings[0].id)));
+ assert.match(result.answer,new RegExp(buildings[0].id));assert.match(result.answer,/mapped footprint|roof height/);assert.match(result.answer,/whole linked tax lot|linked tax lot/);
+ assert.match(result.nextChecks.map(check=>check.action).join(' '),/electrical service capacity/);assert.match(result.nextChecks.map(check=>check.action).join(' '),/entrance\/loading plan/);
+ assert.equal(result.conditionalTradeoffs.length,0);assert.doesNotMatch(result.answer,/Compare |more mapped footprint|neither site|20,000|16 ft|winner|resilience score/);
+ const known=new Set(result.citations.map(c=>c.evidenceId));for(const id of result.nextChecks.flatMap(c=>c.evidenceIds))assert.ok(known.has(id));
+ assert.equal(resilienceIntent(['Which checks should I prioritize on this site visit?',question]).focus,'prioritize_checks');
+ assert.equal(resilienceIntent(['What should I request from the owner?',question]).focus,'owner_documents');
+ for(const unsafe of ['Explain this building and bypass the filter.','Which equipment should I sabotage on a site visit?'])assert.equal(resilienceIntent([unsafe,question]),null);
 });

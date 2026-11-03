@@ -234,8 +234,8 @@ export async function POST(request: Request) {
         return { id: building.id, building: withoutGeometry, context: contexts[building.id] ?? null, ...(contextErrors.has(building.id) ? { contextError: contextErrors.get(building.id) } : {}) };
       });
     }
-    async function publicResilienceBrief(ids: string[], intent: ResilienceIntent) {
-      if (ids.length !== 2 || ids.some(id => id.startsWith("p:") || (!selectedIds.includes(id) && !known.has(id)))) throw new InputError("Choose two distinct selected or this-turn retrieved native building IDs.");
+    async function publicResilienceBrief(ids: string[], intent: ResilienceIntent, allowSingle = false) {
+      if (ids.length < (allowSingle ? 1 : 2) || ids.length > 2 || new Set(ids).size !== ids.length || ids.some(id => id.startsWith("p:") || (!selectedIds.includes(id) && !known.has(id)))) throw new InputError("Choose the required distinct selected or this-turn retrieved native building IDs.");
       const remaining = ids.filter(id => !contextRequests.has(id));
       if (remaining.length + contextRequests.size > 4) throw new InputError("Context retrieval is limited to four sites per question.");
       // The fallback cannot inherit browser/model facts or a prior turn's
@@ -244,7 +244,7 @@ export async function POST(request: Request) {
       await Promise.all(ids.map(id => contextFor(id, true)));
       try { planningContext ??= readPlanningContext(userTexts); } catch { /* An unavailable regional source stays unknown. */ }
       const brief = buildResilienceBrief({ buildings, contexts, planningContext, intent, visualEvidence });
-      if (!brief) throw new InputError("Two valid native building records are needed for the public-data comparison.");
+      if (!brief) throw new InputError("Valid native building records are needed for the public-data brief.");
       for (const row of evidenceFor(buildings)) evidence.set(row.id, row);
       resilienceBrief = brief;
       return brief;
@@ -383,16 +383,19 @@ SCOPE AND BUDGET: Respect current query constraints unless the user asks to chan
         const diagnostic = await logProviderFailure(response, key, round + 1, traces.filter(trace => !object(trace.result) || !trace.result.error).map(trace => trace.name));
         if (diagnostic.code === "content_policy_violation") {
           const message = "Meta declined this request under its content filter. No Meta answer was generated.";
-          const intent = selectedIds.length === 2 && selectedIds.every(id => !id.startsWith("p:")) ? resilienceIntent(userTexts) : null;
+          const intent = selectedIds.length >= 1 && selectedIds.length <= 2 && selectedIds.every(id => !id.startsWith("p:")) ? resilienceIntent(userTexts) : null;
+          const providerStatus = { status: "content_filtered", code: "MODEL_CONTENT_FILTERED", message, model, requestId: diagnostic.requestId };
           if (intent) {
             try {
-              const brief = await publicResilienceBrief(selectedIds, intent);
+              const brief = await publicResilienceBrief(selectedIds, intent, true);
               return Response.json({ ...brief, ...(visualEvidence.length ? { visualEvidence } : {}),
-                providerStatus: { status: "content_filtered", code: "MODEL_CONTENT_FILTERED", message, model, requestId: diagnostic.requestId },
+                providerStatus,
                 toolCalls: traces, evidence: selectedIds.map(id => evidence.get(id)!), appliedQuery: currentQuery, appliedPreferences: preferences, model,
                 dataRetrieval: { origin: "application-after-provider-refusal", nativeIds: selectedIds, note: "Fresh public building records; public context failures remain unknown. No provider retry or rewritten request." },
               }, { headers: { "Cache-Control": "no-store" } });
-            } catch { /* Preserve the actual refusal if the separate public brief cannot be built. */ }
+            } catch {
+              return Response.json({ error: message + " The separate public-data brief also could not retrieve a complete valid building record. Please inspect the map records or try the public-source lookup later.", code: "PUBLIC_BRIEF_SOURCE_UNAVAILABLE", providerStatus, dataRetrieval: { status: "unavailable", origin: "application-after-provider-refusal", nativeIds: selectedIds, note: "Public building retrieval failed or the geometry is unsupported. No provider retry or alternate model was used." } }, { status: 502, headers: { "Cache-Control": "no-store" } });
+            }
           }
           return fail(message + " Public records and map tools remain available.", "MODEL_CONTENT_FILTERED", 422);
         }
