@@ -1,3 +1,4 @@
+import { fetchMetaPaid, MetaSpendError } from './meta-paid-fetch';
 import { decodeMaskToRaster, decodeMaskToSVGPath, parseImageStream, recordsOfKind, type ImageSegmentationResult, type SegmentationMaskRecord } from '@meta-sam/parser';
 import type { CityBuilding } from './city';
 import { fetchSiteImagery, SiteImageryError, type SiteImagery } from './site-imagery';
@@ -141,11 +142,12 @@ async function segmentConcept(image: SiteImagery, concept: ImageryConcept, key: 
   if (signal.aborted) throw new SegmentationError('SAM segmentation was canceled.');
   // Workers implement manual/follow, but not redirect:error. Never follow a
   // redirect carrying the server credential; a 3xx is an unavailable result.
-  const response = await fetch(ENDPOINT, { method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, redirect: 'manual', signal,
-   body: JSON.stringify({ model: 'sam-3.1', input: [{ type: 'message', role: 'user', content: [{ type: 'input_text', text: concept === 'roof' ? 'building roof' : 'tree' }, { type: 'input_image', image_url: image.image.dataUrl }] }], stream: true, metadata: { mask_encoding: 'one_bit' } }) });
+  const response = await fetchMetaPaid(ENDPOINT, { method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, redirect: 'manual', signal,
+   body: JSON.stringify({ model: 'sam-3.1', input: [{ type: 'message', role: 'user', content: [{ type: 'input_text', text: concept === 'roof' ? 'building roof' : 'tree' }, { type: 'input_image', image_url: image.image.dataUrl }] }], stream: true, metadata: { mask_encoding: 'one_bit' } }) }, { model: 'sam-3.1', operation: 'sam_image' });
   if (!response.ok) { await response.body?.cancel(); throw new SegmentationError(`SAM segmentation was unavailable (HTTP ${response.status}). No mask was substituted.`); }
   return normalizeSegmentation(await parseImageStream(responseEvents(response, image.image.width, image.image.height, signal)).finalResult, concept, image.image.width, image.image.height);
  } catch (error) {
+  if (error instanceof MetaSpendError) throw error;
   return { concept, status: 'error', objectCount: 0, paths: [], note: signal.aborted ? 'SAM segmentation timed out or was canceled. No mask was substituted.' : safeSegmentationMessage(error) };
  }
 }

@@ -1,3 +1,4 @@
+import { fetchMetaPaid, MetaSpendError } from './meta-paid-fetch';
 import type {ResilienceBrief} from './resilience-brief';
 
 // Meta's documented one-shot controls, checked 2026-10-30:
@@ -123,7 +124,7 @@ export async function generateAdaptationConcept(brief:ResilienceBrief,key:string
  const abortFromParent=()=>controller.abort();parentSignal?.addEventListener('abort',abortFromParent,{once:true});
  const timeout=setTimeout(()=>{timedOut=true;controller.abort();},ADAPTATION_CONCEPT_LIMITS.timeoutMs);
  try{
-  const response=await fetch(ENDPOINT,{method:'POST',redirect:'manual',cache:'no-store',signal:controller.signal,headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({model:ADAPTATION_CONCEPT_MODEL,prompt:prepared.prompt,n:1,size:'1536x1024',response_format:'b64_json',output_format:'png',reasoning_strength:'low',tool_enablement:{enable_image_search:false,enable_web_search:false,enable_shell:false}})});
+  const response=await fetchMetaPaid(ENDPOINT,{method:'POST',redirect:'manual',cache:'no-store',signal:controller.signal,headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({model:ADAPTATION_CONCEPT_MODEL,prompt:prepared.prompt,n:1,size:'1536x1024',response_format:'b64_json',output_format:'png',reasoning_strength:'low',tool_enablement:{enable_image_search:false,enable_web_search:false,enable_shell:false}})},{model:ADAPTATION_CONCEPT_MODEL,operation:'image'});
   // workerd supports manual redirects; never forward authorization elsewhere.
   if(response.status>=300&&response.status<400){await response.body?.cancel();throw new AdaptationConceptError('CONCEPT_REQUEST_FAILED','Muse Image returned an unexpected redirect. No image was accepted.');}
   const payload=object(await boundedJson(response,response.ok?MAX_RESPONSE:64*1024,controller.signal));
@@ -138,6 +139,7 @@ export async function generateAdaptationConcept(brief:ResilienceBrief,key:string
   if(controller.signal.aborted)throw cancelled();
   return{kind:'adaptation_concept',id:`adaptation-${sha256.slice(0,24)}`,model:ADAPTATION_CONCEPT_MODEL,createdAt:new Date(Number(payload.created)*1000).toISOString(),image:{dataUrl:`data:image/png;base64,${decoded.base64}`,mimeType:'image/png',width:decoded.width,height:decoded.height,byteLength:decoded.bytes.length,sha256},places:prepared.places,checkIds:prepared.checkIds,sourceRef:{kind:'resilience_brief',evidenceIds:prepared.evidenceIds},notToScale:true,isEvidence:false,disclaimer:DISCLAIMER,alt:ALT};
  }catch(error){
+  if(error instanceof MetaSpendError)throw error;
   if(timedOut)throw new AdaptationConceptError('CONCEPT_TIMEOUT','Muse Image timed out. No image was accepted.');
   if(parentSignal?.aborted)throw cancelled();
   if(error instanceof AdaptationConceptError)throw error;

@@ -4,7 +4,8 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
 type Obj=Record<string,any>;
-function compile(file:string,require:(id:string)=>unknown,extra:Obj={}){const module={exports:{} as Obj};const code=ts.transpileModule(readFileSync(new URL(file,import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;new vm.Script(code).runInContext(vm.createContext({module,exports:module.exports,require,Date,Intl,TextEncoder,TextDecoder,Uint8Array,Response,AbortSignal,...extra}));return module.exports;}
+class TestMetaSpendError extends Error { code='META_SPEND_LIMIT'; status=429; constructor(){super('The shared AI demo budget has been reached.');} }
+function compile(file:string,require:(id:string)=>unknown,extra:Obj={}){const module={exports:{} as Obj};const code=ts.transpileModule(readFileSync(new URL(file,import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;new vm.Script(code).runInContext(vm.createContext({module,exports:module.exports,require:(id:string)=>id.endsWith('/meta-paid-fetch')?{MetaSpendError:TestMetaSpendError,fetchMetaPaid:(url:string,init:RequestInit)=>extra.fetch(url,init),settleMetaPaid:async()=>false,getMetaSpendStatus:async()=>({status:extra.spendStatus??'available'})}:require(id),Date,Intl,TextEncoder,TextDecoder,Uint8Array,Response,AbortSignal,...extra}));return module.exports;}
 const planner=compile('../lib/decision-plan.ts',()=>{throw Error('Pure planner')});
 const resilience=compile('../lib/resilience-brief.ts',id=>{if(id==='./decision-plan')return planner;throw Error(id)});
 const index=JSON.parse(readFileSync(new URL('../lib/climate-evidence-index.json',import.meta.url),'utf8'));
@@ -55,4 +56,8 @@ test('HTTP diagnostics retain bounded protocol fields while redacting credential
  const h=harness(()=>Response.json({error:{type:'invalid_request_error',code:'invalid_json_schema',param:'response_format',message:'Unsupported schema synthetic-key Bearer synthetic-key '+ 'x'.repeat(1000)}},{status:400,headers:{'x-request-id':'9979316b-2511-458a-b499-164b7889f5ba'}}));
  await assert.rejects(()=>h.reviewComparison(brief,'synthetic-key'),(error:Obj)=>error.code==='WONDER_REQUEST_FAILED');assert.equal(h.calls.length,1);assert.equal(h.diagnostics.length,1);
  const log=h.diagnostics[0][1];assert.equal(log.status,400);assert.equal(log.code,'invalid_json_schema');assert.equal(log.param,'response_format');assert.equal(log.requestId,'9979316b-2511-458a-b499-164b7889f5ba');assert.ok(log.message.length<=500);assert.ok(!JSON.stringify(log).includes('synthetic-key'));assert.ok(!JSON.stringify(log).includes(brief.places[0].address));
+});
+
+test('a spending denial stays typed and cannot trigger a review retry or substitute model',async()=>{
+ const h=harness(()=>{throw new TestMetaSpendError();});await assert.rejects(()=>h.reviewComparison(brief,'synthetic-key'),(e:Obj)=>e instanceof TestMetaSpendError&&e.code==='META_SPEND_LIMIT');assert.equal(h.calls.length,1);
 });

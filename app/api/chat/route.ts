@@ -1,3 +1,4 @@
+import { fetchMetaPaid, settleMetaPaid, MetaSpendError, getMetaSpendStatus } from "../../../lib/meta-paid-fetch";
 import { getDemoActor } from "../../../lib/demo-access";
 import { queryCity, validateQuery, soda, combineBuilding, type CityBuilding, type CityQuery } from "../../../lib/city";
 import { fetchSiteContext, type SiteContext } from "../../../lib/site-context";
@@ -79,7 +80,8 @@ export async function GET(request?: Request) {
   const { key, model, approved } = await config();
   const user = await getDemoActor();
   const localReview = await getLocalReviewAvailability(request);
-  return Response.json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: false, accessMode: "anonymous-demo", status: !approved ? "approval_pending" : !key ? "credential_missing" : "ready_for_verification", liveVerified: false, model, tools: TOOL_NAMES, localReview, explanation: !approved ? "Meta API approval is pending. Public-data decision tools remain available; no AI request will run." : !key ? "A server-side Meta credential is required." : !user ? "The public AI demo is temporarily unavailable. Explore the map and records." : "Configured for authorized requests. This status does not verify authentication, model access or a successful live tool loop." }, { headers: { "Cache-Control": "no-store" } });
+  const spend = key && approved && user ? await getMetaSpendStatus({model,operation:"chat",maxOutputTokens:2500}) : {status:"unavailable" as const};
+  return Response.json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user) && spend.status === "available", spendStatus: spend.status, requiresSignIn: false, accessMode: "anonymous-demo", status: !approved ? "approval_pending" : !key ? "credential_missing" : user && spend.status !== "available" ? spend.status === "budget_exhausted" ? "budget_exhausted" : "budget_unavailable" : "ready_for_verification", liveVerified: false, model, tools: TOOL_NAMES, localReview, explanation: !approved ? "Meta API approval is pending. Public-data decision tools remain available; no AI request will run." : !key ? "A server-side Meta credential is required." : !user ? "The public AI demo is temporarily unavailable. Explore the map and records." : spend.status === "budget_exhausted" ? "The shared AI demo budget has been reached. The map and public records remain available." : spend.status !== "available" ? "The AI demo budget could not be verified. The map and public records remain available." : "Configured for authorized requests. This status does not verify authentication, model access or a successful live tool loop." }, { headers: { "Cache-Control": "no-store" } });
 }
 async function boundedJson(request: Request): Promise<unknown> {
   if (Number(request.headers.get("content-length") || "0") > MAX_BYTES) throw new InputError("The request must not exceed 60 KB.");
@@ -377,8 +379,8 @@ SCOPE AND BUDGET: Respect current query constraints unless the user asks to chan
     ];
     for (let round = 0; round < MAX_ROUNDS; round++) {
       let response: Response;
-      try { response = await fetch(ENDPOINT, { method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: JSON.stringify({ model, messages, tools, tool_choice: "auto", parallel_tool_calls: false, max_completion_tokens: 2500, reasoning_effort: "low" }), signal: AbortSignal.any([request.signal,AbortSignal.timeout(30_000)]) }); }
-      catch { return fail("The Meta connection timed out or failed.", "MODEL_CONNECTION_FAILED", 502); }
+      try { response = await fetchMetaPaid(ENDPOINT, { method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: JSON.stringify({ model, messages, tools, tool_choice: "auto", parallel_tool_calls: false, max_completion_tokens: 2500, reasoning_effort: "low" }), signal: AbortSignal.any([request.signal,AbortSignal.timeout(30_000)]) }, {model,operation:"chat",maxOutputTokens:2500}); }
+      catch (error) { if (error instanceof MetaSpendError) return fail(error.message,error.code,error.status); return fail("The Meta connection timed out or failed.", "MODEL_CONNECTION_FAILED", 502); }
       if (!response.ok) {
         const diagnostic = await logProviderFailure(response, key, round + 1, traces.filter(trace => !object(trace.result) || !trace.result.error).map(trace => trace.name));
         if (diagnostic.code === "content_policy_violation") {
@@ -403,6 +405,7 @@ SCOPE AND BUDGET: Respect current query constraints unless the user asks to chan
       }
       let provider: unknown;
       try { provider = await response.json(); } catch { return fail("The Meta response could not be read.", "MODEL_INVALID_RESPONSE", 502); }
+      await settleMetaPaid(response, provider);
       const choices = object(provider) && Array.isArray(provider.choices) ? provider.choices : [];
       const message: unknown = object(choices[0]) ? choices[0].message : undefined;
       if (!object(message)) return fail("The Meta response format could not be verified.", "MODEL_INVALID_RESPONSE", 502);
@@ -516,6 +519,7 @@ SCOPE AND BUDGET: Respect current query constraints unless the user asks to chan
           const executed = await executeTool(call.function.name, args); result = executed;
           for (const row of executed.evidence) evidence.set(row.id, row);
         } catch (error) {
+          if (error instanceof MetaSpendError) return fail(error.message,error.code,error.status);
           if(error instanceof VisualComparisonError||error instanceof TemporalImageryError)return fail(error.message,error.code,error.code.includes("CANCEL")?499:502);
           if (error instanceof ComparisonReviewError) return fail(error.message, error.code, error.code === "WONDER_CONTENT_FILTERED" || error.code === "WONDER_REFUSED" ? 422 : 502);
           if (error instanceof AdaptationConceptError) return fail(error.message, error.code, error.code === "CONCEPT_CONTENT_FILTERED" ? 422 : 502);
@@ -527,6 +531,7 @@ SCOPE AND BUDGET: Respect current query constraints unless the user asks to chan
     }
     return fail("Evidence retrieval could not be completed. Narrow the question and try again.", "MODEL_TOOL_LIMIT", 502);
   } catch (error) {
+    if (error instanceof MetaSpendError) return fail(error.message,error.code,error.status);
     if (error instanceof InputError) return fail(error.message, "INVALID_INPUT", 400);
     return fail("AI analysis could not be completed.", "ANALYSIS_FAILED", 500);
   } finally { activeUsers.delete(user.userId); }

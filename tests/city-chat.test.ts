@@ -10,11 +10,12 @@ import type { SiteContext } from '../lib/site-context';
 type Obj = Record<string, any>;
 type TestResponse = Omit<Response, 'json'> & { json(): Promise<Obj> };
 const quality=JSON.parse(readFileSync(new URL('../lib/city-quality.json',import.meta.url),'utf8'));
+class TestMetaSpendError extends Error { code='META_SPEND_LIMIT'; status=429; constructor(){super('The shared AI demo budget has been reached.');} }
 function compile(path:string,requireFn:(s:string)=>any, extra:Obj={}) {
  const source=readFileSync(new URL(path,import.meta.url),'utf8');
  const code=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
  const module={exports:{} as Obj};
- new vm.Script(code).runInContext(vm.createContext({module,exports:module.exports,require:requireFn,Response,Request,URL,URLSearchParams,AbortSignal,TextEncoder,TextDecoder,Uint8Array,process:{env:{}},...extra}));return module.exports;
+ new vm.Script(code).runInContext(vm.createContext({module,exports:module.exports,require:(id:string)=>id.endsWith('/meta-paid-fetch')?{MetaSpendError:TestMetaSpendError,fetchMetaPaid:(url:string,init:RequestInit)=>{if(extra.spendDenied)throw new TestMetaSpendError();return extra.fetch(url,init);},settleMetaPaid:async()=>false,getMetaSpendStatus:async()=>({status:extra.spendStatus??'available'})}:requireFn(id),Response,Request,URL,URLSearchParams,AbortSignal,TextEncoder,TextDecoder,Uint8Array,process:{env:{}},...extra}));return module.exports;
 }
 const planner=compile('../lib/decision-plan.ts',()=>{throw Error('Planner must remain pure')});
 const resilience=compile('../lib/resilience-brief.ts',s=>{if(s==='./decision-plan')return planner;throw Error(s)});
@@ -81,7 +82,7 @@ function harness(provider:(body:Obj,n:number)=>Obj|Promise<Obj>, options:Obj={})
   if(s==='../../../lib/site-context')return{fetchSiteContext:async(id:string)=>{contextCalls.push(id);if(options.contextFailure)throw Error('test unavailable');return context(id)}};
   if(s==='../../../lib/city')return{...city,queryCity:async(q:CityQuery)=>{queries.push(q);if(options.queryFailure||queries.length===options.queryFailureAt)throw Error('test source unavailable');return{buildings:q.unit==='parcel'?records.filter(b=>b.id==='p:'+q.q):records,next_cursor:102,next_page:null,has_more:true,mode:'building-search',query:q,fetched_at:'2026-10-27T00:00:00Z',warnings:['Bounded page'],source_url:'https://data.cityofnewyork.us/d/5zhs-2jue'}},soda:async(dataset:string,p:Obj,ttl:number)=>{sodaCalls.push({dataset,...p,ttl});if(options.sodaFailure)throw Error('Public source unavailable');if(dataset==='5zhs-2jue'){const id=String(p.$where).split('=')[1];return records.filter(b=>b.id===id).map(b=>({doitt_id:b.id,bin:b.bin,mappluto_bbl:b.bbl,base_bbl:b.bbl,the_geom:b.geometry}))}return[{bbl:'1000010001',address:'Official source address',bldgarea:'50000',lotarea:'25000'}]}};
   throw Error('Unexpected module '+s);
- },{Date:options.clock??Date,AbortSignal:options.abortSignal??AbortSignal,console:{warn:(...args:unknown[])=>diagnostics.push(args)},fetch:async(url:string,init:RequestInit)=>{assert.equal(url,'https://api.meta.ai/v1/chat/completions');assert.equal((init.headers as Obj).Authorization,'Bearer synthetic-test-key');const body=JSON.parse(String(init.body));requests.push(body);if(options.providerStatus)return Response.json(options.providerError??{error:{message:'Synthetic provider failure'}},{status:options.providerStatus,headers:options.providerHeaders});return Response.json({choices:[{message:await provider(body,requests.length)}]})}});
+ },{spendStatus:options.spendStatus,spendDenied:options.spendDenied,Date:options.clock??Date,AbortSignal:options.abortSignal??AbortSignal,console:{warn:(...args:unknown[])=>diagnostics.push(args)},fetch:async(url:string,init:RequestInit)=>{assert.equal(url,'https://api.meta.ai/v1/chat/completions');assert.equal((init.headers as Obj).Authorization,'Bearer synthetic-test-key');const body=JSON.parse(String(init.body));requests.push(body);if(options.providerStatus)return Response.json(options.providerError??{error:{message:'Synthetic provider failure'}},{status:options.providerStatus,headers:options.providerHeaders});return Response.json({choices:[{message:await provider(body,requests.length)}]})}});
  return{POST:exports.POST as (request:Request)=>Promise<TestResponse>,GET:exports.GET as (request?:Request)=>Promise<TestResponse>,requests,queries,sodaCalls,contextCalls,energyCalls,planningCalls,imageryCalls,reviewCalls,conceptCalls,visualCalls,temporalCalls,groundCalls,diagnostics};
 }
 function request(overrides:Obj={}){return new Request('https://test.invalid/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Find candidates using official records.',selectedIds:[],query:{borough:'MN'},preferences:{size:1,truck:0,heat:0},...overrides})})}
@@ -568,4 +569,14 @@ test('the real filtered single-site wording gets current native facts and checks
  assert.equal(h.imageryCalls.length+h.reviewCalls.length+h.conceptCalls.length+h.visualCalls.length,0);
  const failure=harness(()=>({}),{...filtered,sodaFailure:true});const failed=await failure.POST(request({message,selectedIds:['101']}));const data=await failed.json();
  assert.equal(failed.status,502);assert.equal(data.code,'PUBLIC_BRIEF_SOURCE_UNAVAILABLE');assert.equal(data.providerStatus.code,'MODEL_CONTENT_FILTERED');assert.deepEqual(data.dataRetrieval.nativeIds,['101']);assert.equal(failure.requests.length,1);
+});
+
+test('monetary exhaustion disables chat capability and terminates before any provider/source/fallback work',async()=>{
+ for(const state of ['budget_exhausted','unavailable']){
+  const h=harness(()=>{throw Error('No provider should run');},{spendStatus:state,spendDenied:true});
+  const ready=await(await h.GET()).json();assert.equal(ready.canRun,false);assert.equal(ready.spendStatus,state);assert.equal(ready.status,state==='budget_exhausted'?'budget_exhausted':'budget_unavailable');
+  const response=await h.POST(request({selectedIds:['101'],message:'Explain this building for a climate-resilient retrofit.'}));const payload=await response.json();
+  assert.equal(response.status,429);assert.equal(payload.code,'META_SPEND_LIMIT');assert.equal(payload.providerStatus,undefined);
+  assert.equal(h.requests.length,0);assert.equal(h.sodaCalls.length,0);assert.equal(h.contextCalls.length,0);assert.equal(h.reviewCalls.length+h.conceptCalls.length+h.imageryCalls.length+h.visualCalls.length,0);
+ }
 });

@@ -5,9 +5,10 @@ import vm from 'node:vm';
 import ts from 'typescript';
 import * as parser from '@meta-sam/parser';
 type Obj=Record<string,any>;
+class TestMetaSpendError extends Error { code='META_SPEND_LIMIT'; status=429; constructor(){super('The shared AI demo budget has been reached.');} }
 function compile(file:string,require:(id:string)=>unknown,extra:Obj={}){
  const module={exports:{} as Obj},code=ts.transpileModule(readFileSync(new URL(file,import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
- new vm.Script(code).runInNewContext({module,exports:module.exports,require,Date,Intl,URL,TextEncoder,TextDecoder,Uint8Array,Int32Array,Float64Array,ArrayBuffer,Response,AbortSignal,AbortController,setTimeout,clearTimeout,...extra});return module.exports;
+ new vm.Script(code).runInNewContext({module,exports:module.exports,require:(id:string)=>id.endsWith('/meta-paid-fetch')?{MetaSpendError:TestMetaSpendError,fetchMetaPaid:(url:string,init:RequestInit)=>extra.fetch(url,init),settleMetaPaid:async()=>false,getMetaSpendStatus:async()=>({status:extra.spendStatus??'available'})}:require(id),Date,Intl,URL,TextEncoder,TextDecoder,Uint8Array,Int32Array,Float64Array,ArrayBuffer,Response,AbortSignal,AbortController,setTimeout,clearTimeout,...extra});return module.exports;
 }
 const pure=()=>{throw Error('Unexpected dependency');};
 const planner=compile('../lib/decision-plan.ts',pure),resilience=compile('../lib/resilience-brief.ts',id=>id==='./decision-plan'?planner:pure());
@@ -174,4 +175,9 @@ test('roof provenance retains six validated model references and appends both ac
 test('already-cited map context is deduplicated; unsupported or excessive provider refs are rejected before augmentation',async()=>{
  const dedup=harness({reply:body=>{const value=validResponse(body),packet=JSON.parse(body.messages[1].content);value.lenses[0].evidenceIds.push(...packet.sites.flatMap((s:Obj)=>s.evidenceIds.filter((id:string)=>id.endsWith(':map_identity'))));return complete(value);}}),out=await dedup.compareSiteImagery(buildings,brief,'key');assert.equal(out.status,'completed');assert.equal(out.review.lenses[0].evidenceIds.length,3);assert.equal(new Set(out.review.lenses[0].evidenceIds).size,3);
  for(const foreign of [false,true]){const h=harness({reply:body=>{const value=validResponse(body),packet=JSON.parse(body.messages[1].content);value.lenses[0].evidenceIds=foreign?[value.lenses[0].evidenceIds[0],'invented-source']:[value.lenses[0].evidenceIds[0],...packet.publicData.evidence.slice(0,6).map((c:Obj)=>c.evidenceId)];return complete(value);}}),invalid=await h.compareSiteImagery(buildings,brief,'key');assert.equal(invalid.review,null);assert.equal(invalid.reviewErrorCode,'VISUAL_REVIEW_INVALID');assert.equal(h.calls.length,1);}
+});
+
+test('spending denial in either SAM or nested Wonder terminates the paired action without another paid stage',async()=>{
+ const sam=harness({inspect:async()=>{throw new TestMetaSpendError();}});await assert.rejects(()=>sam.compareSiteImagery(buildings,brief,'key'),(e:Obj)=>e instanceof TestMetaSpendError);assert.equal(sam.calls.length,0);
+ const wonder=harness({reply:()=>{throw new TestMetaSpendError();}});await assert.rejects(()=>wonder.compareSiteImagery(buildings,brief,'key'),(e:Obj)=>e instanceof TestMetaSpendError);assert.equal(wonder.calls.length,1);
 });

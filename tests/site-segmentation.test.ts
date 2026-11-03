@@ -15,6 +15,7 @@ function stream(data:Obj[], split=43){
  const encoded=new TextEncoder().encode(data.map(value=>'data: '+JSON.stringify(value)+'\r\n\r\n').join(''));
  return new Response(new ReadableStream({start(controller){for(let i=0;i<encoded.length;i+=split)controller.enqueue(encoded.slice(i,i+split));controller.close();}}),{headers:{'Content-Type':'text/event-stream'}});
 }
+class TestMetaSpendError extends Error { code='META_SPEND_LIMIT'; status=429; constructor(){super('The shared AI demo budget has been reached.');} }
 function harness(answer:(body:Obj,n:number)=>Response=()=>stream(events()),image=sourceImage){
  const calls:Obj[]=[];let imageCalls=0;
  const source=readFileSync(new URL('../lib/site-segmentation.ts',import.meta.url),'utf8');
@@ -22,11 +23,12 @@ function harness(answer:(body:Obj,n:number)=>Response=()=>stream(events()),image
  const module={exports:{} as Obj};
  const crossModule={exports:{} as Obj},crossCode=ts.transpileModule(readFileSync(new URL('../lib/imagery-crosscheck.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
  new vm.Script(crossCode).runInContext(vm.createContext({module:crossModule,exports:crossModule.exports}));
- const require=(name:string)=>name==='@meta-sam/parser'?parser:name==='./imagery-crosscheck'?crossModule.exports:name==='./site-imagery'?{SiteImageryError:class extends Error{},fetchSiteImagery:async()=>{imageCalls++;return image;}}:(()=>{throw Error(name)})();
- new vm.Script(code).runInContext(vm.createContext({module,exports:module.exports,require,Response,TextDecoder,AbortSignal,fetch:async(url:string,init:RequestInit)=>{
+ const require=(name:string)=>name==='./meta-paid-fetch'?{MetaSpendError:TestMetaSpendError,fetchMetaPaid:(url:string,init:RequestInit)=>fetcher(url,init)}:name==='@meta-sam/parser'?parser:name==='./imagery-crosscheck'?crossModule.exports:name==='./site-imagery'?{SiteImageryError:class extends Error{},fetchSiteImagery:async()=>{imageCalls++;return image;}}:(()=>{throw Error(name)})();
+ const fetcher=async(url:string,init:RequestInit)=>{
   assert.equal(url,'https://api.meta.ai/v1/responses');assert.equal((init.headers as Obj).Authorization,'Bearer test-key');assert.equal(init.redirect,'manual');assert.ok(init.signal);
   const body=JSON.parse(String(init.body));calls.push(body);return answer(body,calls.length);
- }}));
+ };
+ new vm.Script(code).runInContext(vm.createContext({module,exports:module.exports,require,Response,TextDecoder,AbortSignal,fetch:fetcher}));
  return{sam:module.exports,calls,get imageCalls(){return imageCalls;}};
 }
 const building={id:'101',entity_type:'building',address:'Source address'};
@@ -83,4 +85,8 @@ test('the SAM stream byte cap applies before parser input and no arbitrary conce
  for(const [record,concepts]of[[{...building,id:'p:1000010001'},['roof']],[building,['roof','roof']],[building,['pipe capacity']]]){
   const next=harness();await assert.rejects(next.sam.inspectSiteImagery(record,'test-key',concepts));assert.equal(next.imageCalls,0);assert.equal(next.calls.length,0);
  }
+});
+
+test('a spending denial cannot become an ordinary missing mask that invites another model turn',async()=>{
+ const h=harness(()=>{throw new TestMetaSpendError();});await assert.rejects(()=>h.sam.inspectSiteImagery(building,'test-key',['roof']),(e:Obj)=>e instanceof TestMetaSpendError&&e.code==='META_SPEND_LIMIT');assert.equal(h.calls.length,1);
 });

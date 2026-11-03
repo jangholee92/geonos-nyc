@@ -1,3 +1,4 @@
+import { getMetaSpendStatus, MetaSpendError } from '../../../lib/meta-paid-fetch';
 import { getDemoActor } from '../../../lib/demo-access';
 import { readVoiceUpload, transcribeVoice, VoiceTranscriptionError, VOICE_MODEL, VOICE_MAX_DURATION_MS, VOICE_MAX_UPLOAD_BYTES, VOICE_TIMEOUT_MS } from '../../../lib/voice-transcription';
 
@@ -19,7 +20,8 @@ async function config() {
 export async function GET() {
   const { key, approved } = await config();
   const user = await getDemoActor();
-  return json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user), requiresSignIn: false, accessMode: 'anonymous-demo', model: VOICE_MODEL, maxDurationMs: VOICE_MAX_DURATION_MS, maxUploadBytes: VOICE_MAX_UPLOAD_BYTES,
+  const spend = key && approved && user ? await getMetaSpendStatus({model:VOICE_MODEL,operation:'voice'}) : {status:'unavailable' as const};
+  return json({ configured: Boolean(key), approved, canRun: Boolean(key) && approved && Boolean(user) && spend.status === 'available', spendStatus: spend.status, requiresSignIn: false, accessMode: 'anonymous-demo', model: VOICE_MODEL, maxDurationMs: VOICE_MAX_DURATION_MS, maxUploadBytes: VOICE_MAX_UPLOAD_BYTES,
     format: 'RIFF/WAVE, mono 16-bit integer PCM, 16000 or 24000 Hz', languages: ['English', 'Korean'], editable: true, autoSend: false, liveVerified: false });
 }
 export async function POST(request: Request) {
@@ -51,6 +53,7 @@ export async function POST(request: Request) {
     if (controller.signal.aborted) throw new VoiceTranscriptionError('VOICE_CANCELLED', 'Transcription was cancelled. No draft was accepted.', 499);
     return json(result);
   } catch (error) {
+    if (error instanceof MetaSpendError) return fail(error.message,error.code,error.status);
     if (timedOut) return fail('Voice transcription timed out. No retry was made.', 'VOICE_TIMEOUT', 504);
     if (request.signal.aborted) return fail('Transcription was cancelled. No draft was accepted.', 'VOICE_CANCELLED', 499);
     if (error instanceof VoiceTranscriptionError) return fail(error.message, error.code, error.status);

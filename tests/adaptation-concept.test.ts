@@ -8,9 +8,10 @@ import ts from 'typescript';
 type Obj=Record<string,any>;
 const source=readFileSync(new URL('../lib/adaptation-concept.ts',import.meta.url),'utf8');
 const code=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+class TestMetaSpendError extends Error { code='META_SPEND_LIMIT'; status=429; constructor(){super('The shared AI demo budget has been reached.');} }
 function load(fetcher:(url:string,init:RequestInit)=>Promise<Response>,clock?:{setTimeout:typeof setTimeout;clearTimeout:typeof clearTimeout}){
  const module={exports:{} as Obj};
- new vm.Script(code).runInNewContext({module,exports:module.exports,fetch:fetcher,AbortController,Uint8Array,DataView,TextDecoder,Date,atob,btoa,crypto:webcrypto,setTimeout:clock?.setTimeout??setTimeout,clearTimeout:clock?.clearTimeout??clearTimeout,require:(name:string)=>{throw Error('Unexpected runtime dependency '+name);}});
+ new vm.Script(code).runInNewContext({module,exports:module.exports,fetch:fetcher,AbortController,Uint8Array,DataView,TextDecoder,Date,atob,btoa,crypto:webcrypto,setTimeout:clock?.setTimeout??setTimeout,clearTimeout:clock?.clearTimeout??clearTimeout,require:(name:string)=>{if(name==='./meta-paid-fetch')return{MetaSpendError:TestMetaSpendError,fetchMetaPaid:fetcher};throw Error('Unexpected runtime dependency '+name);}});
  return module.exports;
 }
 const brief=():Obj=>({kind:'resilience_brief',responseOrigin:'source-based-rules',modelGenerated:false,places:[{id:'109855',address:'572 SMITH STREET'},{id:'819422',address:'592 SMITH STREET'}],nextChecks:[{id:'entrances_and_equipment',title:'Establish exposure around entrances',action:'Request surveyed entrance and equipment elevations.',whyItMatters:'A point lookup cannot establish entrance flooding.',whatCouldChange:'Verified exposure could change which protection warrants review.',buildingIds:['109855','819422'],evidenceIds:['109855:stormwater']},{id:'operating_conditions',title:'Confirm required operating performance',action:'Request documented capacity and operating conditions.',whyItMatters:'Outdoor climate does not establish indoor performance.',whatCouldChange:'An unassessed retrofit could change the choice.',buildingIds:['109855','819422'],evidenceIds:['npcc4:2030s:temperature_change_c']},{id:'usable_layout',title:'Verify usable layout',action:'Request current floor plans and clear heights.',whyItMatters:'Mapped area is not usable space.',whatCouldChange:'The actual layout could change the retrofit scope.',buildingIds:['109855','819422'],evidenceIds:['109855:footprint_area_sqft']}],citations:[{evidenceId:'109855:stormwater'},{evidenceId:'npcc4:2030s:temperature_change_c'},{evidenceId:'109855:footprint_area_sqft'}]});
@@ -108,4 +109,8 @@ test('the response stream is bounded even without Content-Length',async()=>{
 test('runtime uses web APIs only and the tool permits exactly two native IDs without extra arguments',()=>{
  assert.doesNotMatch(source,/\bBuffer\b|process\.env|node:|console\.|setInterval\(/);
  const api=load(async()=>{throw Error('No network');}),tool=api.adaptationConceptTool.function;assert.equal(tool.name,'create_adaptation_concept');assert.equal(tool.parameters.additionalProperties,false);assert.deepEqual(plain(tool.parameters.required),['ids']);assert.equal(tool.parameters.properties.ids.minItems,2);assert.equal(tool.parameters.properties.ids.maxItems,2);assert.equal(tool.parameters.properties.ids.uniqueItems,true);
+});
+
+test('a spending denial propagates unchanged instead of an image failure or retry',async()=>{
+ let calls=0;const api=load(async()=>{calls++;throw new TestMetaSpendError();});await assert.rejects(()=>api.generateAdaptationConcept(brief(),'synthetic-key'),(e:Obj)=>e instanceof TestMetaSpendError&&e.code==='META_SPEND_LIMIT');assert.equal(calls,1);
 });

@@ -4,10 +4,11 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
 type Obj = Record<string, any>;
+class TestMetaSpendError extends Error { code='META_SPEND_LIMIT'; status=429; constructor(){super('The shared AI demo budget has been reached.');} }
 function compile(path: string, require: (id: string) => unknown, extra: Obj = {}): Obj {
   const code = ts.transpileModule(readFileSync(new URL(path, import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
   const module = { exports: {} };
-  new vm.Script(code).runInContext(vm.createContext({ module, exports: module.exports, require, Response, Request, URL, Blob, FormData, Uint8Array, DataView, TextDecoder, TextEncoder, AbortController, AbortSignal, setTimeout, clearTimeout, ...extra }));
+  new vm.Script(code).runInContext(vm.createContext({ module, exports: module.exports, require:(id:string)=>id.endsWith('/meta-paid-fetch')?{MetaSpendError:TestMetaSpendError,fetchMetaPaid:(url:string,init:RequestInit)=>{if(extra.spendDenied)throw new TestMetaSpendError();return extra.fetch(url,init);},settleMetaPaid:async()=>false,getMetaSpendStatus:async()=>({status:extra.spendStatus??'available'})}:require(id), Response, Request, URL, Blob, FormData, Uint8Array, DataView, TextDecoder, TextEncoder, AbortController, AbortSignal, setTimeout, clearTimeout, ...extra }));
   return module.exports;
 }
 function wav(rate = 24_000, durationMs = 1000): Uint8Array<ArrayBuffer> {
@@ -32,13 +33,13 @@ const success = (overrides: Obj = {}) => Response.json({ sessionId: 'provider-se
 function harness(reply: (url: string, init: RequestInit) => Response | Promise<Response> = () => success(), options: Obj = {}): Obj {
   const calls: Obj[] = [], deadlines = new Set<() => void>();
   const timers = options.fakeTimers ? { setTimeout: (fn: () => void) => { deadlines.add(fn); return fn; }, clearTimeout: (fn: () => void) => deadlines.delete(fn) } : {};
-  const api = compile('../lib/voice-transcription.ts', id => { throw Error(id); }, { ...timers, fetch: async (url: string, init: RequestInit) => { calls.push({ url, init }); return reply(url, init); } });
+  const api = compile('../lib/voice-transcription.ts', id => { throw Error(id); }, { ...timers, spendDenied: options.spendDenied, fetch: async (url: string, init: RequestInit) => { calls.push({ url, init }); return reply(url, init); } });
   const route = compile('../app/api/transcribe/route.ts', id => {
     if (id === '../../../lib/demo-access') return { getDemoActor: async () => options.user === false ? null : { userId: options.userId ?? 'authenticated-test-user' } };
     if (id === '../../../lib/voice-transcription') return api;
     if (id === 'cloudflare:workers') throw Error('No worker binding in test');
     throw Error(id);
-  }, { ...timers, Date: options.clock ?? Date, process: { env: { ...(options.key === false ? {} : { MODEL_API_KEY: 'synthetic-voice-key' }), META_API_APPROVED: options.approved === false ? 'false' : 'true' } } });
+  }, { ...timers, spendStatus: options.spendStatus, Date: options.clock ?? Date, process: { env: { ...(options.key === false ? {} : { MODEL_API_KEY: 'synthetic-voice-key' }), META_API_APPROVED: options.approved === false ? 'false' : 'true' } } });
   return { ...api, ...route, calls, deadlines };
 }
 const code = (expected: string) => (error: Obj) => error.code === expected;
@@ -167,4 +168,10 @@ test('route deadline also bounds a stalled incoming upload, with no provider cal
   const pending = h.POST(request); while (h.deadlines.size === 0) await new Promise(resolve => setTimeout(resolve, 0)); [...h.deadlines][0]();
   const response = await pending; assert.equal(response.status, 504); assert.equal((await response.json()).code, 'VOICE_TIMEOUT'); assert.equal(stopped, true); assert.equal(h.calls.length, 0); assert.equal(h.deadlines.size, 0);
   assert.equal((await h.POST(upload())).status, 200); assert.equal(h.calls.length, 1); assert.equal(h.deadlines.size, 0);
+});
+
+test('monetary denial disables recording capability and remains distinct from a provider or audio failure',async()=>{
+ const h=harness(()=>{throw Error('No paid transcription');},{spendStatus:'budget_exhausted',spendDenied:true});
+ const ready=await(await h.GET()).json();assert.equal(ready.canRun,false);assert.equal(ready.spendStatus,'budget_exhausted');
+ const response=await h.POST(upload());const payload=await response.json();assert.equal(response.status,429);assert.equal(payload.code,'META_SPEND_LIMIT');assert.equal(h.calls.length,0);
 });

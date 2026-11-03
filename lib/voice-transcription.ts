@@ -1,3 +1,4 @@
+import { fetchMetaPaid, MetaSpendError } from './meta-paid-fetch';
 /** Meta file-ASR contract:
  * https://dev.meta.ai/docs/api-reference/voice/transcribe
  * https://dev.meta.ai/docs/api-reference/voice/schemas
@@ -132,7 +133,7 @@ export async function transcribeVoice(audio: Uint8Array, key: string, parentSign
     const body = new FormData();
     body.append('request', new Blob([JSON.stringify({ model: VOICE_MODEL, audioEncoding: 'WAV', mode: 'PUSH_TO_TALK', languageBias: ['English', 'Korean'] })], { type: 'application/json' }), 'request.json');
     body.append('audio', new Blob([canonical.wav], { type: 'audio/wav' }), 'recording.wav');
-    const response = await fetch(ENDPOINT, { method: 'POST', headers: { Authorization: `Bearer ${key}`, Accept: 'application/json' }, body, signal: controller.signal, redirect: 'manual' });
+    const response = await fetchMetaPaid(ENDPOINT, { method: 'POST', headers: { Authorization: `Bearer ${key}`, Accept: 'application/json' }, body, signal: controller.signal, redirect: 'manual' }, { model: VOICE_MODEL, operation: 'voice' });
     if (Number(response.headers.get('content-length')) > MAX_RESPONSE_BYTES) {
       void response.body?.cancel();
       throw new VoiceTranscriptionError('VOICE_INVALID_RESPONSE', 'Meta returned an oversized transcript response.', 502);
@@ -156,6 +157,7 @@ export async function transcribeVoice(audio: Uint8Array, key: string, parentSign
     if (!value.transcript.trim()) throw new VoiceTranscriptionError('VOICE_NO_SPEECH', 'No speech was transcribed. You can record another short clip or type your question.', 422);
     return { kind: 'voice_transcript', model: VOICE_MODEL, transcript: value.transcript.trim(), audioDurationMs: canonical.audioDurationMs, editable: true, autoSend: false, isEvidence: false };
   } catch (error) {
+    if (error instanceof MetaSpendError) throw error;
     if (timedOut) throw new VoiceTranscriptionError('VOICE_TIMEOUT', 'Voice transcription timed out. No retry was made.', 504);
     if (parentSignal?.aborted || controller.signal.aborted) throw cancelled();
     if (error instanceof VoiceTranscriptionError) throw error;
