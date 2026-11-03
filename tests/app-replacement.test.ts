@@ -18,6 +18,7 @@ const quality=JSON.parse(readFileSync(new URL('../lib/city-quality.json',import.
 const city=compile('../lib/city.ts',{'./city-quality.json':quality,'./public-fetch':{fetchPublicJson:()=>{throw Error('Unexpected network request');}}});
 const planner=compile('../lib/decision-plan.ts');
 const reviewed=compile('../lib/reviewed-plan.ts',{'./city':city,'./decision-plan':planner});
+const tools=compile('../lib/meta-tool-actions.ts');
 const picking=compile('../lib/map-selection.ts',{'./city-quality.json':quality});
 
 // Extract the production handlers, including their actual query/provenance and
@@ -27,7 +28,7 @@ const source=readFileSync(new URL('../app/page.tsx',import.meta.url),'utf8');
 const ast=ts.createSourceFile('page.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
 const home=ast.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='Home') as ts.FunctionDeclaration|undefined;
 assert.ok(home?.body,'Home must exist for the controlled-handler tests');
-const names=['cancelPendingSelections','commitBuildingSelection','drainSelectionQueue','enqueueSelection','loadRecords','selectAtPoint','selectBuilding','removeBuilding','clearSelection','openReturnedSearch','applyReviewed','compareExample'];
+const names=['cancelPendingSelections','commitBuildingSelection','drainSelectionQueue','enqueueSelection','loadRecords','selectAtPoint','selectBuilding','removeBuilding','clearSelection','openReturnedSearch','applyReviewed','compareExample','launchTool','useToolExample'];
 const handlers=names.map(name=>{
  const node=home.body!.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text===name);
  assert.ok(node,'Missing production handler: '+name);return node.getText(ast);
@@ -58,6 +59,7 @@ function harness(){
  const calls:Obj[]=[],resolveCalls:Obj[]=[],contextCalls:any[][]=[];
  const old=building('101',[-73.98,40.75]);
  const state:Obj={
+  activeTool:null,toolHelp:null,toolRequest:null,toolSequence:{current:0},toolGeneration:{current:0},toolExamplePending:{current:false},pendingSelection:0,toolState:{localAvailable:false,canRun:true,busy:false,voiceBusy:false},toolSelectionIssue:tools.toolSelectionIssue,
   selectionQueue:{current:null},requestGeneration:{current:0},selectionGeneration:{current:0},pointGeneration:{current:0},selectedRef:{current:[old]},
   selected:[old],items:[old],page:result([old],'old'),query:{unit:'building',q:'old'},busy:false,error:'',notice:'',
   contexts:{101:{id:'101',status:'old'}},contextBusy:{},contextErrors:{},focus:old,focusToken:7,mobilePanel:'map',overlay:null,resultsOpen:false,filtersOpen:true,
@@ -78,6 +80,41 @@ function harness(){
 const ids=(rows:Obj[])=>plain(rows.map(b=>b.id));
 const workspace=(s:Obj)=>plain(Object.fromEntries(['items','selected','page','query','plan','planVersion','contexts','focus','focusToken','extras','surroundings','overlay'].map(key=>[key,s[key]])));
 const query=(q:string)=>({unit:'building',q,limit:100});
+
+test('tool launch checks selected native buildings and delivers repeat clicks with new request identities',()=>{
+ const {state:s,calls}=harness();s.launchTool('compare');assert.match(s.toolHelp,/two buildings/);assert.equal(s.toolRequest,null);assert.equal(s.mobilePanel,'map');
+ s.selectedRef.current=[building('123'),building('456')];s.launchTool('aerial');
+ assert.deepEqual(plain(s.toolRequest),{sequence:1,tool:'aerial',selectionIds:['123','456']});assert.equal(s.mobilePanel,'chat');assert.equal(s.toolHelp,null);
+ s.launchTool('aerial');assert.equal(plain(s).toolRequest.sequence,2);assert.equal(calls.length,0);
+ s.selectedRef.current=[];s.launchTool('private');assert.equal(plain(s).toolRequest.tool,'private');assert.equal(s.mobilePanel,'chat');
+});
+test('a toolbar example delivers the chosen tool only after two fresh records resolve',async()=>{
+ const h=harness(),s=h.state;s.launchTool('compare');const pending=s.useToolExample();
+ assert.equal(h.calls.length,2);assert.equal(s.toolRequest,null);await s.useToolExample();assert.equal(h.calls.length,2);
+ h.calls[1].resolve(result([building('819422')]));h.calls[0].resolve(result([building('109855')]));await pending;
+ assert.deepEqual(plain(s.toolRequest),{sequence:1,tool:'compare',selectionIds:['109855','819422']});assert.equal(s.mobilePanel,'chat');assert.equal(s.toolExamplePending.current,false);
+});
+test('choosing another tool while the example loads prevents late selection and prompt takeover',async()=>{
+ const h=harness(),s=h.state,original=s.selectedRef.current;s.launchTool('compare');const pending=s.useToolExample();
+ s.launchTool('voice');const current=plain(s.toolRequest);h.calls.forEach((c,i)=>c.resolve(result([building(i?'819422':'109855')])));await pending;
+ assert.deepEqual(plain(s.toolRequest),current);assert.deepEqual(ids(s.selectedRef.current),ids(original));assert.equal(s.mobilePanel,'chat');assert.equal(s.activeTool,'voice');assert.equal(s.busy,false);
+});
+test('an obsolete example rejection cannot publish an error after a newer tool choice',async()=>{
+ const h=harness(),s=h.state;s.launchTool('compare');const pending=s.useToolExample();s.launchTool('voice');
+ h.calls[0].reject(Error('Old example source error'));await pending;h.calls[1].resolve(result([building('819422')]));
+ assert.equal(s.error,'');assert.equal(s.toolRequest.tool,'voice');assert.equal(s.mobilePanel,'chat');
+});
+test('manual selection, clear, new source work and busy voice prevent toolbar-example takeover',async()=>{
+ for(const action of ['select','clear','search']){
+  const h=harness(),s=h.state;s.launchTool('compare');const pending=s.useToolExample();
+  let search:Promise<any>|undefined;
+  if(action==='select')s.selectBuilding(building('789'));else if(action==='clear')s.clearSelection();else search=s.loadRecords(query('new'));
+  const selectedNow=ids(s.selectedRef.current);h.calls.slice(0,2).forEach((c,i)=>c.resolve(result([building(i?'819422':'109855')])));await pending;
+  assert.equal(s.toolRequest,null);assert.deepEqual(ids(s.selectedRef.current),selectedNow);
+  if(search){h.calls[2].resolve(result([]));await search;}
+ }
+ for(const flag of ['busy','voiceBusy']){const h=harness();h.state.launchTool('compare');h.state.toolState[flag]=true;await h.state.useToolExample();assert.equal(h.calls.length,0);}
+});
 
 test('latest source request wins, including page/query and live retrieval provenance',async()=>{
  const h=harness(),s=h.state;

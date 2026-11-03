@@ -21,6 +21,7 @@ const result=compile('components/meta-investigation-result.tsx',{'./energy-sourc
 // the parent state harness without invoking microphones or browser runtimes.
 const VoiceStub=()=>null,MenuStub=()=>null,VisualStub=()=>null,TemporalStub=()=>null,LocalStub=()=>null;
 const imports={'./local-review-panel':{__esModule:true,default:LocalStub},'./site-imagery-evidence':imagery,'@/lib/city':city,'@/lib/reviewed-plan':reviewed,'./meta-investigation-result':result,'./voice-note-composer':{__esModule:true,default:VoiceStub},'./chat-analysis-menu':{__esModule:true,default:MenuStub},'./visual-comparison-result':{...visualComparison,__esModule:true,default:VisualStub},'./temporal-imagery-result':{...temporalImagery,__esModule:true,default:TemporalStub}};
+imports['../lib/meta-tool-actions']=compile('lib/meta-tool-actions.ts');
 const plain=compile('components/map-chat.tsx',imports);
 const planning=compile('lib/planning-context.ts',{'./climate-evidence-index.json':JSON.parse(readFileSync(root+'/lib/climate-evidence-index.json','utf8'))});
 const ready={configured:true,approved:true,canRun:true,liveVerified:false,status:'ready_for_verification'};
@@ -280,4 +281,48 @@ test('a single-site public brief keeps its identity and honest origin in natural
  h.calls.at(-1).resolve(p);await pending;await h.tick();assert.match(visibleText(h.tree()),/Public-data site brief/);assert.doesNotMatch(visibleText(h.tree()),/Public-data comparison/);
  h.draft('What should I request from the owner?');pending=h.send();const body=JSON.parse(h.calls.at(-1).init.body);assert.deepEqual(body.selectedIds,['123']);assert.match(body.history[1].content,/Public-data site brief produced by application rules, not Meta/);assert.match(body.history[1].content,/Fixture A \(native ID 123\)/);assert.doesNotMatch(body.history[1].content,/Fixture B/);
  h.calls.at(-1).resolve(conversation('Request a current plan.'));await pending;await h.tick();
+});
+
+const toolRequest=(sequence,tool,selectionIds=['123'])=>({sequence,tool,selectionIds});
+test('external tools stage an editable prompt exactly once and remove the duplicate primary menu',async()=>{
+ const h=harness({externalTools:true});await h.resolveStatus();h.change({toolRequest:toolRequest(1,'aerial')});
+ const preset=h.find(n=>n.type==='textarea').props.value;assert.match(preset,/first selected building/);assert.equal(h.calls.length,1);assert.equal(h.find(n=>n.type===MenuStub),undefined);
+ h.change({toolRequest:toolRequest(2,'aerial')});assert.equal(h.find(n=>n.type==='textarea').props.value,preset);assert.equal(h.calls.length,1);
+ h.draft(preset+' My own roof question.');h.change({toolRequest:toolRequest(3,'change')});const value=h.find(n=>n.type==='textarea').props.value;
+ assert.ok(value.startsWith(preset+' My own roof question.'));assert.match(value,/first selected building \(A\).*2020.*2024/);assert.equal(h.calls.length,1);
+});
+test('paired aerial and secondary tools adapt to exact selection and replace only untouched presets',async()=>{
+ const h=harness({selected:[building('123'),building('456')]});await h.resolveStatus();h.change({toolRequest:toolRequest(1,'aerial',['123','456'])});
+ assert.match(h.find(n=>n.type==='textarea').props.value,/both selected buildings using SAM and Wonder/);
+ h.change({toolRequest:toolRequest(2,'review',['123','456'])});const prompt=h.find(n=>n.type==='textarea').props.value;assert.match(prompt,/Muse Wonder second review/);assert.doesNotMatch(prompt,/both selected buildings using SAM/);
+ h.change({toolRequest:toolRequest(3,'visual',['123','456'])});assert.match(h.find(n=>n.type==='textarea').props.value,/Create an inspection concept diagram/);assert.equal(h.calls.length,1);
+ const pending=h.send();const body=JSON.parse(h.calls.at(-1).init.body);assert.deepEqual(body.selectedIds,['123','456']);assert.match(body.message,/inspection concept diagram/);h.calls.at(-1).resolve(conversation());await pending;await h.tick();
+});
+test('stale tool selection and consumed requests never replay into a new building or restored context',async()=>{
+ const h=harness();await h.resolveStatus();h.draft('Preserve my question');h.change({toolRequest:toolRequest(1,'aerial',['456'])});assert.equal(h.find(n=>n.type==='textarea').props.value,'Preserve my question');
+ h.change({selected:[building('456')]});assert.equal(h.find(n=>n.type==='textarea').props.value,'Preserve my question');h.change({selected:[building('123')]});assert.equal(h.find(n=>n.type==='textarea').props.value,'Preserve my question');assert.equal(h.calls.length,1);
+ h.change({toolRequest:toolRequest(2,'compare')});assert.match(h.getText(),/Choose two buildings/);assert.equal(h.find(n=>n.type==='textarea').props.value,'Preserve my question');
+});
+test('spending pause still permits tool draft preparation but cannot open voice or send',async()=>{
+ const h=harness();await h.resolveStatus({...ready,status:'budget_exhausted',canRun:false});h.change({toolRequest:toolRequest(1,'aerial')});
+ assert.match(h.find(n=>n.type==='textarea').props.value,/Inspect the aerial/);assert.equal(h.find(n=>n.type==='textarea').props.disabled,undefined);await h.send();assert.equal(h.calls.length,1);
+ h.change({toolRequest:toolRequest(2,'voice')});assert.equal(h.find(n=>n.type===VoiceStub).props.openRequest,0);assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.equal(h.calls.length,1);
+});
+test('voice launcher opens only the voice panel; repeated clicks do not send or discard a draft',async()=>{
+ const h=harness();await h.resolveStatus();h.draft('My typed question');h.change({toolRequest:toolRequest(1,'voice')});assert.equal(h.find(n=>n.type===VoiceStub).props.openRequest,1);
+ h.change({toolRequest:toolRequest(2,'voice')});assert.equal(h.find(n=>n.type===VoiceStub).props.openRequest,2);assert.equal(h.find(n=>n.type==='textarea').props.value,'My typed question');assert.equal(h.calls.length,1);
+ h.find(n=>n.type===VoiceStub).props.onBusyChange(true);h.flush();h.change({toolRequest:toolRequest(3,'aerial')});assert.equal(h.find(n=>n.type==='textarea').props.value,'My typed question');assert.match(h.getText(),/voice note/);assert.equal(h.calls.length,1);
+});
+test('tool clicks during a pending answer are consumed without replacing or queuing work',async()=>{
+ const h=harness();await h.resolveStatus();h.draft('My current question');const pending=h.send();h.change({toolRequest:toolRequest(1,'aerial')});
+ assert.doesNotMatch(h.find(n=>n.type==='textarea').props.value,/Inspect the aerial/);assert.equal(h.calls.length,2);h.calls.at(-1).resolve(conversation());await pending;await h.tick();assert.doesNotMatch(h.find(n=>n.type==='textarea').props.value,/Inspect the aerial/);assert.equal(h.calls.length,2);
+});
+test('local-only tool is an honest setup route on hosting and a separate private panel when available',async()=>{
+ const hosted=harness({selected:[]});await hosted.resolveStatus();hosted.change({toolRequest:toolRequest(1,'private',[])});assert.match(hosted.getText(),/local GEONOS app on your computer/);assert.equal(hosted.find(n=>n.type===LocalStub),undefined);assert.equal(hosted.calls.length,1);
+ const h=harness({selected:[building('123'),building('456')]});await h.resolveStatus({...ready,localReview:{available:true}});h.draft('Public draft stays');h.change({toolRequest:toolRequest(1,'private',['123','456'])});
+ assert.ok(h.find(n=>n.type===LocalStub));assert.equal(h.find(n=>n.type==='form'),undefined);h.change({toolRequest:toolRequest(2,'compare',['123','456'])});assert.ok(h.find(n=>n.type===LocalStub));assert.match(h.getText(),/Close private notes before switching/);assert.equal(h.calls.length,1);
+ h.find(n=>n.type===LocalStub).props.onClose();h.flush();assert.equal(h.find(n=>n.type==='textarea').props.value,'Public draft stays');assert.equal(h.calls.length,1);
+});
+test('a full typed draft is kept intact when a tool preset would exceed the request limit',async()=>{
+ const h=harness();await h.resolveStatus();const draft='X'.repeat(3999);h.draft(draft);h.change({toolRequest:toolRequest(1,'aerial')});assert.equal(h.find(n=>n.type==='textarea').props.value,draft);assert.match(h.getText(),/draft/);assert.equal(h.calls.length,1);
 });

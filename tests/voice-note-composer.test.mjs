@@ -65,3 +65,13 @@ test('a timed-out response that ignores abort never becomes an editable transcri
 test('selection changes cancel transcription and cannot carry a late result into the next building',async()=>{
  const h=harness();h.upload();h.click('Transcribe with Meta');await h.tick();h.change({contextKey:'place-B'});assert.equal(h.calls[0].init.signal.aborted,true);h.calls[0].resolve(result('OLD BUILDING TRANSCRIPT'));await h.tick();h.click('Voice note');assert.doesNotMatch(h.text(),/OLD BUILDING TRANSCRIPT/);assert.equal(h.added.length,0);h.unmount();
 });
+
+test('external open requests never request microphone access or start transcription',async()=>{
+ const h=harness();h.click('Close voice note');h.change({openRequest:1});assert.ok(h.button('Record'));assert.equal(h.permission.length,0);assert.equal(h.calls.length,0);
+ h.change({openRequest:2});assert.ok(h.button('Record'));h.click('Record');assert.equal(h.permission.length,1);const tracks=trackSet();h.permission[0].resolve(tracks);await h.tick();
+ h.change({openRequest:3});assert.equal(h.recorders[0].state,'recording');assert.equal(tracks.track.stops,0);assert.equal(h.permission.length,1);assert.equal(h.calls.length,0);h.unmount();
+});
+test('disabled external voice requests are consumed and never auto-open after budget recovery',()=>{
+ const h=harness();h.click('Close voice note');h.change({disabled:true,openRequest:1});assert.equal(h.button('Record'),undefined);h.change({disabled:false});assert.equal(h.button('Record'),undefined);
+ h.change({openRequest:2});assert.ok(h.button('Record'));assert.equal(h.permission.length,0);assert.equal(h.calls.length,0);h.unmount();
+});

@@ -29,3 +29,5 @@
 .map-chat .meta-investigation-result :is(.mir-scope,.mir-next,.mir-same-total,.mir-options button,.mir-status){background:#233b31;border-color:#42624a;color:#d9e8d8}
 .map-chat .meta-investigation-result .mir-warning{background:#3c3225;color:#efd3a0;border-color:#695839}
 .map-chat .meta-investigation-result .mir-conversation-note{color:#9fb5bf}
+
+.map-chat-local-guide{border:1px solid #476158;background:#182d29;border-radius:8px;padding:12px;margin:0 0 10px;color:#cddfda;font-size:12px;line-height:1.6}.map-chat-local-guide>strong{font-size:13px;color:#e2f0de}.map-chat-local-guide p{margin:6px 0 10px}.map-chat-local-guide a{display:inline-flex;align-items:center;gap:4px;color:#c8f77b;font-size:11px}.map-chat-local-guide>button{display:block;margin-top:10px;font-size:11px;padding:5px 0;color:#b8cccf}.map-chat-tool-notice{margin:0;padding:10px 15px;border-bottom:1px solid #3a5157;color:#c8dada;font-size:12px;line-height:1.6}

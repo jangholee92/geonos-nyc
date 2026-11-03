@@ -5,7 +5,7 @@ import {prepareVoiceAudio,VOICE_FILE_BYTES,VOICE_SECONDS} from '../lib/voice-aud
 import './voice-note-composer.css';
 
 type Recording={blob:Blob;label:string;duration?:number};
-export default function VoiceNoteComposer({disabled,contextKey,remainingCharacters,onTranscript,onBusyChange,onAuthRequired,onSpendUnavailable}:{disabled:boolean;contextKey:string;remainingCharacters:number;onTranscript:(text:string)=>void;onBusyChange:(busy:boolean)=>void;onAuthRequired?:()=>void;onSpendUnavailable?:(exhausted:boolean)=>void}){
+export default function VoiceNoteComposer({disabled,contextKey,remainingCharacters,onTranscript,onBusyChange,onAuthRequired,onSpendUnavailable,openRequest=0}:{openRequest?:number;disabled:boolean;contextKey:string;remainingCharacters:number;onTranscript:(text:string)=>void;onBusyChange:(busy:boolean)=>void;onAuthRequired?:()=>void;onSpendUnavailable?:(exhausted:boolean)=>void}){
  const [open,setOpen]=useState(false),[phase,setPhase]=useState<'idle'|'requesting'|'recording'|'transcribing'>('idle'),[seconds,setSeconds]=useState(0),[recording,setRecording]=useState<Recording|null>(null),[preview,setPreview]=useState(''),[result,setResult]=useState(''),[error,setError]=useState('');
  const fileInput=useRef<HTMLInputElement>(null),recorder=useRef<MediaRecorder|null>(null),stream=useRef<MediaStream|null>(null),request=useRef<AbortController|null>(null),timer=useRef<ReturnType<typeof setInterval>|null>(null),sequence=useRef(0),mounted=useRef(true),started=useRef(0);
  const busy=phase!=='idle';
@@ -15,6 +15,8 @@ export default function VoiceNoteComposer({disabled,contextKey,remainingCharacte
  function close(){cancel();setOpen(false);setRecording(null);setResult('');setError('');setSeconds(0);}
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;++sequence.current;request.current?.abort();if(recorder.current){recorder.current.onstop=null;recorder.current.ondataavailable=null;recorder.current.onerror=null;if(recorder.current.state!=='inactive')recorder.current.stop();}release();};},[]);
  useEffect(()=>{close();},[contextKey]);
+ const lastOpenRequest=useRef(0);
+ useEffect(()=>{if(openRequest>lastOpenRequest.current){lastOpenRequest.current=openRequest;if(!disabled)setOpen(true);}},[openRequest,disabled]);
  useEffect(()=>{if(!recording){setPreview('');return;}const url=URL.createObjectURL(recording.blob);setPreview(url);return()=>URL.revokeObjectURL(url);},[recording]);
  async function record(){
   if(disabled||busy)return;setError('');setResult('');setRecording(null);
