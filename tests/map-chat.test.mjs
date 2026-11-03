@@ -62,6 +62,28 @@ test('demo outage preserves the draft and offers recheck without sign-in or auto
  const h=harness();await h.resolveStatus();h.draft('Check the selected building.');const p=h.send();h.calls.at(-1).resolve({ok:false,body:{code:'DEMO_UNAVAILABLE',error:'Demo unavailable'}});await p;await h.tick();
  assert.equal(h.find(n=>n.type==='textarea').props.value,'Check the selected building.');assert.equal(h.find(n=>n.type==='a'&&n.props.className==='map-chat-signin-link'),undefined);assert.doesNotMatch(h.getText(),/Sign in|ChatGPT/);await h.send();assert.equal(h.calls.length,2);
 });
+test('spending denials preserve the question and prevent further chat and voice requests',async()=>{
+ for(const code of ['META_SPEND_LIMIT','META_SPEND_UNAVAILABLE']){
+  const h=harness();await h.resolveStatus();h.draft('Compare the next inspection.');const p=h.send();
+  h.calls.at(-1).resolve({ok:false,body:{code,error:'AI is paused.'}});await p;await h.tick();
+  assert.equal(h.find(n=>n.type==='textarea').props.value,'Compare the next inspection.');
+  assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.match(h.getText(),/AI is paused/);
+  await h.send();assert.equal(h.calls.length,2);
+ }
+});
+test('a blocked or contradictory spending status cannot enable the composer',async()=>{
+ for(const status of ['budget_exhausted','budget_unavailable']){
+  const payload={...ready,status,canRun:false};assert.equal(plain.readMapChatStatus(payload).state,status);
+  assert.equal(plain.readMapChatStatus({...payload,canRun:true}).canRun,false);
+  const h=harness();await h.resolveStatus(payload);h.draft('Keep this draft.');await h.send();assert.equal(h.calls.length,1);
+ }
+ assert.equal(plain.readMapChatStatus({...ready,spendStatus:'budget_exhausted'}).canRun,false);
+});
+test('a voice spending denial disables chat without losing its current draft',async()=>{
+ const h=harness();await h.resolveStatus();h.draft('Existing draft');h.find(n=>n.type===VoiceStub).props.onSpendUnavailable(true);h.flush();
+ assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.equal(h.find(n=>n.type==='textarea').props.value,'Existing draft');
+ await h.send();assert.equal(h.calls.length,1);assert.match(h.getText(),/spending allowance has been reached/);
+});
 test('voice demo outage invalidates audio context and preserves the current question',async()=>{
  const h=harness();await h.resolveStatus();h.draft('Existing draft');const voice=h.find(n=>n.type===VoiceStub),oldKey=voice.props.contextKey;voice.props.onAuthRequired();h.flush();
  assert.equal(h.find(n=>n.type===VoiceStub).props.disabled,true);assert.notEqual(h.find(n=>n.type===VoiceStub).props.contextKey,oldKey);assert.equal(h.find(n=>n.type==='textarea').props.value,'Existing draft');assert.doesNotMatch(h.getText(),/Sign in|ChatGPT/);assert.equal(h.calls.length,1);assert.equal(h.storage.size,0);

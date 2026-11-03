@@ -1,4 +1,5 @@
 import {gateDemo,type DemoEnv} from "../lib/demo-gate";
+import {runWithMetaSpend} from "../lib/meta-paid-fetch";
 export {DemoBudget} from "./demo-budget";
 import handler from "vinext/server/fetch-handler";
 import { runWithConnectorBinding } from "../lib/connector-context";
@@ -25,7 +26,7 @@ const worker = {
         },
       };
     }
-    return gateDemo(request, env as unknown as DemoEnv, ctx, clean => runWithConnectorBinding(binding, () => handler.fetch(clean, env, ctx)));
+    return runWithMetaSpend(env as unknown as DemoEnv, () => gateDemo(request, env as unknown as DemoEnv, ctx, clean => runWithConnectorBinding(binding, () => handler.fetch(clean, env, ctx))));
   },
 };
 

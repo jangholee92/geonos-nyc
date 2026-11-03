@@ -21,7 +21,7 @@ export type MapChatProps={
 };
 type Obj=Record<string,unknown>;
 export type HistoryTurn={role:'user'|'assistant';content:string};
-type Connection={state:'checking'|'approval_pending'|'credential_missing'|'ready_for_verification'|'demo_unavailable'|'unavailable';canRun:boolean};
+type Connection={state:'checking'|'approval_pending'|'credential_missing'|'ready_for_verification'|'demo_unavailable'|'budget_exhausted'|'budget_unavailable'|'unavailable';canRun:boolean};
 type Exchange={id:number;question:string;context:string;generation:number;places:string[];state:'pending'|'complete'|'error'|'cancelled';payload?:unknown;error?:string;authRequired?:boolean};
 const object=(v:unknown):Obj|null=>v!==null&&typeof v==='object'&&!Array.isArray(v)?v as Obj:null;
 const text=(v:unknown,fallback='',limit=8000)=>typeof v==='string'?v.slice(0,limit):fallback;
@@ -35,6 +35,8 @@ export function readMapChatStatus(payload:unknown):Connection{
  if(p.status==='approval_pending'&&p.approved===false&&p.canRun===false)return{state:'approval_pending',canRun:false};
  if(p.status==='credential_missing'&&p.approved===true&&p.configured===false&&p.canRun===false)return{state:'credential_missing',canRun:false};
  if(p.requiresSignIn===true)return{state:'unavailable',canRun:false};
+ if((p.status==='budget_exhausted'||p.status==='budget_unavailable')&&p.canRun===false)return{state:p.status,canRun:false};
+ if(p.spendStatus!==undefined&&p.spendStatus!=='available')return{state:'unavailable',canRun:false};
  if(p.status==='ready_for_verification'&&p.approved===true&&p.configured===true&&p.canRun===true)return{state:'ready_for_verification',canRun:true};
  return{state:'unavailable',canRun:false};
 }
@@ -129,6 +131,8 @@ const statusCopy:Record<Connection['state'],string>={
  credential_missing:'Meta is not connected yet. You can keep drafting.',
  ready_for_verification:'Ready to send.',
  demo_unavailable:'The public AI demo is temporarily unavailable. The map remains available.',
+ budget_exhausted:'AI is paused because this demo’s spending allowance has been reached. Explore the map and records.',
+ budget_unavailable:'AI is paused while its spending allowance is checked. Your draft is saved here.',
  unavailable:'Connection unavailable. Try again.',
 };
 
@@ -163,6 +167,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
   if(current){setDraft(value=>value||current.question);setExchanges(rows=>rows.map(row=>row.id===current.id&&row.state==='pending'?{...row,state:'cancelled',error:reason}:row));}
  },[]);
  const setDemoUnavailable=useCallback(()=>{setConnection({state:'demo_unavailable',canRun:false});setVoiceReset(value=>value+1);},[]);
+ const setSpendUnavailable=useCallback((exhausted:boolean)=>{setConnection({state:exhausted?'budget_exhausted':'budget_unavailable',canRun:false});setVoiceReset(value=>value+1);},[]);
 
  useLayoutEffect(()=>{
   if(activeContext.current===context)return;
@@ -217,6 +222,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
    if(!current())return;
    if(!response.ok){
     const data=object(payload);
+    if(data?.code==='META_SPEND_LIMIT'||data?.code==='META_SPEND_UNAVAILABLE')setSpendUnavailable(data.code==='META_SPEND_LIMIT');
     if(data?.code==='AUTH_REQUIRED'||data?.code==='DEMO_UNAVAILABLE'){authRequired=true;setDemoUnavailable();throw Error('The public demo is unavailable. Your question is ready in the composer.');}
     if(data?.code==='MODEL_APPROVAL_PENDING')setConnection({state:'approval_pending',canRun:false});
     else if(data?.code==='MODEL_NOT_CONFIGURED')setConnection({state:'credential_missing',canRun:false});
@@ -294,7 +300,7 @@ export default function MapChat({selected,query,onApplyReviewed,onOpenSearch}:Ma
    {!selectionValid&&<p className="map-chat-context-warning" role="alert">Choose no more than two distinct places before sending.</p>}
    {!validQuery&&<p className="map-chat-context-warning" role="alert">The current search scope is invalid. Update the map search before sending.</p>}
    <label className="map-chat-sr-only" htmlFor={inputId}>Your question for Meta</label>
-   <div className="map-chat-input-wrap"><textarea ref={composer} id={inputId} value={draft} onChange={event=>setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Message Meta…" aria-describedby={!connection.canRun?`${inputId}-status`:undefined} onKeyDown={event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.nativeEvent.isComposing&&connection.canRun){event.preventDefault();void send();}}}/><div className="map-chat-input-footer"><div className="map-chat-input-tools"><ChatAnalysisMenu count={selected.length} disabled={busy||voiceBusy||actionBusy!==null} context={`${context}:${voiceReset}`} onChoose={fillDraft} onLocalReview={localAvailable&&selected.length===2&&selected.every(b=>!b.id.startsWith('p:'))?()=>setLocalOpen(true):undefined}/><VoiceNoteComposer onAuthRequired={setDemoUnavailable} disabled={!connection.canRun||busy||actionBusy!==null} contextKey={`${context}:${voiceReset}`} remainingCharacters={4000-draft.trim().length-(draft.trim()?1:0)} onTranscript={value=>{setDraft(current=>[current.trim(),value].filter(Boolean).join('\n').slice(0,4000));composer.current?.focus();}} onBusyChange={setVoiceBusy}/><span>{draft.length>=3600?`${draft.length.toLocaleString()} / 4,000`:''}</span></div>{busy?<button type="button" className="map-chat-send map-chat-stop" onClick={()=>stopRequest('Stopped waiting. No new answer was accepted.')} aria-label="Stop waiting for the response"><Square size={14} aria-hidden="true"/></button>:<button type="submit" className="map-chat-send" disabled={!canSend} aria-label={connection.canRun?'Send question to Meta':connection.state==='demo_unavailable'?'Demo temporarily unavailable':'Send unavailable until Meta is connected'} title="Send message"><ArrowUp size={18} aria-hidden="true"/></button>}</div></div>
+   <div className="map-chat-input-wrap"><textarea ref={composer} id={inputId} value={draft} onChange={event=>setDraft(event.target.value)} maxLength={4000} rows={2} placeholder="Message Meta…" aria-describedby={!connection.canRun?`${inputId}-status`:undefined} onKeyDown={event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.nativeEvent.isComposing&&connection.canRun){event.preventDefault();void send();}}}/><div className="map-chat-input-footer"><div className="map-chat-input-tools"><ChatAnalysisMenu count={selected.length} disabled={busy||voiceBusy||actionBusy!==null} context={`${context}:${voiceReset}`} onChoose={fillDraft} onLocalReview={localAvailable&&selected.length===2&&selected.every(b=>!b.id.startsWith('p:'))?()=>setLocalOpen(true):undefined}/><VoiceNoteComposer onAuthRequired={setDemoUnavailable} onSpendUnavailable={setSpendUnavailable} disabled={!connection.canRun||busy||actionBusy!==null} contextKey={`${context}:${voiceReset}`} remainingCharacters={4000-draft.trim().length-(draft.trim()?1:0)} onTranscript={value=>{setDraft(current=>[current.trim(),value].filter(Boolean).join('\n').slice(0,4000));composer.current?.focus();}} onBusyChange={setVoiceBusy}/><span>{draft.length>=3600?`${draft.length.toLocaleString()} / 4,000`:''}</span></div>{busy?<button type="button" className="map-chat-send map-chat-stop" onClick={()=>stopRequest('Stopped waiting. No new answer was accepted.')} aria-label="Stop waiting for the response"><Square size={14} aria-hidden="true"/></button>:<button type="submit" className="map-chat-send" disabled={!canSend} aria-label={connection.canRun?'Send question to Meta':connection.state==='demo_unavailable'?'Demo temporarily unavailable':'Send unavailable until Meta is connected'} title="Send message"><ArrowUp size={18} aria-hidden="true"/></button>}</div></div>
   </form>
  </aside>;
 }

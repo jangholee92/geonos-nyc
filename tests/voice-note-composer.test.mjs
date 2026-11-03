@@ -34,6 +34,13 @@ test('an unavailable demo informs the parent and never accepts or retries a tran
  h.calls[0].resolve({ok:false,json:async()=>({code:'AUTH_REQUIRED',error:'Authentication required'})});await h.tick();
  assert.equal(requested,1);assert.match(h.text(),/public voice demo is temporarily unavailable/);assert.equal(h.calls.length,1);assert.equal(h.added.length,0);assert.equal(h.busy.at(-1),false);h.unmount();
 });
+test('spending guard denial informs the parent and never retries or adds audio text',async()=>{
+ for(const code of ['META_SPEND_LIMIT','META_SPEND_UNAVAILABLE']){
+  const h=harness(),denials=[];h.change({onSpendUnavailable:value=>denials.push(value)});h.upload();h.click('Transcribe with Meta');await h.tick();
+  h.calls[0].resolve({ok:false,json:async()=>({code,error:'AI is paused.'})});await h.tick();
+  assert.deepEqual(denials,[code==='META_SPEND_LIMIT']);assert.equal(h.calls.length,1);assert.equal(h.added.length,0);assert.equal(h.busy.at(-1),false);h.unmount();
+ }
+});
 
 test('a permission rejection from an abandoned recording cannot stop the newer microphone stream',async()=>{
  const h=harness();h.click('Record');h.click('Waiting for microphone… Cancel');h.click('Record');const current=trackSet();h.permission[1].resolve(current);await h.tick();
