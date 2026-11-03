@@ -106,12 +106,6 @@ Chat keeps provider status visible and identifies the origin of each response. S
 
 The investigation follows each source at its own scale: HVI describes community vulnerability, NPCC provides regional scenarios, stormwater layers describe modeled ground, and energy reports retain their reporting boundaries. Usable space, electrical capacity and roof or equipment details become concrete requests for owner records and site inspection.
 
-## Hackathon fit
-
-The selected problem statement is **Build for Your World**. The [official participant guide](https://cerebralvalley.ai/e/meta-ai-developer-hackathon/details) assigns **30% Impact, 25% Use of Meta AI Tooling, 20% Technical Depth & Execution and 25% Demo**. The intended demonstration is one connected investigation: compare buildings, inspect the evidence, add a local planning note and identify the next consequential check.
-
-The guide names **Muse Glimmer or Muse Spark Open** for the Best Open-Weight bonus. The actually executed Glimmer role meets that model-use aspect; this is a category alignment, not an eligibility decision or award claim. DINOv2 remains a separate, useful open-weight visual role.
-
 ## Rights and attribution
 
 See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This snapshot does not grant a blanket license over all application code, data, model weights and dependencies. Third-party materials retain their own terms, including the custom SAM parser license, DINOv2's Apache-2.0 license, ONNX Runtime notices, and publisher-specific data terms. No API key, private deployment credential or production user content is included.
