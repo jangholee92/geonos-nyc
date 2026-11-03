@@ -2,15 +2,15 @@
 
 Explore New York City buildings, select two to compare, and plan the next step toward a climate-resilient retrofit. GEONOS connects official building and tax-lot records, climate context, dated aerial imagery and seven Meta model roles across the hosted workflow and an optional local inspection-review mode. Follow the evidence to the owner document, equipment check or site inspection that could change your choice.
 
-This is a sanitized public source snapshot of the hackathon application, based on the demonstrated v15 application (`fd667567f782f37df64358d4c90554ee99a35c84`) with subsequent source hardening and the optional local Glimmer extension. The current source sync includes the public-service release and 3D building-display correction from private working commit `921e8af36e9d3e4eeb4ad6f4dd6050be3dca2d7b`. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
+This is a sanitized public source snapshot of the hackathon application, based on the demonstrated v15 application (`fd667567f782f37df64358d4c90554ee99a35c84`) with subsequent source hardening and the optional local Glimmer extension. The current source includes the standalone Cloudflare Worker, persistent public-demo quotas and the solid 3D building-display correction. It excludes deployment identity, credentials, private working history and local provider captures. See [Hackathon build scope](HACKATHON_BUILD_SCOPE.md) for what was built and which foundations pre-existed.
 
 ## Open GEONOS
 
-[Open the live application](https://geonos-nyc-explorer-jh-1027.jholee.chatgpt.site/). Explore the map and public building records without signing in. Hosted AI tools require ChatGPT sign-in. The optional local Glimmer review is available through the local setup below.
+[Open the live application](https://geonos-nyc.ljh920821.workers.dev/). Explore the map, public building records and capped AI demo without signing in. The optional local Glimmer review is available through the local setup below.
 
 ## Recorded demo
 
-Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role recording edition, prepared on 31 October 2026. The page contains a 2:37 overview and an 8:30 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role overview updated on 3 November 2026, with the retained full walkthrough. The page contains a 2:55 overview and an 8:30 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
 
 The videos show edited actual product states with synthetic English narration. 1080p delivery combines a recorded 3D opening, fresh full-page captures and archival product shots. Native source dimensions are retained in the production record. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
 
@@ -34,13 +34,9 @@ npm run dev -- --host 127.0.0.1
 
 Open the printed localhost URL. The map, public-data tools and deterministic evidence checks run independently of the Meta API. Live source lookups require network access. Keep the preview bound to loopback.
 
-To enable optional Meta requests with **your own approved account**:
+The local map and deterministic tools are available immediately. For the optional Glimmer mode, follow the pinned setup below; its loopback sign-in is separate from the deployed public-demo actor.
 
-```sh
-cp .dev.vars.example .dev.vars
-```
-
-Set `MODEL_API_KEY` and `META_API_APPROVED=true` in that local file. Keep the key server-side, leave `TRUST_SITES_PROXY_IDENTITY=false`, and never commit the filled file. Use the local sign-in link at `/signin-with-chatgpt?return_to=%2F`; it creates a loopback-only development identity. Model requests start only after a user action and may incur provider charges. No credential is included in this repository.
+To deploy your own public AI demo, use an approved Meta account and configure server-side Cloudflare secrets `MODEL_API_KEY`, `META_API_APPROVED=true` and a random `DEMO_IP_SALT` of at least 32 characters. The generated Worker configuration binds the `DemoBudget` Durable Object and enables `GEONOS_PUBLIC_DEMO`. Do not commit secret values or enable `TRUST_SITES_PROXY_IDENTITY` on a generic host. A localhost sign-in alone does not create the Cloudflare-edge actor used by the public chat/voice routes.
 
 ```sh
 node --test tests/*.test.ts tests/*.test.mjs scripts/build-citywide-tiles.test.mjs
@@ -48,15 +44,17 @@ npx tsc --noEmit
 npm run build
 ```
 
-The default test suite uses local fixtures/mocks; two public-source integration checks are opt-in with `CITY_LIVE_TESTS=1`. `npm start` serves a built Worker locally. Use the development command above for the local sign-in workflow.
+The default test suite uses local fixtures/mocks; two public-source integration checks are opt-in with `CITY_LIVE_TESTS=1`. `npm start` serves a built Worker locally. Use the development command above for the optional local Glimmer workflow.
 
-## Authentication and hosting boundary
+## Public-demo access and hosting boundary
 
-The original hosted app uses Sites to inject authenticated identity. **This public copy rejects production identity headers by default.** An arbitrary browser-supplied `oai-authenticated-user-*` header is not authentication.
+Use [Standalone deployment](STANDALONE_DEPLOYMENT.md) for the Worker setup, required server-side secrets, persistent quota storage and deployment checks.
 
-`TRUST_SITES_PROXY_IDENTITY=true` is only for a trusted Sites edge that strips incoming identity headers and injects its own authenticated identity. Do not enable it on a generic public host. A different host must implement and verify its own authentication before paid API routes are enabled. The environment flag is not itself an authentication service.
+The current Worker uses an anonymous, request-scoped quota actor derived from Cloudflare edge metadata. Browser-supplied identity headers are stripped; they do not establish an authenticated person. Paid chat and transcription requests require a same-origin request, server-side approval and credentials, and a successful reservation from one persistent `DemoBudget` Durable Object.
 
-The neutral `.openai/hosting.json` is required by the retained Vinext/Sites build adapter but contains no project identity or storage binding. A new hosted deployment needs its own configuration and secrets. The local mock is restricted by host and socket to loopback and is not a production login mechanism. The original hosted application is publicly accessible for map exploration; its hosted AI routes require ChatGPT sign-in. Publishing this source does not provision authentication or provider credentials for another deployment.
+Default allowances are 60 chat and 20 voice interactions per UTC day, with lifetime limits of 300 chat and 100 voice interactions. Per-IP daily limits are 20 chat and 6 voice interactions, with a shared burst limit of three per minute and two active investigations globally. Accepted attempts consume an allowance even if downstream work fails. These limits count interactions, not dollars; a chat may use more than one model. Public map and record tools remain available independently.
+
+The previous Sites deployment used ChatGPT sign-in. Its retained authentication helper rejects production identity headers unless explicitly configured for a trusted Sites edge. The local mock is limited to loopback and is used by the optional Glimmer workflow. Neither is the current public-demo quota actor. The neutral `.openai/hosting.json` retains the build adapter without private project identity. Publishing this source supplies neither provider credentials nor another deployment's quota storage.
 
 ## Seven model roles
 
@@ -91,6 +89,8 @@ The shipped source snapshots contain **1,082,964 footprint records**, with **1,0
 Normal startup uses the bundled products; it does not rerun data acquisition or model conversion. Rebuilding tiles requires the audited source SQLite and a Python/Shapely environment via `scripts/build-citywide-tiles.mjs --source ... --python ...`. Full data synchronization requires a separately acquired source root. DINO conversion requires the official checkpoint/source and Python ML dependencies; `scripts/dino/export_dinov2.py` documents its inputs. Rebuild the same-origin worker with `node scripts/dino/build-worker.mjs` after changing its implementation or model manifest. The lockfile covers the web application, not these separate research environments.
 
 ## Verification
+
+The standalone Cloudflare service was checked in an anonymous browser on **3 November 2026**. The live question “Compare these two buildings for climate resilience. What should I verify next?” produced a Muse Spark response for 572 and 592 Smith Street, with building facts, climate context and entrance/equipment checks. A further full-outline question returned the mapped 2050 deep-water contact at 572 Smith, the roughly 47-metre separation at 592 Smith, and entrance, loading and equipment checks. These verify the tested source-linked flows on the new public service; earlier model-specific executions are recorded below.
 
 The recorded v15 application suite had **529 checks: 527 passed, two opt-in checks skipped, zero failures**, followed by focused protocol, transport and authentication checks. Actual provider and browser verification covered editable synthetic-English transcription, paired SAM/Wonder analysis for 572 and 592 Smith Street, and local/browser DINOv2 inference on the official 2020/2024 pair. This public export adds authentication hardening, with separate validation recorded in [PUBLIC_EXPORT.md](PUBLIC_EXPORT.md).
 

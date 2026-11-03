@@ -1,91 +1,137 @@
 WEBVTT
 
-00:00:00.280 --> 00:00:03.050
-Heat and flooding shape cold storage decisions.
+1
+00:00:00.280 --> 00:00:06.410
+Choosing a building means planning for years of heat, heavy rain, and changing needs.
 
-00:00:03.080 --> 00:00:05.050
+2
+00:00:06.440 --> 00:00:11.690
+But the evidence is scattered across maps, records, and photographs.
+
+3
+00:00:11.720 --> 00:00:13.210
 This is GEONOS.
 
-00:00:05.080 --> 00:00:11.100
-Compare two buildings, inspect the evidence, and plan your next site visit.
+4
+00:00:13.240 --> 00:00:18.700
+We bring it together to help people make more climate-resilient building decisions.
 
-00:00:12.550 --> 00:00:17.770
-Speak a building question; Muse Voice turns it into an editable message.
+5
+00:00:19.697 --> 00:00:23.187
+Here, we’re exploring a cold-storage retrofit in Brooklyn.
 
-00:00:17.830 --> 00:00:23.690
-Select two New York buildings and ask which checks matter for a climate-resilient retrofit.
+6
+00:00:23.217 --> 00:00:29.797
+Muse Voice turns a spoken question into an editable message, while the map keeps both buildings in view.
 
-00:00:25.155 --> 00:00:30.085
-Spark retrieves official records and follows your question into climate evidence.
+7
+00:00:30.697 --> 00:00:38.077
+Across New York, search addresses, filter records, and explore mapped layers in 3D.
 
-00:00:30.115 --> 00:00:32.855
-These scenarios use the same rainfall.
+8
+00:00:38.217 --> 00:00:43.037
+A second selection opens a same-scale building comparison.
 
-00:00:32.915 --> 00:00:41.975
-In the 2050 map, the deep-water class touches 572 Smith’s outline; it is about forty-seven meters from 592.
+9
+00:00:44.030 --> 00:00:47.040
+Muse Spark brings official records into the conversation.
 
-00:00:43.447 --> 00:00:51.177
-That contrast directs the next visit: locate entrances, loading access, and essential equipment, then check
+10
+00:00:47.070 --> 00:00:53.440
+In this published 2050 rainfall scenario, mapped deep water reaches the ground at 572 Smith’s outline.
 
-00:00:51.207 --> 00:00:52.697
-their elevations.
+11
+00:00:53.470 --> 00:00:58.370
+At 592 Smith, the nearest deep-water class is about forty-seven meters away.
 
-00:00:52.727 --> 00:00:55.227
-Your requirements stay explicit.
+12
+00:00:59.280 --> 00:01:04.370
+That gives us a useful next step: compare entrance and equipment elevations.
 
-00:00:55.367 --> 00:01:01.627
-A twenty-thousand-square-foot footprint condition supports one candidate and conflicts with the other.
+13
+00:01:04.400 --> 00:01:10.100
+A separate footprint requirement helps us see which candidate fits the project’s initial size condition.
 
-00:01:03.113 --> 00:01:08.973
-SAM 3.1 marks roof and tree regions on actual 2024 aerial images.
+14
+00:01:10.988 --> 00:01:16.798
+Climate Studio combines station history, paired temperature and dew point, and regional future pathways to
 
-00:01:09.033 --> 00:01:14.283
-Wonder reviews the structured detections with public records and recommends the next survey.
+15
+00:01:16.828 --> 00:01:19.408
+frame the project’s operating conditions.
 
-00:01:14.313 --> 00:01:17.533
-Open the evidence to see where each question came from.
+16
+00:01:20.405 --> 00:01:27.545
+Energy reports trace each reporting boundary’s buildings and floor area, guiding requests for meter schedules.
 
-00:01:19.030 --> 00:01:25.320
-DINOv2 runs locally, comparing 2020 and 2024 visual features.
+17
+00:01:28.530 --> 00:01:32.900
+SAM 3.1 marks roof and tree regions in the dated aerials.
 
-00:01:25.350 --> 00:01:30.010
-Drag across the original photographs to inspect the highlighted locations.
+18
+00:01:32.930 --> 00:01:35.940
+Compare roof detections with the mapped outlines.
 
-00:01:31.488 --> 00:01:35.778
-Bring a planning note into Muse Glimmer, running on this computer.
+19
+00:01:35.970 --> 00:01:42.100
+Muse Wonder reviews those structured findings alongside building records, helping the team focus its next
 
-00:01:35.808 --> 00:01:43.138
-It connects your requirement to quoted records, proposes the first owner request, and explains which measured
+20
+00:01:42.130 --> 00:01:43.110
+survey.
 
-00:01:43.168 --> 00:01:46.018
-finding could change the next inspection.
+21
+00:01:44.072 --> 00:01:49.722
+DINOv2 compares the 2020 and 2024 images locally in the browser.
 
-00:01:46.048 --> 00:01:48.228
-Notes stay local.
+22
+00:01:49.752 --> 00:01:53.772
+We can explore the highlighted locations in the original photographs.
 
-00:01:49.697 --> 00:01:54.197
-Muse Image turns written checks into an illustrated inspection plan.
+23
+00:01:54.655 --> 00:01:57.105
+Muse Glimmer runs on the local computer.
 
-00:01:54.817 --> 00:01:59.717
-This earlier example connects each action to the decision it could change.
+24
+00:01:57.135 --> 00:02:01.315
+It connects our planning note to building records and owner requests.
 
-00:02:00.017 --> 00:02:03.877
-Open its written checks alongside the generated concept.
+25
+00:02:01.455 --> 00:02:05.425
+The team needs twenty thousand square feet of usable space.
 
-00:02:05.363 --> 00:02:13.413
-Built during this hackathon, GEONOS connects over a million valid mapped footprints, existing public datasets,
+26
+00:02:05.455 --> 00:02:10.995
+Here, verifying usable space could change which building we inspect first.
 
-00:02:13.443 --> 00:02:18.743
-and pretrained Meta models through one focused map and conversation.
+27
+00:02:11.988 --> 00:02:19.078
+Muse Image turns the written checks into an illustrated inspection plan, making the next steps easier to share
 
-00:02:20.238 --> 00:02:27.408
-Station weather, regional projections, energy reports, and citywide geometry give each question a source and
+28
+00:02:19.108 --> 00:02:20.808
+with the project team.
 
-00:02:27.438 --> 00:02:28.418
-scale.
+29
+00:02:21.780 --> 00:02:29.270
+Built during this hackathon, GEONOS brings more than a million mapped NYC building outlines into one focused
 
-00:02:28.638 --> 00:02:34.848
-Seven Meta model roles connect a spoken question to evidence, an inspection, and a better-informed building
+30
+00:02:29.300 --> 00:02:30.600
+workspace.
 
-00:02:34.878 --> 00:02:35.858
-decision.
+31
+00:02:31.572 --> 00:02:35.222
+We started with two buildings and a practical question.
+
+32
+00:02:35.252 --> 00:02:42.022
+Now we have a sourced comparison, a focused inspection plan, and clear requests for the owner.
+
+33
+00:02:42.052 --> 00:02:45.462
+Export the evidence and project conditions.
+
+34
+00:02:45.492 --> 00:02:52.072
+Seven Meta model roles work together to help us make the next building decision with better evidence.

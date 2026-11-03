@@ -4,17 +4,17 @@ GEONOS helps you compare two NYC buildings for a climate-sensitive use and ident
 
 ## Watch the recorded demo
 
-Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role recording edition, prepared on 31 October 2026. It includes the 2:37 overview and 8:30 full walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watch directly in your browser with captions and transcripts.
+Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role overview updated on 3 November 2026, with the retained full walkthrough. It includes the 2:55 overview and 8:30 full walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watch directly in your browser with captions and transcripts.
 
 The recordings use edited actual product states and synthetic English narration. 1080p delivery combines a recorded 3D opening, fresh full-page captures and archival product shots. Native source dimensions are retained in the production record. The Muse Image sequence presents an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026.
 
 ## Access and verified release
 
-[Open GEONOS](https://geonos-nyc-explorer-jh-1027.jholee.chatgpt.site/). Explore the map and public building records without signing in. Sign in with ChatGPT to use the hosted AI tools. The optional Glimmer inspection-note review uses the separate local setup below. The public service launched on 1 November 2026 at 04:37 UTC from source `bd3115414acc502df89c5421c53ad86dda31f4cf`; anonymous data access, ChatGPT sign-in and a live two-building Meta follow-up were checked. The current deployed source is `921e8af36e9d3e4eeb4ad6f4dd6050be3dca2d7b`, adding the 3D display correction so a selected building is rendered once at its recorded height.
+[Open GEONOS](https://geonos-nyc.ljh920821.workers.dev/). The current standalone Cloudflare demo exposes the map, public building records and capped hosted AI tools without requiring a ChatGPT account. The map and a live Muse Spark two-building comparison were checked in an anonymous browser on 3 November 2026. The tested question was: “Compare these two buildings for climate resilience. What should I verify next?” Persistent quotas protect the shared demo allowance; the optional Glimmer inspection-note review uses the separate local setup below. The recorded seven-role demonstrations include verified earlier hosted runs and the configured local Glimmer workflow.
 
 The v16 application was deployed on **1 November 2026 at 01:38 UTC** (31 October in New York), from source `afb7f21f3dae18d66f418dccf5f9edda39c5078b`. Actual production Spark checks retrieved both buildings’ surrounding-ground records and continued into owner questions. Earlier six-role production checks were recorded on 31 October UTC. Production browser checks covered editable synthetic-English transcription, paired SAM/Wonder analysis for 572 and 592 Smith Street, and local DINOv2 inference on the official 2020/2024 image pair. This repository adds the authentication hardening documented in [PUBLIC_EXPORT.md](PUBLIC_EXPORT.md).
 
-For an independent local review, follow [Run locally in the README](README.md#run-locally). The map, public-data inspection, requirements and exports run independently of the Meta API; live source lookups use network access. Optional model requests require **your own approved Meta account and server-side key**. Keep the preview on loopback; leave `TRUST_SITES_PROXY_IDENTITY=false`.
+For an independent local review, follow [Run locally in the README](README.md#run-locally). The map, public-data inspection, requirements and exports run independently of the Meta API; live source lookups use network access. Your own hosted AI deployment requires an approved Meta account, server-side secrets and the documented persistent quota binding. Keep the local Glimmer preview on loopback; leave `TRUST_SITES_PROXY_IDENTITY=false`.
 
 ## A short walkthrough
 
