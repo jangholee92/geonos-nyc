@@ -17,6 +17,7 @@ test('seven functional tools have explicit selection requirements and local-mode
  assert.match(META_TOOLS.find((t:any)=>t.id==='private').model,/Local/);
 });
 test('aerial launch adapts one and two buildings while historical imagery explicitly targets A',()=>{
+ assert.equal(metaToolPrompt('compare',2),'Compare these two buildings for climate resilience. What should I verify next?');
  assert.match(metaToolPrompt('aerial',1),/first selected building/);assert.doesNotMatch(metaToolPrompt('aerial',1),/both selected/);
  assert.match(metaToolPrompt('aerial',2),/both selected buildings using SAM and Wonder/);
  assert.match(metaToolPrompt('change',2),/first selected building \(A\).*2020.*2024.*DINOv2/);

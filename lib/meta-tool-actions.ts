@@ -20,7 +20,7 @@ export function toolSelectionIssue(tool:MetaToolId,ids:readonly string[]):string
 }
 export function metaToolPrompt(tool:MetaToolId,count:number):string|null{
  switch(tool){
-  case'compare':return 'Compare these two buildings for climate resilience. Use their building records and surrounding-ground scenarios. What stands out, and which site check should we prioritize?';
+  case'compare':return 'Compare these two buildings for climate resilience. What should I verify next?';
   case'aerial':return count===2?'Compare the aerial imagery, roofs and nearby tree context of both selected buildings using SAM and Wonder. Show which site checks could change our climate-resilience comparison.':'Inspect the aerial photograph of the first selected building. Use SAM to mark roofs and trees, and explain what needs to be confirmed on site.';
   case'change':return 'Show historical aerial images of the first selected building (A) and compare 2020 with 2024 using DINOv2.';
   case'review':return 'Give a Muse Wonder second review of the climate-resilience comparison of these two buildings. Challenge the weakest assumption and identify the next decisive check.';
