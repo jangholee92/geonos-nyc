@@ -1,10 +1,9 @@
 import path from "node:path";
 
-// Shared defaults for Vite and standalone Wrangler commands. Managed Linux
-// supplies its own checkout-local paths before these defaults are applied.
+// Shared defaults for Vite and standalone Wrangler commands. Local state stays outside tracked source.
 export function configureToolEnvironment(projectRoot) {
   const runtimeRoot =
-    process.env.SITES_RUNTIME_ROOT || path.join(projectRoot, ".sites-runtime");
+    process.env.GEONOS_RUNTIME_ROOT || path.join(projectRoot, ".geonos-runtime");
   const defaults = {
     CLOUDFLARE_CF_FETCH_ENABLED: "false",
     WRANGLER_SEND_METRICS: "false",

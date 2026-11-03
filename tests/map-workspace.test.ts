@@ -10,6 +10,8 @@ type Node={type:any;props:Any};
 const demo=JSON.parse(readFileSync(new URL('../public/data/demo-sites.json',import.meta.url),'utf8'));
 const buildings:CityBuilding[]=demo.buildings.slice(0,3);
 const source=ts.transpileModule(readFileSync(new URL('../app/page.tsx',import.meta.url),'utf8'),{fileName:'page.tsx',compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText;
+const toolModule={exports:{} as Any};
+new vm.Script(ts.transpileModule(readFileSync(new URL('../lib/meta-tool-actions.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText).runInNewContext({module:toolModule,exports:toolModule.exports});
 const plain=<T>(value:T):T=>JSON.parse(JSON.stringify(value));
 function deferred(){let resolve!:(value:any)=>void,reject!:(error:unknown)=>void;const promise=new Promise<any>((a,b)=>{resolve=a;reject=b;});return{promise,resolve,reject};}
 function descendants(value:any):Node[]{if(!value)return[];if(Array.isArray(value))return value.flatMap(descendants);if(typeof value!=='object'||!('props'in value))return[];return[value,...descendants(value.props.children)];}
@@ -36,6 +38,7 @@ function workspace(){
   if(name==='lucide-react')return new Proxy({}, {get:(_,key)=>String(key)});
   if(name.endsWith('.css'))return{};
   if(name.startsWith('@/components/'))return{__esModule:true,default:name.slice(13)};
+  if(name==='@/lib/meta-tool-actions')return toolModule.exports;
   if(name==='@/lib/address-search')return{addressQuery:(entry:Any)=>entry.match?.bin||(/^\d{7}$|^\d{10}$/.test(entry.text)?entry.text:null)};
   if(name==='@/lib/city')return{BOROUGHS:{},validateQuery:(params:URLSearchParams)=>Object.fromEntries([...params].map(([key,value])=>[key,key==='bbox'?value.split(',').map(Number):['limit','cursor','page','minArea'].includes(key)?Number(value):value])),queryCity:(query:CityQuery)=>{const request=deferred();queries.push({query:plain(query),request});return request.promise;}};
   if(name==='@/lib/site-context')return{fetchSiteContext:(id:string)=>{contextIds.push(id);return new Promise(()=>{});}};

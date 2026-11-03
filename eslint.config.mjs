@@ -9,7 +9,7 @@ const eslintConfig = defineConfig([
     "dist/**",
     ".vinext/**",
     ".wrangler/**",
-    ".sites-runtime/**",
+    ".geonos-runtime/**",
     "outputs/**",
     "work/**",
   ]),

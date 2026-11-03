@@ -12,7 +12,7 @@ function harness(options:Obj={}):Obj{
  const env={GEONOS_LOCAL_REVIEW:'true',GEONOS_GLIMMER_URL:'http://127.0.0.1:8088/v1',GEONOS_GLIMMER_API_KEY:'synthetic-local-test-key',...options.env};
  const config=compile('../lib/local-review-config.ts',name=>{assert.equal(name,'cloudflare:workers');return{env};});
  const route=compile('../app/api/local-review/route.ts',name=>{
-  if(name==='../../chatgpt-auth')return{getChatGPTUser:async()=>options.auth===false?null:{userId:'local-test-user'}};
+  if(name==='../../../lib/local-review-auth')return{getLocalReviewActor:()=>options.auth===false?null:{userId:'local-test-user'}};
   if(name==='../../../lib/local-review-config')return config;
   if(name==='../../../lib/reviewed-plan')return{resolveReviewedPlan:async(input:Obj)=>{sources.push(input);if(options.sourceFailure)throw Error('PRIVATE_SOURCE_BODY');if(options.sourcePending)return new Promise(()=>{});return{buildings:input.ids.map((id:string)=>({id,address:'Official '+id,entity_type:'building',retrieval:{mode:'live-query',retrieved_at:new Date().toISOString()}}))};}};
   if(name==='../../../lib/local-glimmer-review')return{LocalGlimmerError:MockError,reviewLocalGlimmer:async(input:Obj,configuration:Obj,signal:AbortSignal)=>{calls.push({input,configuration,signal});if(options.reviewPending)return new Promise(()=>{});if(options.reviewError)throw options.reviewError;return{kind:'local_glimmer_review',model:'muse-glimmer',execution:'local-loopback',buildingIds:input.buildings.map((b:Obj)=>b.id),actions:[{id:'a1',title:'Review the owner note'}]};}};
@@ -58,7 +58,7 @@ test('server endpoint has a fixed loopback destination and rejects arbitrary URL
  for(const url of ['https://127.0.0.1:8088/v1','http://public.example/v1','http://127.0.0.1.attacker/v1','http://2130706433/v1','http://127.1/v1','http://user:password@127.0.0.1/v1','http://127.0.0.1:65536/v1','http://127.0.0.1/v1?key=bad','http://127.0.0.1/v1#bad','http://127.0.0.1/private'])assert.equal(await harness({env:{GEONOS_GLIMMER_URL:url}}).localReviewConfig(request()),null,url);
  const h=harness();assert.equal((await h.localReviewConfig(request())).endpoint,'http://127.0.0.1:8088/v1/chat/completions');
 });
-test('POST requires exact Origin, same-origin fetch metadata and authenticated user',async()=>{
+test('POST requires exact Origin, same-origin fetch metadata and local preview actor',async()=>{
  const h=harness();
  for(const headers of [{Origin:'null'},{Origin:'https://attacker.example'},{Origin:'http://localhost:40090'},{Origin:''},{'Sec-Fetch-Site':'cross-site'},{'Sec-Fetch-Site':'same-site'},{'Sec-Fetch-Site':'none'}])assert.equal((await h.POST(request(undefined,{headers}))).status,403);
  const noOrigin=request();noOrigin.headers.delete('origin');assert.equal((await h.POST(noOrigin)).status,403);

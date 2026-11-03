@@ -23,13 +23,13 @@ Dates below use **America/New_York** and were read from the private repository's
 | 28–29 October 2026 | `fd6c905`, `66967a2`, `67db1b1`, then `b073789` at 00:10 on 29 October | Independent citywide map, conversational/visual evidence and source-based climate comparison with explicit refusal handling |
 | 30 October 2026 | `9d2a394` at 14:52 | Wonder second review and Image inspection concepts; specific production cases verified |
 | 30 October 2026 | `bfb83e3` at 20:21 through `fd66756` at 20:37 | Voice, paired SAM/Wonder and DINOv2 browser comparison; compressed model delivery and authenticated same-origin asset fix |
-| 31 October 2026 | Public export preparation | Sanitized source, neutral hosting configuration, default-deny production identity, public documentation and license notices |
+| 31 October 2026 | Public export preparation | Sanitized source, deployment separation, default-deny production identity, public documentation and license notices |
 
 ## Pre-existing foundations
 
 - Meta's Muse/SAM APIs, official SAM parser, and pretrained DINOv2 weights. GEONOS did not train these models.
 - NYC/NYS/NOAA/Census/MTA public-source measurements, imagery and boundaries. GEONOS acquired, validated, transformed or queried them; it did not collect the original government observations.
-- Sites/Vinext/Next/React, Cloudflare development tooling, MapLibre, ONNX Runtime, UI libraries and other locked dependencies. Their licenses and attribution remain separate.
+- Vinext/Next/React, Cloudflare development tooling, MapLibre, ONNX Runtime, UI libraries and other locked dependencies. Their licenses and attribution remain separate.
 - Published scientific methods and papers cited in the reports. Application-specific calculations and visualization do not establish independent scientific validation.
 
 For a demo, show the actual interface and identify the new interaction or analysis being demonstrated. Distinguish model interpretation, deterministic source calculations and existing public evidence. Do not present prepared source or media as a completed competition submission.

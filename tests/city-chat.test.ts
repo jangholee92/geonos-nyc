@@ -17,6 +17,7 @@ function compile(path:string,requireFn:(s:string)=>any, extra:Obj={}) {
  const module={exports:{} as Obj};
  new vm.Script(code).runInContext(vm.createContext({module,exports:module.exports,require:(id:string)=>id.endsWith('/meta-paid-fetch')?{MetaSpendError:TestMetaSpendError,fetchMetaPaid:(url:string,init:RequestInit)=>{if(extra.spendDenied)throw new TestMetaSpendError();return extra.fetch(url,init);},settleMetaPaid:async()=>false,getMetaSpendStatus:async()=>({status:extra.spendStatus??'available'})}:requireFn(id),Response,Request,URL,URLSearchParams,AbortSignal,TextEncoder,TextDecoder,Uint8Array,process:{env:{}},...extra}));return module.exports;
 }
+const publicFetch=compile('../lib/public-fetch.ts',()=>{throw Error('Public fetch has no imports')});
 const planner=compile('../lib/decision-plan.ts',()=>{throw Error('Planner must remain pure')});
 const resilience=compile('../lib/resilience-brief.ts',s=>{if(s==='./decision-plan')return planner;throw Error(s)});
 const descriptions=compile('../lib/building-description.ts',()=>{throw Error('Building descriptions must remain pure')});
@@ -53,6 +54,7 @@ function harness(provider:(body:Obj,n:number)=>Obj|Promise<Obj>, options:Obj={})
  const exports=compile('../app/api/chat/route.ts',(s)=>{
   if(s==='cloudflare:workers')return{env:{MODEL_API_KEY:options.configured===false?'':'synthetic-test-key',META_API_APPROVED:options.approved===false?'false':options.approvalMissing?undefined:'true'}};
   if(s==='../../../lib/demo-access')return{getDemoActor:async()=>options.auth===false?null:{userId:options.userId??'unit-test-user'}};
+  if(s==='../../../lib/public-fetch')return publicFetch;
   if(s==='../../../lib/decision-plan')return planner;
   if(s==='../../../lib/building-description')return descriptions;
   if(s==='../../../lib/resilience-brief')return resilience;
@@ -80,7 +82,7 @@ function harness(provider:(body:Obj,n:number)=>Obj|Promise<Obj>, options:Obj={})
   if(s==='../../../lib/planning-context')return{planningContextTool:{type:'function',function:{name:'read_planning_context',parameters:{type:'object',properties:{},additionalProperties:false}}},readPlanningContext:(userTexts:string[])=>{planningCalls.push([...userTexts]);if(options.realPlanning)return planning.readPlanningContext(userTexts,new Date('2026-10-28T20:00:00Z'));if(options.planningFailure)throw Error('Planning context unavailable');return options.planningResult??{kind:'planning_context',status:'available',planningWindow:{origin:'relative_user_window',quote:'next 10 years',anchorDate:'2026-10-29',requestedStartYear:2026,requestedEndYear:2036,publishedHorizon:'2030s',interpretation:'Published regional reference, not an exact 2026–2036 forecast'},facts:[],citations:[{evidenceId:'planning:test-reference-window',source:{label:'Planning fixture',url:'https://www.nyc.gov/site/orr/index.page'},measurement:'reference_window',scope:'NYC_region',unit:'published_horizon',value:'2030s'}],limitations:['No exact ten-year or building-specific forecast.']};}};
   if(s==='../../../lib/city-screening')return{screen};
   if(s==='../../../lib/site-context')return{fetchSiteContext:async(id:string)=>{contextCalls.push(id);if(options.contextFailure)throw Error('test unavailable');return context(id)}};
-  if(s==='../../../lib/city')return{...city,queryCity:async(q:CityQuery)=>{queries.push(q);if(options.queryFailure||queries.length===options.queryFailureAt)throw Error('test source unavailable');return{buildings:q.unit==='parcel'?records.filter(b=>b.id==='p:'+q.q):records,next_cursor:102,next_page:null,has_more:true,mode:'building-search',query:q,fetched_at:'2026-10-27T00:00:00Z',warnings:['Bounded page'],source_url:'https://data.cityofnewyork.us/d/5zhs-2jue'}},soda:async(dataset:string,p:Obj,ttl:number)=>{sodaCalls.push({dataset,...p,ttl});if(options.sodaFailure)throw Error('Public source unavailable');if(dataset==='5zhs-2jue'){const id=String(p.$where).split('=')[1];return records.filter(b=>b.id===id).map(b=>({doitt_id:b.id,bin:b.bin,mappluto_bbl:b.bbl,base_bbl:b.bbl,the_geom:b.geometry}))}return[{bbl:'1000010001',address:'Official source address',bldgarea:'50000',lotarea:'25000'}]}};
+  if(s==='../../../lib/city')return{...city,queryCity:async(q:CityQuery)=>{queries.push(q);if(options.queryFailure||queries.length===options.queryFailureAt)throw Error('test source unavailable');return{buildings:q.unit==='parcel'?records.filter(b=>b.id==='p:'+q.q):records,next_cursor:102,next_page:null,has_more:true,mode:'building-search',query:q,fetched_at:'2026-10-27T00:00:00Z',warnings:['Bounded page'],source_url:'https://data.cityofnewyork.us/d/5zhs-2jue'}},soda:async(dataset:string,p:Obj,ttl:number)=>{sodaCalls.push({dataset,...p,ttl});if(options.sodaError)throw options.sodaError;if(options.sodaFailure)throw Error('Public source unavailable');if(dataset==='5zhs-2jue'){const id=String(p.$where).split('=')[1];return records.filter(b=>b.id===id).map(b=>({doitt_id:b.id,bin:b.bin,mappluto_bbl:b.bbl,base_bbl:b.bbl,the_geom:b.geometry}))}return[{bbl:'1000010001',address:'Official source address',bldgarea:'50000',lotarea:'25000'}]}};
   throw Error('Unexpected module '+s);
  },{spendStatus:options.spendStatus,spendDenied:options.spendDenied,Date:options.clock??Date,AbortSignal:options.abortSignal??AbortSignal,console:{warn:(...args:unknown[])=>diagnostics.push(args)},fetch:async(url:string,init:RequestInit)=>{assert.equal(url,'https://api.meta.ai/v1/chat/completions');assert.equal((init.headers as Obj).Authorization,'Bearer synthetic-test-key');const body=JSON.parse(String(init.body));requests.push(body);if(options.providerStatus)return Response.json(options.providerError??{error:{message:'Synthetic provider failure'}},{status:options.providerStatus,headers:options.providerHeaders});return Response.json({choices:[{message:await provider(body,requests.length)}]})}});
  return{POST:exports.POST as (request:Request)=>Promise<TestResponse>,GET:exports.GET as (request?:Request)=>Promise<TestResponse>,requests,queries,sodaCalls,contextCalls,energyCalls,planningCalls,imageryCalls,reviewCalls,conceptCalls,visualCalls,temporalCalls,groundCalls,diagnostics};
@@ -579,4 +581,22 @@ test('monetary exhaustion disables chat capability and terminates before any pro
   assert.equal(response.status,429);assert.equal(payload.code,'META_SPEND_LIMIT');assert.equal(payload.providerStatus,undefined);
   assert.equal(h.requests.length,0);assert.equal(h.sodaCalls.length,0);assert.equal(h.contextCalls.length,0);assert.equal(h.reviewCalls.length+h.conceptCalls.length+h.imageryCalls.length+h.visualCalls.length,0);
  }
+});
+
+
+test('official comparison failures retain safe public-source diagnostics without changing native IDs or retrying',async()=>{
+ for(const [name,code,status]of [['compare_resilience','PUBLIC_HTTP_ERROR',429],['compare_sites','PUBLIC_TIMEOUT',undefined]]as const){
+  const failure=new publicFetch.PublicDataError(code,status);failure.message='secret upstream body https://private.example/?token=DO_NOT_EMIT';
+  const h=harness((_,n)=>n===1?tool(name,{ids:['101','102']}):{content:'The source lookup failed; current site facts remain unavailable.'},{sodaError:failure});
+  const response=await h.POST(request({selectedIds:['101','102']}));assert.equal(response.status,200);const out=await response.json();
+  assert.equal(out.toolCalls.length,1);assert.equal(out.toolCalls[0].result.publicData.code,code);assert.equal(out.toolCalls[0].result.publicData.status,status??null);
+  assert.equal(out.evidence.length,0);assert.equal(out.citations.length,0);assert.equal(h.requests.length,2);assert.equal(h.sodaCalls.length,2);
+  assert.deepEqual(h.sodaCalls.map(x=>x.$where),['doitt_id=101','doitt_id=102']);
+  const sent=JSON.parse(h.requests[1].messages.at(-1).content);assert.equal(sent.publicData.code,code);assert.ok(!JSON.stringify(out).includes('DO_NOT_EMIT'));assert.ok(!JSON.stringify(h.requests).includes('private.example'));
+ }
+});
+test('source diagnostics omit invalid status values and do not expose arbitrary exception messages',async()=>{
+ const failure=new publicFetch.PublicDataError('PUBLIC_HTTP_ERROR',99999);failure.message='DO_NOT_EMIT';
+ const h=harness((_,n)=>n===1?tool('compare_sites',{ids:['101','102']}):{content:'The public source failed.'},{sodaError:failure});
+ const out=await(await h.POST(request({selectedIds:['101','102']}))).json();assert.equal(out.toolCalls[0].result.publicData.status,null);assert.ok(!JSON.stringify(out).includes('99999'));assert.ok(!JSON.stringify(out).includes('DO_NOT_EMIT'));
 });

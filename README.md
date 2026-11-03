@@ -34,9 +34,9 @@ npm run dev -- --host 127.0.0.1
 
 Open the printed localhost URL. The map, public-data tools and deterministic evidence checks run independently of the Meta API. Live source lookups require network access. Keep the preview bound to loopback.
 
-The local map and deterministic tools are available immediately. For the optional Glimmer mode, follow the pinned setup below; its loopback sign-in is separate from the deployed public-demo actor.
+The local map and deterministic tools are available immediately. For the optional Glimmer mode, follow the pinned setup below. Its development-only loopback capability is separate from the deployed public-demo actor.
 
-To deploy your own public AI demo, use an approved Meta account and configure server-side Cloudflare secrets `MODEL_API_KEY`, `META_API_APPROVED=true`, a random `DEMO_IP_SALT` of at least 32 characters, and a deliberate `META_DEMO_BUDGET_USD` spending allowance. The generated Worker configuration binds the `DemoBudget` Durable Object and enables `GEONOS_PUBLIC_DEMO`. A missing spending allowance blocks paid calls. Do not commit secret values or enable `TRUST_SITES_PROXY_IDENTITY` on a generic host. A localhost sign-in alone does not create the Cloudflare-edge actor used by the public chat/voice routes.
+To deploy your own public AI demo, use an approved Meta account and configure server-side Cloudflare secrets `MODEL_API_KEY`, `META_API_APPROVED=true`, a random `DEMO_IP_SALT` of at least 32 characters, and a deliberate `META_DEMO_BUDGET_USD` spending allowance. The generated Worker configuration binds the `DemoBudget` Durable Object and enables `GEONOS_PUBLIC_DEMO`. A missing spending allowance blocks paid calls. Do not commit secret values. The optional local-review capability does not create the Cloudflare-edge actor used by the public chat/voice routes.
 
 ```sh
 node --test tests/*.test.ts tests/*.test.mjs scripts/build-citywide-tiles.test.mjs
@@ -56,7 +56,7 @@ Default allowances are 60 chat and 20 voice interactions per UTC day, with lifet
 
 A separate persistent spending ledger reserves a conservative maximum cost before **every paid Meta call**, including later conversation rounds and parallel analyses. Validated text-token usage can reduce that reservation; uncertain charges keep their full reservation. Missing accounting or insufficient allowance stops the paid call and disables the composer. Concurrent requests share the same ledger, which survives redeployment. This is an operator-configured application budget based on a verified starting credit balance, rather than live Meta account-balance synchronization. Keep other clients outside this accounting boundary from spending the same credits. See [Standalone deployment](STANDALONE_DEPLOYMENT.md) for configuration and verification.
 
-The previous Sites deployment used ChatGPT sign-in. Its retained authentication helper rejects production identity headers unless explicitly configured for a trusted Sites edge. The local mock is limited to loopback and is used by the optional Glimmer workflow. Neither is the current public-demo quota actor. The neutral `.openai/hosting.json` retains the build adapter without private project identity. Publishing this source supplies neither provider credentials nor another deployment's quota storage.
+The standalone build uses a direct Cloudflare Worker configuration. Optional local Glimmer access is established only by the loopback development server and retains exact-origin and local model-token checks. Publishing this source supplies neither provider credentials nor another deployment's quota storage.
 
 ## Seven model roles
 
@@ -112,4 +112,4 @@ The guide names **Muse Glimmer or Muse Spark Open** for the Best Open-Weight bon
 
 ## Rights and attribution
 
-See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This snapshot does not grant a blanket license over all application code, data, model weights and dependencies. Third-party materials retain their own terms, including the custom SAM parser license, DINOv2's Apache-2.0 license, ONNX Runtime notices, and publisher-specific data terms. No API key, private Site access credential or production user content is included.
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). This snapshot does not grant a blanket license over all application code, data, model weights and dependencies. Third-party materials retain their own terms, including the custom SAM parser license, DINOv2's Apache-2.0 license, ONNX Runtime notices, and publisher-specific data terms. No API key, private deployment credential or production user content is included.

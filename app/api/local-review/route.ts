@@ -1,4 +1,4 @@
-import {getChatGPTUser} from '../../chatgpt-auth';
+import {getLocalReviewActor} from '../../../lib/local-review-auth';
 import {getLocalReviewAvailability,isLocalReviewPostOrigin,localReviewConfig} from '../../../lib/local-review-config';
 import {resolveReviewedPlan} from '../../../lib/reviewed-plan';
 import {reviewLocalGlimmer,LocalGlimmerError} from '../../../lib/local-glimmer-review';
@@ -39,8 +39,8 @@ export async function POST(request:Request){
  const configuration=await localReviewConfig(request);
  if(!configuration)return fail('Local review is unavailable.','LOCAL_REVIEW_UNAVAILABLE',404);
  if(!isLocalReviewPostOrigin(request))return fail('Open local review from this application.','LOCAL_REVIEW_ORIGIN_REJECTED',403);
- const user=await getChatGPTUser();
- if(!user)return fail('Sign in to use local review.','AUTH_REQUIRED',401);
+ const user=getLocalReviewActor();
+ if(!user)return fail('Open local review from the local development app.','AUTH_REQUIRED',401);
  const now=Date.now();for(const[id,record]of windows)if(now-record.start>=60_000)windows.delete(id);
  const window=windows.get(user.userId)??{start:now,count:0};
  if(active||window.count>=4||(!windows.has(user.userId)&&windows.size>=2048))return fail('Finish the current local review or try again shortly.','RATE_LIMITED',429);

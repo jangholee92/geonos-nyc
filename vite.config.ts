@@ -1,97 +1,42 @@
 import vinext from "vinext";
+import { randomBytes } from "node:crypto";
 import { defineConfig } from "vite";
-import hostingConfig from "./.openai/hosting.json";
-import { readExecutionProfile } from "./scripts/execution-profile.mjs";
 import { configureToolEnvironment } from "./scripts/tool-environment.mjs";
-import { sites } from "./scripts/vite/sites-vite-plugin";
-import { connectorPreview } from "./scripts/vite/connector-preview-plugin.mjs";
-
-const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
-  "00000000-0000-4000-8000-000000000000";
-
-const { d1, r2 } = hostingConfig;
-
-// macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
-const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
-const managedLinux = readExecutionProfile() === "managed-linux";
-
-const localBindingConfig = {
-  name: "geonos-nyc",
-  workers_dev: true,
-  durable_objects: { bindings: [{name: "DEMO_BUDGET", class_name: "DemoBudget"}] },
-  migrations: [{tag: "v1", new_sqlite_classes: ["DemoBudget"]}],
-  vars: { GEONOS_PUBLIC_DEMO: "true" },
-  main: "./worker/index.ts",
-  compatibility_flags: ["nodejs_compat"],
-  assets: { binding: "ASSETS" },
-  d1_databases: d1
-    ? [
-        {
-          binding: d1,
-          database_name: "site-creator-d1",
-          database_id: SITE_CREATOR_PLACEHOLDER_DATABASE_ID,
-        },
-      ]
-    : [],
-  r2_buckets: r2
-    ? [
-        {
-          binding: r2,
-          bucket_name: "site-creator-r2",
-        },
-      ]
-    : [],
-};
+import { localPreview } from "./scripts/vite/local-preview";
 
 export default defineConfig(async ({ command }) => {
   configureToolEnvironment(process.cwd());
-
-  // Wrangler snapshots its log path while the Cloudflare plugin is imported.
   const { cloudflare } = await import("@cloudflare/vite-plugin");
-
+  const development = command === "serve";
+  // This capability exists only in a loopback development process. It is never
+  // placed in browser code, a production binding or a tracked environment file.
+  const previewToken = development ? randomBytes(32).toString("hex") : null;
   return {
     server: {
-      ...(managedLinux
-        ? { host: "0.0.0.0", allowedHosts: ["terminal.local"] }
-        : {}),
-      ...(isCodexSeatbeltSandbox
-        ? { watch: { useFsEvents: false, usePolling: true } }
-        : {}),
+      host: "127.0.0.1",
+      strictPort: true,
+      fs: { deny: [".env", ".env.*", ".dev.vars", ".dev.vars.*", "*.{crt,pem}", "**/.git/**", "**/.geonos-runtime/**"] },
+      watch: { ignored: ["**/.geonos-runtime/**"], ...(process.env.GEONOS_POLLING === "true" ? { useFsEvents: false, usePolling: true } : {}) },
     },
     plugins: [
       vinext(),
-      sites({ mockAuth: !managedLinux }),
-      connectorPreview(),
+      ...(previewToken ? [localPreview(previewToken)] : []),
       cloudflare({
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
         inspectorPort: false,
         config: {
-          ...localBindingConfig,
-          ...(command === "serve"
-            ? {
-                services: [
-                  {
-                    binding: "CONNECTORS",
-                    service: "sites-connector-preview",
-                    entrypoint: "ConnectorPreview",
-                  },
-                ],
-              }
-            : {}),
+          name: "geonos-nyc",
+          workers_dev: true,
+          main: "./worker/index.ts",
+          compatibility_flags: ["nodejs_compat"],
+          assets: { binding: "ASSETS" },
+          durable_objects: { bindings: [{ name: "DEMO_BUDGET", class_name: "DemoBudget" }] },
+          migrations: [{ tag: "v1", new_sqlite_classes: ["DemoBudget"] }],
+          vars: {
+            GEONOS_PUBLIC_DEMO: "true",
+            ...(previewToken ? { GEONOS_LOCAL_PREVIEW: "true", GEONOS_LOCAL_PREVIEW_TOKEN: previewToken } : {}),
+          },
         },
-        ...(command === "serve"
-          ? {
-              auxiliaryWorkers: [
-                {
-                  config: {
-                    name: "sites-connector-preview",
-                    main: "./scripts/connector-preview/worker.mjs",
-                    compatibility_date: "2026-05-15",
-                  },
-                },
-              ],
-            }
-          : {}),
       }),
     ],
   };

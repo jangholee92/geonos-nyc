@@ -10,6 +10,6 @@ META_DEMO_BUDGET_USD=
 # Set a deliberate finite dollar allowance for future hosted Meta usage.
 # Missing allowance blocks paid calls; redeployment never resets spent dollars.
 # Hosted requests use Cloudflare edge metadata and the durable anonymous allowance.
-# Loopback /signin is not an authorization mechanism for this standalone deployment.
-# Never enable TRUST_SITES_PROXY_IDENTITY on this directly exposed Worker.
+# Local Glimmer uses an independent development-only loopback capability.
+# Hosted identity is derived only from the Cloudflare request quota context.
 # See STANDALONE_DEPLOYMENT.md for finite allowance settings and deployment checks.

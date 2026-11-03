@@ -1,5 +1,6 @@
 import { fetchMetaPaid, settleMetaPaid, MetaSpendError, getMetaSpendStatus } from "../../../lib/meta-paid-fetch";
 import { getDemoActor } from "../../../lib/demo-access";
+import { PublicDataError } from "../../../lib/public-fetch";
 import { queryCity, validateQuery, soda, combineBuilding, type CityBuilding, type CityQuery } from "../../../lib/city";
 import { fetchSiteContext, type SiteContext } from "../../../lib/site-context";
 import { type Preferences } from "../../../lib/city-screening";
@@ -523,7 +524,16 @@ SCOPE AND BUDGET: Respect current query constraints unless the user asks to chan
           if(error instanceof VisualComparisonError||error instanceof TemporalImageryError)return fail(error.message,error.code,error.code.includes("CANCEL")?499:502);
           if (error instanceof ComparisonReviewError) return fail(error.message, error.code, error.code === "WONDER_CONTENT_FILTERED" || error.code === "WONDER_REFUSED" ? 422 : 502);
           if (error instanceof AdaptationConceptError) return fail(error.message, error.code, error.code === "CONCEPT_CONTENT_FILTERED" ? 422 : 502);
-          result = { error: (error instanceof InputError || error instanceof DecisionToolError || error instanceof InvestigationInputError || error instanceof SegmentationError || error instanceof SiteImageryError) ? error.message : "The official-data request failed. Unknown does not mean zero or safe.", allowedTools: TOOL_NAMES };
+          if (error instanceof PublicDataError) {
+            // Preserve bounded source failure metadata, never the upstream body,
+            // URL, credentials or an arbitrary exception message. No retry is added.
+            const code = ["PUBLIC_HTTP_ERROR", "PUBLIC_TIMEOUT", "PUBLIC_INVALID_JSON", "PUBLIC_NETWORK_ERROR"].includes(error.code) ? error.code : "PUBLIC_NETWORK_ERROR";
+            const status = Number.isInteger(error.status) && error.status! >= 100 && error.status! <= 599 ? error.status! : null;
+            const reason = code === "PUBLIC_TIMEOUT" ? "timed out" : code === "PUBLIC_INVALID_JSON" ? "returned an invalid response" : code === "PUBLIC_HTTP_ERROR" && status !== null ? `returned HTTP ${status}` : "could not connect";
+            result = { error: `The official public-data request ${reason}. No record was established by this failed attempt.`, publicData: { code, status }, allowedTools: TOOL_NAMES };
+          } else {
+            result = { error: (error instanceof InputError || error instanceof DecisionToolError || error instanceof InvestigationInputError || error instanceof SegmentationError || error instanceof SiteImageryError) ? error.message : "The official-data request failed. Unknown does not mean zero or safe.", allowedTools: TOOL_NAMES };
+          }
         }
         traces.push({ name: call.function.name, arguments: args, result });
         messages.push({ role: "tool", tool_call_id: call.id, content: JSON.stringify(result) });

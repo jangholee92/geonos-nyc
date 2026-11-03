@@ -1,6 +1,6 @@
 # Standalone public GEONOS demo
 
-This checkout runs the application on Cloudflare Workers with Static Assets. The map, official-record queries, browser DINOv2 and hosted Meta features use the same application routes. Visitors use an explicitly anonymous demo allowance; the standalone UI does not present ChatGPT sign-in. Glimmer remains a separately configured local workflow.
+This checkout runs the application on Cloudflare Workers with Static Assets. The map, official-record queries, browser DINOv2 and hosted Meta features use the same application routes. Visitors use an anonymous demo allowance without an account sign-in. Glimmer remains a separately configured local workflow.
 
 ## Build and deployment
 
@@ -14,7 +14,7 @@ Deploy the generated configuration through an authorized Cloudflare account. The
 - `DEMO_IP_SALT`: a newly generated random string of at least 32 characters, used only to derive daily HMAC quota keys.
 - `META_DEMO_BUDGET_USD`: a finite spending allowance for future Meta calls, configured privately by the operator.
 
-Do not copy local Glimmer configuration or credentials to the hosted Worker. Never enable `TRUST_SITES_PROXY_IDENTITY` on this directly exposed deployment. Provider credentials and raw IP addresses are not stored in the quota object.
+Do not copy local Glimmer configuration or credentials to the hosted Worker. Provider credentials and raw IP addresses are not stored in the quota object.
 
 ## Durable demo allowances
 
@@ -42,6 +42,6 @@ The model/rate allowlist is pinned to the [official pricing](https://dev.meta.ai
 
 ## Boundary and verification
 
-The quota actor is an internal `anonymous-demo` type derived from Cloudflare request metadata. It is not an authenticated person, email or ChatGPT account. Incoming identity headers are removed. Paid POSTs require the exact application Origin. Quota storage contains counters, daily salted IP digests and expiring lease identifiers; it contains no questions, notes, recordings or model replies.
+The quota actor is an internal `anonymous-demo` type derived from Cloudflare request metadata. It represents a bounded demo session rather than an authenticated person or email. Incoming identity headers are removed. Paid POSTs require the exact application Origin. Quota storage contains counters, daily salted IP digests and expiring lease identifiers; it contains no questions, notes, recordings or model replies.
 
 Verify the actual public URL after deployment: anonymous map/data, no-sign-in chat/voice status, rejected cross-origin writes, persistent allowances, exhausted-budget rejection without a provider request, one authorized real model request, pinned surrounding-ground assets and browser model loading. Free-plan CPU limits must be checked with real workloads; no paid plan upgrade is performed by these build scripts.

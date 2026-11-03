@@ -21,7 +21,7 @@ async function budgetCall(stub:DurableObjectStub,path:string,body:unknown){
 export async function gateDemo(request:Request,env:DemoEnv,ctx:Pick<ExecutionContext,'waitUntil'>,run:(request:Request)=>Promise<Response>):Promise<Response>{
  const url=new URL(request.url),kind:DemoKind|null=url.pathname==='/api/chat'?'chat':url.pathname==='/api/transcribe'?'voice':null;
  const headers=new Headers(request.headers);
- for(const key of headers.keys())if(key.startsWith('oai-authenticated-user-')||key.startsWith('x-geonos-'))headers.delete(key);
+ for(const key of [...headers.keys()])if(key.includes('authenticated-user')||key.startsWith('x-geonos-'))headers.delete(key);
  const clean=new Request(request,{headers});
  if(!kind)return runWithDemoActor(null,()=>run(clean));
  const actor=await demoActor(request,env);

@@ -177,7 +177,7 @@ research/citywide/.venv/bin/python research/decision_patterns/fetch_masks.py
 python3 research/decision_patterns/audit_public_package.py
 ```
 
-The package audit checks all shard hashes/counts, report links, public symlinks and accidental absolute local paths. The staged public-sync test also verifies an idempotent second run and proves that a deliberately missing energy-scope field leaves the destination unchanged. Source/archive code and raw research data are not silently bundled into the public Site. A clone of the app repository contains the browser products and public-sync script, but a complete raw-data rebuild additionally requires the separately retained research workspace. Final production build, Sites archive contents and deployed CDN transfers must still be checked for the final publication revision; an older archive is not evidence for these newer artifacts.
+The package audit checks all shard hashes/counts, report links, public symlinks and accidental absolute local paths. The staged public-sync test also verifies an idempotent second run and proves that a deliberately missing energy-scope field leaves the destination unchanged. Source/archive code and raw research data are not silently bundled into the public application. A clone of the app repository contains the browser products and public-sync script, but a complete raw-data rebuild additionally requires the separately retained research workspace. Final production build, Worker and static-asset contents and deployed CDN transfers must still be checked for the final publication revision; an older archive is not evidence for these newer artifacts.
 
 ### Original citywide acquisition
 
