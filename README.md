@@ -12,7 +12,7 @@ This is a sanitized public source snapshot of the hackathon application, based o
 
 Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role overview updated on 3 November 2026, with the retained full walkthrough. The page contains a 2:55 overview and an 8:30 full walkthrough, with English captions and transcripts. You can also open [docs/index.html](docs/index.html) locally.
 
-The videos show edited actual product states with synthetic English narration. 1080p delivery combines a recorded 3D opening, fresh full-page captures and archival product shots. Native source dimensions are retained in the production record. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
+The videos show edited actual product states with synthetic English narration. The 1080p overview combines the recorded 3D opening and current Meta toolbar views with large, source-linked evidence readouts. Original aerial photographs, masks and map shapes retain their recorded geometry; exact source quotations and values are typeset for readability. The full walkthrough retains its original captured views. The Muse Image sequence uses an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026. Watch directly in your browser, with captions and transcripts. See [JUDGE_GUIDE.md](JUDGE_GUIDE.md) for hands-on exercises and application access.
 
 ## What it does
 
@@ -20,7 +20,7 @@ The videos show edited actual product states with synthetic English narration. 1
 - Identifies the scope of each measurement: building footprint, tax-lot floor area, community context or energy-report boundary. Open questions become explicit owner-document and inspection requests.
 - Connects evidence to the next owner document or site inspection that could change a comparison.
 - Offers dated roof/tree masks, a paired aerial review and an optional local 2020/2024 visual-feature comparison inside chat.
-- Turns voice recordings and analysis-menu choices into editable drafts, with the user choosing when to send.
+- Presents seven analysis choices in the top Meta toolbar. Model prompts become editable drafts; Voice opens recording/upload controls, and Private notes opens the optional local workflow. Sending remains an explicit action.
 - In local mode, reviews two refreshed building records with an inspection note and returns source-linked next actions and a conditional follow-up.
 
 ## Run locally

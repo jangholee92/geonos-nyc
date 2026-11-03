@@ -6,7 +6,7 @@ GEONOS helps you compare two NYC buildings for a climate-sensitive use and ident
 
 Watch the [public recorded demo](https://jangholee.com/geonos-nyc/) — seven-role overview updated on 3 November 2026, with the retained full walkthrough. It includes the 2:55 overview and 8:30 full walkthrough, captions and transcripts. The same page is available locally at [docs/index.html](docs/index.html). Watch directly in your browser with captions and transcripts.
 
-The recordings use edited actual product states and synthetic English narration. 1080p delivery combines a recorded 3D opening, fresh full-page captures and archival product shots. Native source dimensions are retained in the production record. The Muse Image sequence presents an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026.
+The recordings use edited actual product states and synthetic English narration. The 1080p overview combines the recorded 3D opening and current Meta toolbar views with large, source-linked evidence readouts. Original aerial photographs, masks and map shapes retain their recorded geometry; exact source quotations and values are typeset for readability. The full walkthrough retains its original captured views. The Muse Image sequence presents an earlier illustrated inspection example for 572 Smith Street and 611 Court Street, dated 30 October 2026.
 
 ## Access and verified release
 
@@ -27,16 +27,16 @@ On a narrow screen, use the bottom **Map**, **Building/Compare** and **Meta** co
 
 ## Optional model exercises
 
-Use the **+** button beside the message box. Selecting an exercise fills an editable draft. Review it, then send when ready.
+Use the top **Meta tools** bar or the **+** menu beside the message box. Compare, Aerial imagery, Change detection, Second review and Inspection visual stage an editable question. Review it, then send. Voice opens recording/upload controls; Private notes opens the optional local workflow.
 
-- **Compare roofs & tree context:** send the draft with both buildings selected. Inspect the two actual dated aerials, SAM roof/tree detections and Wonder's review of their typed summaries. The next checks should connect the images to a current site visit.
-- **Explore a place through time:** retrieve the official 2020/2024 pair, then press **Run DINOv2 visual comparison**. Inference runs locally; first use downloads approximately **33.1 MB** of model/runtime assets. Move the divider and inspect the original photographs. Local inference runs independently of API credentials; enable Meta access for the current chat path that retrieves the image pair.
-- **Challenge the comparison** or **Illustrate the inspection plan:** request a second review or a labelled generated concept. Use the labelled concept to communicate the written inspection checks.
-- **Voice note:** record or upload up to 60 seconds, transcribe, edit and choose **Add to message**. Sending remains a separate action. The recorded exercise demonstrates synthetic-English transcription, editing and the separate send action.
+- **Aerial imagery:** send the draft with both buildings selected. Inspect the two actual dated aerials, SAM roof/tree detections and Wonder's review of their typed summaries. The next checks should connect the images to a current site visit.
+- **Change detection:** retrieve the official 2020/2024 pair, then press **Run DINOv2 visual comparison**. Inference runs locally; first use downloads approximately **33.1 MB** of model/runtime assets. Move the divider and inspect the original photographs. Local inference runs independently of API credentials; enable Meta access for the current chat path that retrieves the image pair.
+- **Second review** or **Inspection visual:** request a second review or a labelled generated concept. Use the labelled concept to communicate the written inspection checks.
+- **Voice:** record or upload up to 60 seconds, transcribe, edit and choose **Add to message**. Sending remains a separate action. The recorded exercise demonstrates synthetic-English transcription, editing and the separate send action.
 
 ## Local seventh role: inspect a planning note
 
-The source also includes an optional **Muse Glimmer 30B** local review. Follow the pinned [local runtime instructions](scripts/glimmer/README.md), then run the application and model server on loopback. Select the same two buildings, open **+ → Review private inspection notes**, and enter an authored requirement such as: “The operation requires 20,000 usable square feet. Request an interior survey to measure usable area and clear height, verify loading access, and obtain electrical-service documentation.”
+The source also includes an optional **Muse Glimmer 30B** local review. Follow the pinned [local runtime instructions](scripts/glimmer/README.md), then run the application and model server on loopback. Select the same two buildings, choose **Private notes** in the top toolbar (or the corresponding **+** menu item), and enter an authored requirement such as: “The operation requires 20,000 usable square feet. Request an interior survey to measure usable area and clear height, verify loading access, and obtain electrical-service documentation.”
 
 Glimmer returns two source-linked inspection cards and a conditional next check. The actual browser review completed in **35 seconds** and displayed both cards and a conditional change in inspection order. A separate 39.82-second local response passed the current strict validator. The note is processed on that computer; public records are refreshed from NYC by native building ID. The seven-role recordings include this local mode alongside the hosted workflow. Use the local setup to reproduce the Glimmer segment.
 
